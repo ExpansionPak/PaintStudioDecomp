@@ -30,13 +30,13 @@ segments:
     start: 0x0200 # LBA 0
     vram: 0x80000400
     align: 8
+    bss_size: 0x44F18
     subsegments:
     - [0x0200, asm, entrypoint] # maybe hasm
     - [0x0250, data] # list of LBA Start/End Mapping Info (unused here)
 
     - [0x0260, asm]
     - [0x1160, c, gameboot]
-    - [0x76B0, asm]
 
     #--libleo .text
     - [0xC500, asm, leo/lib/readwrite]
@@ -229,6 +229,12 @@ segments:
     - { start: 0x76B90, type: databin, use_src_path: True, name: rsp/f3dpex2 }
 
     - [0x76FB0, pad] # end
+
+
+    # .bss
+    - { type: bss, vram: 0x800789D0, name: gameboot }
+    - { type: bss, vram: 0x800B86C0, name: leo }
+    - { type: bss, vram: 0x800BADD0, name: libultra }
 
     #--libleo .bss
     #- { type: .bss, vram: 0x800B86C0, name: leo/lib/leofunc }

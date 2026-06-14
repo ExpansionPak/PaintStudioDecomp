@@ -3,36 +3,37 @@
 #include "PR/sptask.h"
 #include "PR/sched.h"
 #include "PR/ultratypes.h"
+#include "PR/gbi.h"
 
 #define THREAD_ID_IDLE 1
 #define THREAD_ID_MAIN 6
 #define ARRAYCOUNT(a) (sizeof(a) / sizeof(a[0]))
 
 typedef struct {
-    s16 centerX;
-    s16 centerY;
-    s16 width;
-    s16 height;
-    s16 unk_08[16];
-} RectDescriptor;
+    /* 0x00 */ s16 centerX;
+    /* 0x02 */ s16 centerY;
+    /* 0x04 */ s16 width;
+    /* 0x06 */ s16 height;
+    /* 0x08 */ s16 unk_08[16];
+} RectDescriptor; // size = 0x28
 
 typedef struct {
-    s32 state;
-    u8 red;
-    u8 green;
-    u8 blue;
-    u8 alpha;
-    s32 x;
-    s32 y;
-    f32 scaleX;
-    f32 scaleY;
-    char text[0x42];
-    u8 pad_5A[6];
-    s16 unk_60; // isQueued?
-    u16 pad_62;
-    s32 unk_64; // delayFrames?
-    s32 unk_68;
-} UnkStruct80081EA0;
+    /* 0x00 */ s32 state;
+    /* 0x04 */ u8 red;
+    /* 0x05 */ u8 green;
+    /* 0x06 */ u8 blue;
+    /* 0x07 */ u8 alpha;
+    /* 0x08 */ s32 x;
+    /* 0x0C */ s32 y;
+    /* 0x10 */ f32 scaleX;
+    /* 0x14 */ f32 scaleY;
+    /* 0x18 */ char text[0x42];
+    /* 0x5A */ u8 pad_5A[6];
+    /* 0x60 */ s16 unk_60; // isQueued?
+    /* 0x62 */ u16 pad_62;
+    /* 0x64 */ s32 unk_64; // delayFrames?
+    /* 0x68 */ s32 unk_68;
+} UnkStruct80081EA0; // size = 0x6C
 
 typedef union {
     struct {
@@ -43,29 +44,56 @@ typedef union {
         u8 pad[0x42-0x4];
     };
     u8 bytes[0x42];
-} Unk800823B0;
+} Unk800823B0; // size = 0x42
 
-extern u32 D_80037D20[];
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    u8 pad4[0x28-0x4];
+    s16 unk28;
+    u16 pad2A;
+    u16 pad2C;
+    s16 unk2E;
+    s8 unk30;
+    s8 unk31;
+} Unk80050860; // size = 0x32
+
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    s32 unk8;
+    s16 unkC;
+    u16 padE;
+} Unk80084B30; // size = 0x10
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    u16 unk8;
+    u16 unkA;
+    u16 unkC;
+    u16 unkE;
+    s32 unk10;
+    s32 unk14;
+    u16 unk18;
+    u16 unk1A;
+    u16 unk1C;
+    u16 pad1E;
+    u16 unk20;
+    u16 unk22;
+    u16 unk24;
+    u16 pad26;
+    u16 unk28;
+    u16 unk2A;
+    s8 unk2C;
+    s8 unk2D;
+    s8 pad2E;
+    s8 unk2F;
+} Unk80087758; // size = 0x30
+
 extern s32 D_80037F58;
-extern OSThread D_800791B0;
-extern u8 D_80079360[0x2000];
-extern OSMesg D_8007B360[200];
-extern OSMesgQueue D_8007B680;
-extern u8 D_8007B698[OS_SC_STACKSIZE];
-extern OSSched D_8007D698;
-extern OSMesgQueue D_8007D9B8;
-extern OSMesg D_8007D9D0[32];
-extern OSMesgQueue D_8007D920;
-extern OSMesg D_8007D938[32];
-extern OSScClient D_8007DA50;
-extern OSPiHandle *D_8007DA58;
-extern OSThread D_8007DA60;
-extern u8 D_8007DC10[0x2000];
-extern u8 D_8007FC10[OS_SC_STACKSIZE];
-extern OSThread D_80081C10;
-extern OSScClient D_80081DC0;
-extern OSMesgQueue D_80081DC8;
-extern OSMesg D_80081DE0[32];
 
 // TODO: too early to determine the range of these
 extern u8 D_80038188[0x8003FF50 - 0x80038188];
@@ -73,45 +101,37 @@ extern u8 D_8003FF50[0xC000 - ARRAYCOUNT(D_80038188)];
 extern u8 D_800442A8[0x8004FF50 - 0x800442A8];
 extern u8 D_8004FF50[0xC000 - ARRAYCOUNT(D_800442A8)];
 
-extern u32 D_800351E0;
-extern u32 D_800351E4;
-extern u32 D_800351E4_LOAD;
-extern u16 D_800351F8;
-extern u32 D_80037D24;
+extern u32 D_800351E0; // = 0;
+extern u32 D_800351E4; // = 0;
+extern u32 D_800351E4_LOAD; // ?
+extern char D_800351EC[]; // = "01";
+extern char D_800351F0[]; // = "DMPJ";
+extern u16 D_800351F8; // = 0;
+extern u16 D_800351FC[5304]; // = { 1 };
 extern char D_80037B6C[];
 extern char D_80037B90[];
 extern char D_80037C1C[];
 extern char D_80037C90[];
 extern char D_80037CBC[];
-extern RectDescriptor D_80037D30[];
-extern u8 D_80037D2C;
+extern u32 D_80037D20[3]; // = { 0 };
+extern u8 D_80037D2C; // = 0;
+extern RectDescriptor D_80037D30[5];
+extern s32 D_80037E20[4]; // static GBI commands
+extern s32 D_80037E30[4]; // static GBI commands
+extern s32 D_80037E40[8]; // static GBI commands
+extern s32 D_80037E60[50]; // static GBI commands
 extern char D_80037F28[];
 extern u8 D_80037F3C[];
 extern u32 D_80052720[];
 extern u32 D_80052730;
 extern OSViMode D_80059C80;
 extern OSViMode D_80059F50;
-extern u16* D_80081E60;
-extern u16* D_80081E64;
-extern u16* D_80081E68;
-extern u32 D_80081E70;
-extern u32 D_80081E74;
-extern u32 D_80081E78;
-extern u32 D_80081E7C;
-extern u32 D_80081E80;
-extern u32 D_80081E84;
-extern u32 D_80081E88;
-extern UnkStruct80081EA0 D_80081EA0[];
-extern Unk800823B0 D_800823B0[12];
-extern char D_800826C8[];
 extern s32 D_8011F524;
 extern u32 D_8011F4FC;
 extern u32 D_8011F4FC_LOAD;
 extern u8 D_801243E8[];
 extern u8 D_80315AE0[];
 extern u16* D_80000318;
-extern char D_800351EC[];
-extern char D_800351F0[];
 extern s32 gMfsError;
 extern u8 D_80076428[];
 extern u8 diskQBuf[];
@@ -127,12 +147,89 @@ extern u32 D_3B;
 extern u8 func_800BD8E0[];
 extern u8 D_8015F340[];
 extern u8 func_801F6EB0[];
-extern u32 D_80083060;
+extern Unk80050860 D_80050860;
+extern f32 D_800508C4;
+extern f32 D_800508C8;
 
+extern s32 D_80037E20[];
+extern s32 D_80037E30[];
+extern Gfx* D_8008305C;
+extern void* D_80083064;
+
+// .data
 u16 D_800351D0 = 240;
 u16 D_800351D4 = 320;
 u16 D_800351D8 = 1;
 u16* D_800351DC = 0;
+
+// .bss
+extern u8 D_800789D0[0x7E0];
+extern OSThread D_800791B0;
+extern u8 D_80079360[OS_SC_STACKSIZE];
+extern OSMesg D_8007B360[200];
+extern OSMesgQueue D_8007B680;
+extern u8 D_8007B698[OS_SC_STACKSIZE];
+extern OSSched D_8007D698;
+extern OSMesgQueue D_8007D920;
+extern OSMesg D_8007D938[32];
+extern OSMesgQueue D_8007D9B8;
+extern OSMesg D_8007D9D0[32];
+extern OSScClient D_8007DA50;
+extern OSPiHandle *D_8007DA58;
+extern OSThread D_8007DA60;
+extern u8 D_8007DC10[OS_SC_STACKSIZE];
+extern u8 D_8007FC10[OS_SC_STACKSIZE];
+extern OSThread D_80081C10;
+extern OSScClient D_80081DC0;
+extern OSMesgQueue D_80081DC8;
+extern OSMesg D_80081DE0[32];
+extern u16* D_80081E60;
+extern u16* D_80081E64;
+extern u16* D_80081E68;
+extern u32 D_80081E70;
+extern u32 D_80081E74;
+extern u32 D_80081E78;
+extern u32 D_80081E7C;
+extern u32 D_80081E80;
+extern u32 D_80081E84;
+extern u32 D_80081E88;
+// extern u8 D_80081E8C[0x04];
+// extern u8 D_80081E90[0x10];
+extern UnkStruct80081EA0 D_80081EA0[12];
+extern Unk800823B0 D_800823B0[12];
+extern char D_800826C8[0x988];
+// extern u8 D_80083050[0x04];
+// extern u8 D_80083054[0x04];
+// extern u8 D_80083058[0x04];
+// extern u8 D_8008305C[0x04];
+extern u32 D_80083060;
+// extern u8 D_80083064[0x04];
+// extern u8 D_80083068[0x08];
+// extern u8 D_80083070[0xC00];
+// extern u8 D_80083C70[0x18];
+// extern u8 D_80083C88[0x6C];
+// extern u8 D_80083CF4[0x54];
+// extern u8 D_80083D48[0xBD0];
+// extern u8 D_80084918[0x108];
+// extern u8 D_80084A20[0x04];
+// extern u8 D_80084A24[0x04];
+// extern u8 D_80084A28[0x100];
+// extern u8 D_80084B28[0x08];
+extern Unk80084B30 D_80084B30[42];
+// extern u8 D_80084F50[0x2800];
+extern s32 D_80087750;
+extern u8 D_80087754[0x4]; // pad?
+extern Unk80087758 D_80087758[2][30][66];
+// u8 D_8009EA98[0x17348];
+// extern u8 D_800B5DE0[0x21B0];
+// extern u8 D_800B7F90[0x08];
+// extern u8 D_800B7F98[0x18];
+// extern u8 D_800B7FB0[0x80];
+// extern u8 D_800B8030[0x08];
+// extern u8 D_800B8038[0x80];
+// extern u8 D_800B80B8[0x200];
+// extern u8 D_800B82B8[0x200];
+// extern u8 D_800B84B8[0x208];
 
 void func_800013D4(void *arg);
 void func_80001450(void *arg);
@@ -179,6 +276,12 @@ void func_80005108(void);
 void func_80005384(void);
 s32 func_800C1484(void);
 void func_800C28A0(void);
+void func_8000ADF0(void);
+void func_8000AE58(s32, s32);
+void func_8000AE6C(s32, s32);
+void func_8000AE80(f64, f64);
+void func_8000AE9C(u8, u8, u8, u8);
+void func_8000AED0(s8*, s32);
 
 void func_80001360(void *arg) {
     osInitialize();
@@ -205,7 +308,7 @@ void func_80001450(void *arg) {
     func_80002788();
     func_80001C98();
     D_800351E0 = 1;
-    D_80037D24 = 1;
+    D_80037D20[1] = 1;
     func_800D7800(0);
     func_8000152C();
 
@@ -457,7 +560,7 @@ s32 func_80001E54(u32 devAddr, void *dramAddr, u32 size) {
     OSIoMesg mb;
     OSMesg msg;
 
-    if (D_80037D24 != 0) {
+    if (D_80037D20[1] != 0) {
         if ((D_80052720[4] != 0) && (D_80052720[0] & 1)) {
             while (TRUE) {}
         }
@@ -614,7 +717,7 @@ s32 DisplayDiskError(s32 arg0) {
                     }
                 }
             }
-            if (D_80037D24 != 0) {
+            if (D_80037D20[1] != 0) {
                 func_800C28A0();
             }
             break;
@@ -846,7 +949,35 @@ void func_80003720(char *str, s32 screenWidth) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003AC0.s")
 
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003D60.s")
+#else
+// this should match but doesn't seem to?
+// https://decomp.me/scratch/2bzEn
+void func_80003D60(void) {
+    s32 pad[3];
+
+    gDPSetColorImage(D_8008305C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, D_800351D4, osVirtualToPhysical(D_80083064));
+    gSPDisplayList(D_8008305C++, D_80037E60);
+    if (D_800351D4 == 0x140) {
+        {
+            Gfx *_g = D_8008305C++;\
+            _g->words.w0 = 0xDC080008;\
+            _g->words.w1 = (u32) D_80037E20;
+        }        
+    } else {
+        {
+            Gfx *_g = D_8008305C++;\
+            _g->words.w0 = 0xDC080008;\
+            _g->words.w1 = (u32) D_80037E30;
+        }
+    }
+    gSPDisplayList(D_8008305C++, D_80037E40);
+    gDPSetCycleType(D_8008305C++, G_CYC_FILL);
+    gDPSetFillColor(D_8008305C++, 0x00010001);
+    gDPFillRectangle(D_8008305C++, 0, 0, (D_800351D4 - 2), (D_800351D0 - 2));
+}
+#endif
 
 void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top) {
     s32 halfScreenWidth;
@@ -953,3 +1084,103 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000584C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80005878.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800078B0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007A28.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007AEC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007B20.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007B60.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D04.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D64.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D70.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D94.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80008614.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80008808.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800088E8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80008938.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80008988.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80009130.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800095C0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/DisplayMessage.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80009B74.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80009F74.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A008.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A240.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A310.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A448.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A5AC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A5F0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/RenderText.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AD54.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000ADA0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000ADF0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE58.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE6C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE80.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE9C.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AED0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/GetCharWidth.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/GetCharKern.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B054.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B070.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B0FC.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B1E0.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B2B8.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B368.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B508.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B768.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BA44.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BD70.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BDB4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BDD4.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BE24.s")
+
+#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000C56C.s")
