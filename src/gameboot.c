@@ -93,14 +93,6 @@ typedef struct {
     s8 unk2F;
 } Unk80087758; // size = 0x30
 
-extern s32 D_80037F58;
-
-// TODO: too early to determine the range of these
-extern u8 D_80038188[0x8003FF50 - 0x80038188];
-extern u8 D_8003FF50[0xC000 - ARRAYCOUNT(D_80038188)];
-extern u8 D_800442A8[0x8004FF50 - 0x800442A8];
-extern u8 D_8004FF50[0xC000 - ARRAYCOUNT(D_800442A8)];
-
 extern u32 D_800351E0; // = 0;
 extern u32 D_800351E4; // = 0;
 extern u32 D_800351E4_LOAD; // ?
@@ -121,7 +113,24 @@ extern s32 D_80037E30[4]; // static GBI commands
 extern s32 D_80037E40[8]; // static GBI commands
 extern s32 D_80037E60[50]; // static GBI commands
 extern char D_80037F28[];
-extern u8 D_80037F3C[];
+extern u8 D_80037F3C; // = 0x81;
+extern u8 D_80037F3D[12];
+extern s32 D_80037F50[3]; // = { 0 };
+extern OSMesgQueue D_80037F5C; // = { 0 };
+extern OSMesg D_80037F74[8][16]; // = { 0 };
+// TODO: too early to determine the range of these
+extern u8 D_80038188[0x8003FF50 - 0x80038188];
+extern u8 D_8003FF50[0xC000 - ARRAYCOUNT(D_80038188)];
+extern u8 D_800442A8[0x8004FF50 - 0x800442A8];
+extern u8 D_8004FF50[0xC000 - ARRAYCOUNT(D_800442A8)];
+extern s16 D_800502A8[16]; // = { 0 };
+extern s32 D_800502C8; // = 0;
+extern s32 D_800502CC; // = 0;
+extern s32 D_800502D0; // = 0;
+extern s32 D_800502D4; // = 0;
+extern s32 D_800502D8; // = 0xAB;
+extern s32 D_800502E0[16]; // actually a struct
+extern u16 D_80050320; // = 0;
 extern u32 D_80052720[];
 extern u32 D_80052730;
 extern OSViMode D_80059C80;
@@ -287,7 +296,7 @@ void func_80001360(void *arg) {
     osInitialize();
     D_80037D20[1] = 0;
     D_80037D20[2] = 0;
-    D_80037F58 = 0;
+    D_80037F50[2] = 0;
     osCreateThread(&D_800791B0, THREAD_ID_IDLE, func_800013D4, arg, D_80079360 + sizeof(D_80079360), 9);
     osStartThread(&D_800791B0);
 }
@@ -629,7 +638,7 @@ void func_80002B90(s32 arg0) {
     s32 tens;
 
     if (1) {
-        digitPtr = D_80037F3C;
+        digitPtr = &D_80037F3C;
         value = arg0;
         remainder = value % 100;
         value -= remainder;
