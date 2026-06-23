@@ -492,14 +492,14 @@ void func_800016F8(u16 arg0) {
 
     switch (arg0) {
         case 1:
-            if (osTvType == 1) {
-                osViSetMode(&D_80059C80);
+            if (osTvType == OS_TV_NTSC) {
+                osViSetMode(&osViModeTable[2]);
                 break;
             }
             while (TRUE) {}
         case 0:
-            if (osTvType == 1) {
-                osViSetMode(&D_80059F50);
+            if (osTvType == OS_TV_NTSC) {
+                osViSetMode(&osViModeTable[11]);
                 break;
             }
             while (TRUE) {}
@@ -869,7 +869,7 @@ void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)())
         changedResolution = 1;
         D_800351D4 = SCREEN_WIDTH;
         D_800351D0 = SCREEN_HEIGHT;
-        osViSetMode(&D_80059C80);
+        osViSetMode(&osViModeTable[2]);
         osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
         osViSetSpecialFeatures(OS_VI_DIVOT_ON | OS_VI_GAMMA_DITHER_OFF | OS_VI_GAMMA_OFF);
     }
@@ -906,7 +906,7 @@ void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)())
         D_800351D4 = HIGH_RES_SCREEN_WIDTH;
         D_800351D0 = HIGH_RES_SCREEN_HEIGHT;
         func_80001A44();
-        osViSetMode(&D_80059F50);
+        osViSetMode(&osViModeTable[11]);
         osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
         osViSetSpecialFeatures(OS_VI_DIVOT_ON | OS_VI_GAMMA_DITHER_OFF | OS_VI_GAMMA_OFF);
     }

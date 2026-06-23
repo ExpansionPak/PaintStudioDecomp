@@ -183,7 +183,7 @@ segments:
     - [0x599A0, data, libultra/io/siacs]
     - [0x599B0, data, libultra/io/controller]
     - [0x599C0, data, libultra/os/initialize]
-    - [0x599E0, data, libultra/io/vitbl]
+    - [0x599E0, .data, libultra/io/vitbl]
     - [0x5AB60, data, libultra/gu/us2dex2_emu]
     - [0x5AB90, data, libultra/io/pimgr]
     - [0x5ABC0, data, libultra/sched/sched]

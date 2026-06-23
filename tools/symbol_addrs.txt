@@ -583,7 +583,7 @@ osViClock = 0x80059BC8;
 __osShutdown = 0x80059BCC;
 __OSGlobalIntMask = 0x80059BD0;
 //-- libultra/io/vitbl
-osViModeTable = 0x80059BE0;
+osViModeTable = 0x80059BE0; // size:0x1180
 //-- libultra/gu/us2dex2_emu
 us2dex2_emu_data_0000 = 0x8005AD60;
 us2dex2_emu_data_0004 = 0x8005AD64;
