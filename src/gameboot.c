@@ -131,14 +131,93 @@ extern s32 D_800502D4; // = 0;
 extern s32 D_800502D8; // = 0xAB;
 extern s32 D_800502E0[16]; // actually a struct
 extern u16 D_80050320; // = 0;
-extern u32 D_80052720[];
+// -- file split here?
+extern s32 D_80050334; // = 0;
+extern s32 D_80050338; // = 0;
+extern u16 D_8005033C; // = 0;
+extern u16 D_80050340; // = 0;
+extern s32 D_80050344; // = 0;
+extern s32 D_80050348; // = 1;
+extern s32 D_8005034C; // = 0;
+extern s32 D_80050350; // = 0;
+extern s16 D_80050354[]; // = { 0x00A0, 0x0028, 0x00E0, 0x0012, 0x1A1A, 0x1AFF, 0x1A1A, 0x1AFF, 0x1A1A, 0x1AFF, 0x1A1A, 0x1AFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
+// the next three vars might all be part of D_80050382
+extern s16 D_8005037C; // = 0xA0;
+extern s16 D_8005037E; // = 0x1F;
+extern s16 D_80050380; // = 0xE0;
+extern s16 D_80050382[]; // = { 0x0002, 0xC8C8, 0xC8FF, 0x6E6E, 0x6EFF, 0xC8C8, 0xC8FF, 0x6E6E, 0x6EFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
+// the next three vars might all be part of D_800503AA
+extern s16 D_800503A4; // = 0x00A0;
+extern s16 D_800503A6; // = 0x0031;
+extern s16 D_800503A8; // = 0x00E0;
+extern s16 D_800503AA[]; // = { 0x0002, 0x6E6E, 0x6EFF, 0x3C3C, 0x3CFF, 0x6E6E, 0x6EFF, 0x3C3C, 0x3CFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
+// the next three vars might all be part of D_800503D2
+extern s16 D_800503CC; // = 0x0030;
+extern s16 D_800503CE; // = 0x0028;
+extern s16 D_800503D0; // = 0x0002;
+extern s16 D_800503D2[]; // = { 0x0012, 0xC8C8, 0xC8FF, 0xC8C8, 0xC8FF, 0x6E6E, 0x6EFF, 0x6E6E, 0x6EFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
+extern s16 D_800503F4[]; // = { 0x0110, 0x0028, 0x0002, 0x0012, 0x6E6E, 0x6EFF, 0x6E6E, 0x6EFF, 0x3C3C, 0x3CFF, 0x3C3C, 0x3CFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
+extern s32 D_8005041C; // = 0;
+extern s32 D_80050420; // = 0;
+// -- file split here?
+extern s32 D_80050438; // = 0;
+extern s32 D_8005043C[]; // size of 13? all 0s
+extern s32 D_80050470[]; // size of 11? all 0s
+extern s32 D_8005049C[]; // size of 0x60?
+extern s32 D_8005061C[]; // size of 0x30?
+extern s32 D_800506DC[]; // size of 0x20?
+extern s8 D_8005075C[]; // size of 0x100?
+extern s32 D_8005085C;
+extern Unk80050860 D_80050860;
+extern u8 D_800508A4; // = 0xFF;
+extern u8 D_800508A8; // = 0xFF;
+extern u8 D_800508AC; // = 0xFF;
+extern u8 D_800508B0; // = 0xFF;
+extern s32 D_800508B4; // = 0;
+extern s32 D_800508B8; // = 0;
+extern s32 D_800508BC; // = 0x28;
+extern s32 D_800508C0; // = 1;
+extern f32 D_800508C4; // = 1.0f;
+extern f32 D_800508C8; // = 1.0f;
+extern u16 D_800508CC[]; // size of 0x88?
+extern s32 D_800509DC[]; // this is a struct
+extern s16 D_800509EC[]; // size of 0x200?
+extern s32 D_80050DEC[]; // Maybe an array of gbi commands? size of 0x380?
+extern s32 D_80051BEC[]; // array of values between 0-4, size of 0x120?
+extern u8 D_8005206C[0x80];
+extern u8 D_800520EC; // = 6; probably part of D_800520ED
+extern u8 D_800520ED[0x16B];
+extern s32 D_80052258[]; // array of gbi commands? size of 10
+extern s32 D_80052280[]; // array of gbi commands? size of 16
+extern s32 D_800522C0[]; // array of gbi commands? size of 0x96?
+extern s32 D_80052518[]; // array of gbi commands? size of 14
+extern s32 D_80052550[]; // array of gbi commands? size of 0x74?
+extern u32 D_80052720[4];
 extern u32 D_80052730;
+extern s32 pad_D_80052734;
+extern s32 pad_D_80052738;
+extern s32 D_8005273C[9];
+extern s32 D_80052760[17];
+extern s32 D_800527A4[]; // maybe a struct? passed into func_8000B768 as 5th arg (sp10)
+extern s32 D_80058744[]; // maybe a struct? passed into func_8000BA44 as 5th arg (sp10)
+extern s16 D_80059164[]; // size of 0x2A?
+extern s32 D_800591B8[4];
+extern s32 D_800591C8[4];
+extern s32 D_800591D8[8]; // array of gbi commands?
+extern s32 D_800591F8[]; // array of gbi commands? size of 0x20?
+extern s32 D_80059278;
+
+// libultra data
 extern OSViMode D_80059C80;
 extern OSViMode D_80059F50;
+
+// src/main data
 extern s32 D_8011F524;
 extern u32 D_8011F4FC;
 extern u32 D_8011F4FC_LOAD;
 extern u8 D_801243E8[];
+
+// unknown data
 extern u8 D_80315AE0[];
 extern u16* D_80000318;
 extern s32 gMfsError;
@@ -156,9 +235,6 @@ extern u32 D_3B;
 extern u8 func_800BD8E0[];
 extern u8 D_8015F340[];
 extern u8 func_801F6EB0[];
-extern Unk80050860 D_80050860;
-extern f32 D_800508C4;
-extern f32 D_800508C8;
 
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
@@ -1098,6 +1174,7 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007A28.s")
 
+// file split around here?
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007AEC.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007B20.s")
