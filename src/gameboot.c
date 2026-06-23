@@ -4,10 +4,18 @@
 #include "PR/sched.h"
 #include "PR/ultratypes.h"
 #include "PR/gbi.h"
+#include "PR/leo.h"
+
+#include "common.h"
+#include "gameboot.h"
 
 #define THREAD_ID_IDLE 1
 #define THREAD_ID_MAIN 6
-#define ARRAYCOUNT(a) (sizeof(a) / sizeof(a[0]))
+
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 240
+#define HIGH_RES_SCREEN_WIDTH 640
+#define HIGH_RES_SCREEN_HEIGHT 480
 
 typedef struct {
     /* 0x00 */ s16 centerX;
@@ -228,7 +236,6 @@ extern char D_8005BA30[];
 extern char D_8005BA60[];
 extern char D_8005BA6C[];
 extern char D_8005BAAC[];
-extern u8 leoBootID[];
 extern u32 D_19;
 extern u32 D_19_ALT;
 extern u32 D_3B;
@@ -242,8 +249,8 @@ extern Gfx* D_8008305C;
 extern void* D_80083064;
 
 // .data
-u16 D_800351D0 = 240;
-u16 D_800351D4 = 320;
+u16 D_800351D0 = SCREEN_HEIGHT;
+u16 D_800351D4 = SCREEN_WIDTH;
 u16 D_800351D8 = 1;
 u16* D_800351DC = 0;
 
@@ -316,20 +323,31 @@ extern Unk80087758 D_80087758[2][30][66];
 // extern u8 D_800B82B8[0x200];
 // extern u8 D_800B84B8[0x208];
 
+// forward declarations
 void func_800013D4(void *arg);
 void func_80001450(void *arg);
 void func_800014D4(void);
 void func_8000152C(void);
 void func_800015BC(void *arg);
-void func_800016F8(u16 arg0);
 void func_80001B00(void);
 void func_80001C98(void);
-s32 func_80001D0C(u32 startLba, void *dst, u32 lbaCount);
-s32 func_80001E54(u32 devAddr, void *dramAddr, u32 size);
-u32 func_80001F20(u32 startLba, u32 endLba, u32 *lbaCount);
 void func_80002788(void);
-s32 DisplayDiskError(s32 arg0);
-void func_80002788(void);
+void func_8000327C(void *arg);
+void func_800050B0(void);
+void func_80003AC0(void);
+void func_80003D60(void);
+void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)());
+void func_80003720(char *str, s32 screenWidth);
+void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top);
+void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue);
+void func_8000ADF0(void);
+void func_8000AE58(s32, s32);
+void func_8000AE6C(s32, s32);
+void func_8000AE80(f64, f64);
+void func_8000AE9C(u8, u8, u8, u8);
+void func_8000AED0(s8*, s32);
+
+// defined in 20B20.s
 s32 Mfs_CreateLeoManager(s32 arg0, void *arg1, s32 arg2);
 s32 Mfs_ReadLBA(u32 startLba, void *dst, u32 lbaCount);
 s32 func_800273FC(void);
@@ -337,36 +355,16 @@ s32 func_800275B0(void);
 void func_80027680(s32 arg0, s32 arg1, char *arg2);
 s32 func_80027B4C(void);
 void Mfs_SetGameCode(char *arg0, char *arg1);
-s32 LeoLBAToByte(s32 startlba, u32 nlbas, s32 *bytes);
 void func_800283E4(void);
 s32 Mfs_CopyRamAreaFromBackup(void);
 void func_80029DEC(void *arg0, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5);
-void func_80002B90(s32 arg0);
-s32 func_80002AA0(void);
-s32 func_80002B20(void);
-s32 func_8000314C(u8 *a, u8 *b, u32 size);
-void func_8000327C(void *arg);
-void func_800050B0(void);
+
+// defined in main/787C8.s
 void func_800BDB80(void *arg);
 void func_800D7800(s32 arg0);
 void func_800D78A4(char *arg0, char *arg1, s32 arg2);
-void func_80001A44(void);
-void func_80003AC0(void);
-void func_80003D60(void);
-void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)());
-void func_80003720(char *str, s32 screenWidth);
-void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top);
-void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue);
-void func_80005108(void);
-void func_80005384(void);
 s32 func_800C1484(void);
 void func_800C28A0(void);
-void func_8000ADF0(void);
-void func_8000AE58(s32, s32);
-void func_8000AE6C(s32, s32);
-void func_8000AE80(f64, f64);
-void func_8000AE9C(u8, u8, u8, u8);
-void func_8000AED0(s8*, s32);
 
 void func_80001360(void *arg) {
     osInitialize();
@@ -468,12 +466,12 @@ void func_800016F8(u16 arg0) {
 
     switch (arg0) {
     case 1:
-        D_800351D4 = 320;
-        D_800351D0 = 240;
+        D_800351D4 = SCREEN_WIDTH;
+        D_800351D0 = SCREEN_HEIGHT;
         break;
     case 0:
-        D_800351D4 = 640;
-        D_800351D0 = 480;
+        D_800351D4 = HIGH_RES_SCREEN_WIDTH;
+        D_800351D0 = HIGH_RES_SCREEN_HEIGHT;
         break;
     }
 
@@ -509,10 +507,10 @@ void func_800016F8(u16 arg0) {
             break;
     }
 
-    osViSetSpecialFeatures(0x40);
+    osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
     osViSetXScale(1.0f);
     osViSetYScale(1.0f);
-    osViSetSpecialFeatures(0x1A);
+    osViSetSpecialFeatures(OS_VI_DIVOT_ON | OS_VI_GAMMA_DITHER_OFF | OS_VI_GAMMA_OFF);
     osViSwapBuffer(D_80081E64);
 }
 
@@ -540,7 +538,7 @@ void func_80001A44(void) {
     }
 }
 
-// TODO: split into error.c here
+// TODO: split into leoerror.c here
 
 void func_80001B00(void) {
     s32 state;
@@ -786,7 +784,7 @@ s32 DisplayDiskError(s32 arg0) {
 
             if (status != -1 || (status == -1 && gMfsError != 1)) {
                 bcopy(D_80076428, D_801243E8, 0x20);
-                while (func_8000314C(D_80076428, leoBootID, 0x20) == 0) {
+                while (func_8000314C(D_80076428, leoBootID, sizeof(leoBootID)) == 0) {
                     func_80003570(D_80037CBC, 1, 0xF8, func_80002AA0);
                 }
             } else {
@@ -797,7 +795,7 @@ s32 DisplayDiskError(s32 arg0) {
                     D_800351F8 = 0;
                     bcopy(D_80076428, D_801243E8, 0x20);
                     D_80037D2C = 0;
-                    while (func_8000314C(D_80076428, leoBootID, 0x20) == 0) {
+                    while (func_8000314C(D_80076428, leoBootID, sizeof(leoBootID)) == 0) {
                         func_80003570(D_80037CBC, 1, 0xF8, func_80002AA0);
                     }
                 }
@@ -867,13 +865,13 @@ void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)())
 
     done = 0;
     changedResolution = 0;
-    if (D_800351D4 == 640) {
+    if (D_800351D4 == HIGH_RES_SCREEN_WIDTH) {
         changedResolution = 1;
-        D_800351D4 = 320;
-        D_800351D0 = 240;
+        D_800351D4 = SCREEN_WIDTH;
+        D_800351D0 = SCREEN_HEIGHT;
         osViSetMode(&D_80059C80);
-        osViSetSpecialFeatures(0x40);
-        osViSetSpecialFeatures(0x1A);
+        osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
+        osViSetSpecialFeatures(OS_VI_DIVOT_ON | OS_VI_GAMMA_DITHER_OFF | OS_VI_GAMMA_OFF);
     }
 
     D_80037D20[0] |= 1;
@@ -905,12 +903,12 @@ void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)())
     }
 
     if (changedResolution != 0) {
-        D_800351D4 = 640;
-        D_800351D0 = 480;
+        D_800351D4 = HIGH_RES_SCREEN_WIDTH;
+        D_800351D0 = HIGH_RES_SCREEN_HEIGHT;
         func_80001A44();
         osViSetMode(&D_80059F50);
-        osViSetSpecialFeatures(0x40);
-        osViSetSpecialFeatures(0x1A);
+        osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
+        osViSetSpecialFeatures(OS_VI_DIVOT_ON | OS_VI_GAMMA_DITHER_OFF | OS_VI_GAMMA_OFF);
     }
 
     for (i = 0; i < 4; i++) {
@@ -1028,9 +1026,6 @@ void func_80003720(char *str, s32 screenWidth) {
 }
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003A98.s")
-
-//void __dummy(void) {
-//}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003AC0.s")
 

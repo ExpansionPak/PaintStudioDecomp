@@ -18,6 +18,7 @@ options:
   ld_align_segment_start: 8
   ld_align_segment_vram_end: false
   ld_align_section_vram_end: false
+  make_full_disasm_for_code: True
 segments:
   - name: header
     type: data # this is not a typical N64 header. Do not let splat process it as such.
