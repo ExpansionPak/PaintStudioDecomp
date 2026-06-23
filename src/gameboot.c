@@ -101,6 +101,80 @@ typedef struct {
     s8 unk2F;
 } Unk80087758; // size = 0x30
 
+
+// .bss
+u8 D_800789D0[0x7E0];
+OSThread D_800791B0;
+u8 D_80079360[OS_SC_STACKSIZE];
+OSMesg D_8007B360[200];
+OSMesgQueue D_8007B680;
+u8 D_8007B698[OS_SC_STACKSIZE];
+OSSched D_8007D698;
+OSMesgQueue D_8007D920;
+OSMesg D_8007D938[32];
+OSMesgQueue D_8007D9B8;
+OSMesg D_8007D9D0[32];
+OSScClient D_8007DA50;
+OSPiHandle *D_8007DA58;
+OSThread D_8007DA60;
+u8 D_8007DC10[OS_SC_STACKSIZE];
+u8 D_8007FC10[OS_SC_STACKSIZE];
+OSThread D_80081C10;
+OSScClient D_80081DC0;
+OSMesgQueue D_80081DC8;
+OSMesg D_80081DE0[32];
+u16* D_80081E60;
+u16* D_80081E64;
+u16* D_80081E68;
+u32 pad_D_80081E6C;
+u32 D_80081E70;
+u32 D_80081E74;
+u32 D_80081E78;
+u32 D_80081E7C;
+u32 D_80081E80;
+u32 D_80081E84;
+u32 D_80081E88;
+s32 D_80081E8C;
+s32 D_80081E90;
+s32 padD_80081E94;
+s32 padD_80081E98;
+s32 padD_80081E9C;
+UnkStruct80081EA0 D_80081EA0[12];
+Unk800823B0 D_800823B0[12];
+u8 pad_D_800826C8[2440];
+s32 D_80083050;
+s32 D_80083054;
+s32 D_80083058;
+Gfx* D_8008305C;
+u32 D_80083060;
+void* D_80083064;
+s32 D_80083068;
+// extern u8 D_80083070[0xC00];
+// extern u8 D_80083C70[0x18];
+// extern u8 D_80083C88[0x6C];
+// extern u8 D_80083CF4[0x54];
+// extern u8 D_80083D48[0xBD0];
+// extern u8 D_80084918[0x108];
+// extern u8 D_80084A20[0x04];
+// extern u8 D_80084A24[0x04];
+// extern u8 D_80084A28[0x100];
+// extern u8 D_80084B28[0x08];
+extern Unk80084B30 D_80084B30[42];
+// extern u8 D_80084F50[0x2800];
+extern s32 D_80087750;
+extern u8 D_80087754[0x4]; // pad?
+extern Unk80087758 D_80087758[2][30][66];
+// u8 D_8009EA98[0x17348];
+// extern u8 D_800B5DE0[0x21B0];
+// extern u8 D_800B7F90[0x08];
+// extern u8 D_800B7F98[0x18];
+// extern u8 D_800B7FB0[0x80];
+// extern u8 D_800B8030[0x08];
+// extern u8 D_800B8038[0x80];
+// extern u8 D_800B80B8[0x200];
+// extern u8 D_800B82B8[0x200];
+// extern u8 D_800B84B8[0x208];
+
 extern u32 D_800351E0; // = 0;
 extern u32 D_800351E4; // = 0;
 extern u32 D_800351E4_LOAD; // ?
@@ -215,10 +289,6 @@ extern s32 D_800591D8[8]; // array of gbi commands?
 extern s32 D_800591F8[]; // array of gbi commands? size of 0x20?
 extern s32 D_80059278;
 
-// libultra data
-extern OSViMode D_80059C80;
-extern OSViMode D_80059F50;
-
 // src/main data
 extern s32 D_8011F524;
 extern u32 D_8011F4FC;
@@ -245,83 +315,12 @@ extern u8 func_801F6EB0[];
 
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
-extern Gfx* D_8008305C;
-extern void* D_80083064;
 
 // .data
 u16 D_800351D0 = SCREEN_HEIGHT;
 u16 D_800351D4 = SCREEN_WIDTH;
 u16 D_800351D8 = 1;
 u16* D_800351DC = 0;
-
-// .bss
-extern u8 D_800789D0[0x7E0];
-extern OSThread D_800791B0;
-extern u8 D_80079360[OS_SC_STACKSIZE];
-extern OSMesg D_8007B360[200];
-extern OSMesgQueue D_8007B680;
-extern u8 D_8007B698[OS_SC_STACKSIZE];
-extern OSSched D_8007D698;
-extern OSMesgQueue D_8007D920;
-extern OSMesg D_8007D938[32];
-extern OSMesgQueue D_8007D9B8;
-extern OSMesg D_8007D9D0[32];
-extern OSScClient D_8007DA50;
-extern OSPiHandle *D_8007DA58;
-extern OSThread D_8007DA60;
-extern u8 D_8007DC10[OS_SC_STACKSIZE];
-extern u8 D_8007FC10[OS_SC_STACKSIZE];
-extern OSThread D_80081C10;
-extern OSScClient D_80081DC0;
-extern OSMesgQueue D_80081DC8;
-extern OSMesg D_80081DE0[32];
-extern u16* D_80081E60;
-extern u16* D_80081E64;
-extern u16* D_80081E68;
-extern u32 D_80081E70;
-extern u32 D_80081E74;
-extern u32 D_80081E78;
-extern u32 D_80081E7C;
-extern u32 D_80081E80;
-extern u32 D_80081E84;
-extern u32 D_80081E88;
-// extern u8 D_80081E8C[0x04];
-// extern u8 D_80081E90[0x10];
-extern UnkStruct80081EA0 D_80081EA0[12];
-extern Unk800823B0 D_800823B0[12];
-extern char D_800826C8[0x988];
-// extern u8 D_80083050[0x04];
-// extern u8 D_80083054[0x04];
-// extern u8 D_80083058[0x04];
-// extern u8 D_8008305C[0x04];
-extern u32 D_80083060;
-// extern u8 D_80083064[0x04];
-// extern u8 D_80083068[0x08];
-// extern u8 D_80083070[0xC00];
-// extern u8 D_80083C70[0x18];
-// extern u8 D_80083C88[0x6C];
-// extern u8 D_80083CF4[0x54];
-// extern u8 D_80083D48[0xBD0];
-// extern u8 D_80084918[0x108];
-// extern u8 D_80084A20[0x04];
-// extern u8 D_80084A24[0x04];
-// extern u8 D_80084A28[0x100];
-// extern u8 D_80084B28[0x08];
-extern Unk80084B30 D_80084B30[42];
-// extern u8 D_80084F50[0x2800];
-extern s32 D_80087750;
-extern u8 D_80087754[0x4]; // pad?
-extern Unk80087758 D_80087758[2][30][66];
-// u8 D_8009EA98[0x17348];
-// extern u8 D_800B5DE0[0x21B0];
-// extern u8 D_800B7F90[0x08];
-// extern u8 D_800B7F98[0x18];
-// extern u8 D_800B7FB0[0x80];
-// extern u8 D_800B8030[0x08];
-// extern u8 D_800B8038[0x80];
-// extern u8 D_800B80B8[0x200];
-// extern u8 D_800B82B8[0x200];
-// extern u8 D_800B84B8[0x208];
 
 // forward declarations
 void func_800013D4(void *arg);

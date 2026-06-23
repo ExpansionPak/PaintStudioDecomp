@@ -233,7 +233,8 @@ segments:
 
 
     # .bss
-    - { type: bss, vram: 0x800789D0, name: gameboot }
+    - { type: .bss, vram: 0x800789D0, name: gameboot }
+    - { type: bss, vram: 0x80083070, name: gameboot_bss_80083070 }
     - { type: bss, vram: 0x800B86C0, name: leo }
     - { type: bss, vram: 0x800BADD0, name: libultra }
 
