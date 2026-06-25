@@ -18,6 +18,7 @@ options:
   ld_align_segment_start: 8
   ld_align_segment_vram_end: false
   ld_align_section_vram_end: false
+  make_full_disasm_for_code: True
 segments:
   - name: header
     type: data # this is not a typical N64 header. Do not let splat process it as such.
@@ -30,13 +31,13 @@ segments:
     start: 0x0200 # LBA 0
     vram: 0x80000400
     align: 8
+    bss_size: 0x44F18
     subsegments:
     - [0x0200, asm, entrypoint] # maybe hasm
     - [0x0250, data] # list of LBA Start/End Mapping Info (unused here)
 
     - [0x0260, asm]
     - [0x1160, c, gameboot]
-    - [0x76B0, asm]
 
     #--libleo .text
     - [0xC500, asm, leo/lib/readwrite]
@@ -182,7 +183,7 @@ segments:
     - [0x599A0, data, libultra/io/siacs]
     - [0x599B0, data, libultra/io/controller]
     - [0x599C0, data, libultra/os/initialize]
-    - [0x599E0, data, libultra/io/vitbl]
+    - [0x599E0, .data, libultra/io/vitbl]
     - [0x5AB60, data, libultra/gu/us2dex2_emu]
     - [0x5AB90, data, libultra/io/pimgr]
     - [0x5ABC0, data, libultra/sched/sched]
@@ -229,6 +230,13 @@ segments:
     - { start: 0x76B90, type: databin, use_src_path: True, name: rsp/f3dpex2 }
 
     - [0x76FB0, pad] # end
+
+
+    # .bss
+    - { type: .bss, vram: 0x800789D0, name: gameboot }
+    - { type: bss, vram: 0x80083070, name: gameboot_bss_80083070 }
+    - { type: bss, vram: 0x800B86C0, name: leo }
+    - { type: bss, vram: 0x800BADD0, name: libultra }
 
     #--libleo .bss
     #- { type: .bss, vram: 0x800B86C0, name: leo/lib/leofunc }
