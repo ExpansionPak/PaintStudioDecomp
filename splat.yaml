@@ -309,7 +309,7 @@ segments:
     align: 8
     symbol_name_format: saveload_$VRAM
     subsegments:
-    - [0x1F4D40, asm]
+    - [0x1F4D40, c, saveload]
     - [0x2346C0, data]
     - [0x23B610, databin] # gfx
     - [0x279C60, pad]

@@ -1,14 +1,18 @@
-# Mario Artist Paint Studio Decompilation
+# PaintStudioDecomp
 
-[![build](https://img.shields.io/github/actions/workflow/status/LuigiBlood/paintstudio_decomp/ubuntu-build.yml?branch=main&label=build)](https://github.com/LuigiBlood/paintstudio_decomp/actions/workflows/ubuntu-build.yml)
-[![Code](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/LuigiBlood/paintstudio_decomp/gh-pages/badges/code.json&cacheSeconds=300)](https://raw.githubusercontent.com/LuigiBlood/paintstudio_decomp/gh-pages/badges/progress.json)
-[![Data](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/LuigiBlood/paintstudio_decomp/gh-pages/badges/data.json&cacheSeconds=300)](https://raw.githubusercontent.com/LuigiBlood/paintstudio_decomp/gh-pages/badges/progress.json)
+[![build](https://img.shields.io/github/actions/workflow/status/ExpansionPak/PaintStudioDecomp/ubuntu-build.yml?branch=main&label=build)](https://github.com/ExpansionPak/PaintStudioDecomp/actions/workflows/ubuntu-build.yml)
+[![Code](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/code.json&cacheSeconds=300)](https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/progress.json)
+[![Data](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/data.json&cacheSeconds=300)](https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/progress.json)
+
+This is a work-in-progress decompilation of [Mario Artist: Paint Studio (1999)](https://en.wikipedia.org/wiki/Mario_Artist) for the [64DD](https://en.wikipedia.org/wiki/64DD)
+
+It is built directly on top of [LuigiBlood's original decompilation of the game](https://github.com/LuigiBlood/paintstudio_decomp).
 
 Required base ROM file:
 
 - `dmpj.d64` with MD5 `3546bc6d93928a28285a91478bc41b68`
 
-Convert a Mario Artist Paint Studio NDD dump to D64 with [leo64dd_python](https://github.com/LuigiBlood/leo64dd_python).
+Convert a Mario Artist Paint Studio NDD dump to D64 with LuigiBlood's [leo64dd_python](https://github.com/LuigiBlood/leo64dd_python) tool.
 The RAM area should be only `0xFF`.
 You can create the dmpj.d64 file by taking a .ndd file (md5 `8485643e5830cd67ed4c0a5fd49e2491`) and running `python3 leo64ddfile.py d64 <path-to-ndd-file> <path-to-repo>/dmpj.d64`
 

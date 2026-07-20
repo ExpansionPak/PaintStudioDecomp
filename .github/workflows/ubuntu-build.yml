@@ -29,14 +29,14 @@ jobs:
       - name: Check out private ROM repository
         uses: actions/checkout@v4
         with:
-          repository: zestydevy/paintstudio-private
+          repository: ExpansionPak/PaintStudioDecompPrivate
           token: ${{ secrets.PAINTSTUDIO_PRIVATE_REPO_TOKEN }}
-          path: paintstudio-private
+          path: PaintStudioDecompPrivate
           persist-credentials: false
           sparse-checkout: |
             dmpj.d64.aes
           sparse-checkout-cone-mode: false
-
+        
       - name: Install system dependencies
         run: |
           sudo apt-get update

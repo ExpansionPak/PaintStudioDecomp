@@ -121,7 +121,6 @@ CC_OLD = $(IDO_71_RECOMP_CC)
 ASMPROC_DIR := tools/asmproc
 ASMPROC = python3 $(ASMPROC_DIR)/build.py
 ASMPROC_FILES := $(ASMPROC_DIR)/build.py $(ASMPROC_DIR)/asm_processor.py $(ASMPROC_DIR)/prelude.inc
-ASMPROC_FLAGS := --input-enc utf-8 --output-enc euc-jp
 
 MIPS_VERSION := -mips2
 
@@ -234,9 +233,13 @@ $(BUILD_DIR)/$(TARGET).bin: $(BUILD_DIR)/$(TARGET).elf
 $(BUILD_DIR)/$(TARGET).elf: $(PNG_INC_FILES) $(O_FILES) $(BUILD_DIR)/$(LD_SCRIPT)
 	@$(LD) $(LDFLAGS) -o $@
 
+$(BUILD_DIR)/src/overlays/%.c.o: src/overlays/%.c Makefile $(ASMPROC_FILES)
+	$(CC_CHECK) $(CHECK_FLAGS) $(CHECK_WARNINGS) -MMD -MP -MT $@ -MF $(@:.o=.d) $<
+	$(ASMPROC) $(CC) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) -g -mips2 -o $@ $<
+
 $(BUILD_DIR)/%.c.o: %.c Makefile $(ASMPROC_FILES)
 	$(CC_CHECK) $(CHECK_FLAGS) $(CHECK_WARNINGS) -MMD -MP -MT $@ -MF $(@:.o=.d) $<
-	$(ASMPROC) $(ASMPROC_FLAGS) $(CC) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) $(OPTFLAGS) -o $@ $<
+	$(ASMPROC) $(CC) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) $(OPTFLAGS) -o $@ $<
 
 $(BUILD_DIR)/src/libultra/libc/ll.c.o: src/libultra/libc/ll.c
 	$(CC) -c $(CFLAGS) $(OPTFLAGS) -o $@ $<

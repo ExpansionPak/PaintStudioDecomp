@@ -26,6 +26,14 @@ typedef struct {
 } RectDescriptor; // size = 0x28
 
 typedef struct {
+    u8 pad0[4];
+    u8 unk4;
+    u8 unk5;
+    u8 unk6;
+    u8 unk7;
+} UnkStruct80007D70;
+
+typedef struct {
     /* 0x00 */ s32 state;
     /* 0x04 */ u8 red;
     /* 0x05 */ u8 green;
@@ -101,6 +109,39 @@ typedef struct {
     s8 unk2F;
 } Unk80087758; // size = 0x30
 
+typedef struct {
+    s16 unk0;
+    s16 unk2;
+    s16 unk4;
+    s16 unk6;
+    u8 unk8;
+    u8 unk9;
+    u8 unkA;
+    u8 unkB;
+    u8 unkC;
+    u8 unkD;
+    u8 unkE;
+    u8 unkF;
+    u8 unk10;
+    u8 unk11;
+    u8 unk12;
+    u8 unk13;
+    u8 unk14;
+    u8 unk15;
+    u8 unk16;
+    u8 unk17;
+    u8 pad18[0x28 - 0x18];
+} Unk80059164; // size = 0x28
+
+// struct for D_80081E64 ? some sort of view buffer?
+typedef struct {
+    u16 unk0[1/*unknown size*/][0x140];
+} Unk8000BA44;
+
+typedef struct {
+    u8 pad0[0x7DF0];
+    s32 unk7DF0[120][20];
+} Unk8000BD70;
 
 // .bss
 u8 D_800789D0[0x7E0];
@@ -170,11 +211,12 @@ extern Unk80087758 D_80087758[2][30][66];
 // extern u8 D_800B7F98[0x18];
 // extern u8 D_800B7FB0[0x80];
 // extern u8 D_800B8030[0x08];
-// extern u8 D_800B8038[0x80];
-// extern u8 D_800B80B8[0x200];
-// extern u8 D_800B82B8[0x200];
-// extern u8 D_800B84B8[0x208];
+extern Mtx D_800B8038[2];
+extern Mtx D_800B80B8[4][2];
+extern Mtx D_800B82B8[4][2];
+extern Vtx D_800B84B8[][16];
 
+// .data
 extern u32 D_800351E0; // = 0;
 extern u32 D_800351E4; // = 0;
 extern u32 D_800351E4_LOAD; // ?
@@ -267,22 +309,19 @@ extern s16 D_800509EC[]; // size of 0x200?
 extern s32 D_80050DEC[]; // Maybe an array of gbi commands? size of 0x380?
 extern s32 D_80051BEC[]; // array of values between 0-4, size of 0x120?
 extern u8 D_8005206C[0x80];
-extern u8 D_800520EC; // = 6; probably part of D_800520ED
+extern u8 D_800520EC[];
 extern u8 D_800520ED[0x16B];
 extern s32 D_80052258[]; // array of gbi commands? size of 10
 extern s32 D_80052280[]; // array of gbi commands? size of 16
 extern s32 D_800522C0[]; // array of gbi commands? size of 0x96?
 extern s32 D_80052518[]; // array of gbi commands? size of 14
 extern s32 D_80052550[]; // array of gbi commands? size of 0x74?
-extern u32 D_80052720[4];
-extern u32 D_80052730;
-extern s32 pad_D_80052734;
-extern s32 pad_D_80052738;
+extern u32 D_80052720[7];
 extern s32 D_8005273C[9];
 extern s32 D_80052760[17];
 extern s32 D_800527A4[]; // maybe a struct? passed into func_8000B768 as 5th arg (sp10)
 extern s32 D_80058744[]; // maybe a struct? passed into func_8000BA44 as 5th arg (sp10)
-extern s16 D_80059164[]; // size of 0x2A?
+extern Unk80059164 D_80059164[2];
 extern s32 D_800591B8[4];
 extern s32 D_800591C8[4];
 extern s32 D_800591D8[8]; // array of gbi commands?
@@ -315,6 +354,8 @@ extern u8 func_801F6EB0[];
 
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
+
+extern u16 D_8015F620;
 
 // .data
 u16 D_800351D0 = SCREEN_HEIGHT;
@@ -364,6 +405,13 @@ void func_800D7800(s32 arg0);
 void func_800D78A4(char *arg0, char *arg1, s32 arg2);
 s32 func_800C1484(void);
 void func_800C28A0(void);
+
+s32 func_80023690(s32, s32);
+
+s32 func_800046DC(void);
+
+void RenderText(s32, s32, s32, s32, s32);
+void func_8000A5F0(s32, s32, s32, s32, s32);
 
 void func_80001360(void *arg) {
     osInitialize();
@@ -666,7 +714,7 @@ u32 func_80001F20(u32 startLba, u32 endLba, u32 *lbaCount) {
     s32 startByte;
     s32 endByte;
 
-    if ((D_800351E0 != 0) && (D_80052730 == 1)) {
+    if ((D_800351E0 != 0) && (D_80052720[4] == 1)) {
         while (TRUE) {}
     }
 
@@ -676,7 +724,11 @@ u32 func_80001F20(u32 startLba, u32 endLba, u32 *lbaCount) {
     return endByte - startByte;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80001FA8.s")
+void func_80001FA8(void) {
+    func_80023690(0xB1FF0014, 0);
+    func_80023690(0xB1FF0004, 0);
+    func_80023690(0xB1FF0000, 0x49533634);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80001FF0.s")
 
@@ -831,7 +883,23 @@ s32 DisplayDiskError(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/DisplayDiskError.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800030B0.s")
+void func_800030B0(u8* arg0, u8* arg1) {
+    u8 temp_v0;
+
+    temp_v0 = *arg0;
+    arg1++;
+    arg0++;
+    *(arg1 - 1) = temp_v0;
+    
+    if (temp_v0 != 0) {
+        do {
+            temp_v0 = *arg0;
+            arg1++;
+            arg0++;
+            *(arg1 - 1) = temp_v0;
+        } while (temp_v0 != 0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800030E0.s")
 
@@ -1024,7 +1092,12 @@ void func_80003720(char *str, s32 screenWidth) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003A98.s")
+s32 func_80003A98(void) {
+    if (D_8015F620 & 0x100) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003AC0.s")
 
@@ -1132,7 +1205,16 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800046DC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800046F8.s")
+s32 func_800046F8(s32 arg0) {
+    s32 var_v1;
+
+    if (func_800046DC() != 0) {
+        var_v1 = arg0 - 0x20;
+    } else {
+        var_v1 = arg0;
+    }
+    return var_v1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80004730.s")
 
@@ -1179,7 +1261,18 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D70.s")
+void func_80007D70(UnkStruct80007D70 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
+    s32 temp1 = arg1;
+    s32 temp2 = arg2;
+    
+    *(s32 *)&arg1 = arg1;
+    *(s32 *)&arg2 = arg2;
+    
+    arg0->unk4 = (u8)temp1;
+    arg0->unk5 = (u8)temp2;
+    arg0->unk6 = (u8)temp2;
+    arg0->unk7 = arg4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D94.s")
 
@@ -1211,7 +1304,13 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A448.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A5AC.s")
+void func_8000A5AC(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4) {
+    if (D_80050334 == 0) {
+        RenderText(a0, a1, a2, a3, a4);
+        return;
+    }
+    func_8000A5F0(a0, a1, a2, a3, a4);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000A5F0.s")
 
@@ -1223,21 +1322,56 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000ADF0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE58.s")
+void func_8000AE58(s32 arg0, s32 arg1) {
+    D_800508BC = arg0;
+    D_800508C0 = arg1;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE6C.s")
+void func_8000AE6C(s32 arg0, s32 arg1) {
+    D_800508B4 = arg0;
+    D_800508B8 = arg1;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE80.s")
+void func_8000AE80(f64 arg0, f64 arg1) {
+    D_800508C4 = (f32)arg0;
+    D_800508C8 = (f32)arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE9C.s")
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AED0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/GetCharWidth.s")
+u8 GetCharWidth(u16 arg0) {
+    
+    u8 var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/GetCharKern.s")
+    for(var_v1 =0;var_v1 < 0x88;var_v1++){
+    
+        if (D_800508CC[var_v1] == arg0) {
+            return D_800520EC[var_v1 * 2];
+        }
+    }
+    return 0x10;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B054.s")
+u8 GetCharKern(u16 arg0) {
+    
+    u8 var_v1;
+
+    for(var_v1 = 0; var_v1 < 0x88; var_v1++) {
+        
+        if (D_800508CC[var_v1] == arg0) {
+            return D_800520ED[var_v1 * 2];
+        }
+    }
+    return 0;
+}
+
+u16 func_8000B054(s32 arg0) {
+    *(s32 *)&arg0 = arg0; 
+    arg0 = (u8)arg0; 
+    return D_800508CC[arg0];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B070.s")
 
@@ -1251,16 +1385,279 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B508.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B768.s")
+void func_8000B768(Unk8000BA44 *arg0, s32 arg1, s32 arg2, s32 arg3, u16 *arg4, s32 arg5, s32 arg6, s32 arg7) {
+    f32 temp_f0;
+    s32 j;
+    s32 i;
+    f32 var_f2;
+    f32 var_f12;
+    f32 var_f14;
+    u16* var_v0;
+    u16* var_v1;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BA44.s")
+    D_80052720[6] = arg0;
+    var_v0 = &arg0->unk0[arg2][arg1];
+    var_v1 = arg4;
+    var_v1 += arg3 * arg5 * arg6;
+    for (i = 0; i != arg6; i++) {
+        for (j = 0; j != arg5; j++) {
+            if (D_80052720[4] != 0) {
+                temp_f0 = arg7 / 255.0f;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BD70.s")
+                var_f2 = (*var_v0 >> 11) & 0x1F;
+                var_f12 = (*var_v0 >> 6) & 0x1F;
+                var_f14 = (*var_v0 >> 1) & 0x1F;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BDB4.s")
+                var_f2 *= temp_f0;
+                var_f12 *= temp_f0;
+                var_f14 *= temp_f0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BDD4.s")
+                *var_v0 = (((u32) var_f2 & 0xFFFF) << 0xB) | (((u32) var_f12 & 0xFFFF) << 6) | (((u32) var_f14 & 0xFFFF) << 1) | 1;
+                var_v0++;
+            } else {
+                if (*var_v1 & 1) {
+                    *var_v0 = *var_v1;
+                    var_v0++;
+                    var_v1++;
+                } else {
+                    *var_v0 = 0;
+                    var_v0++;
+                    var_v1++;
+                }
+            }
+        }
+        var_v0 = (var_v0 - arg5) + 0x140;
+    }
+}
 
+void func_8000BA44(Unk8000BA44 *arg0, s32 arg1, s32 arg2, u32 arg3, u16* arg4, s32 arg5, s32 arg6, s32 arg7) {
+    f32 var_f14;
+    f32 var_f20;
+    f32 var_f0;
+    f32 var_f12;
+    f32 var_f2;
+    f64 var_f22;
+    f32 var_f6;
+    f32 var_f8;
+    s32 j;
+    s32 i;
+    u16* var_v0;
+
+    var_v0 = &arg0->unk0[arg2][arg1];
+    for (i = 0; i != arg6; i++) {
+        for (j = 0; j != arg5; j++) {
+            var_f0 = (*var_v0 >> 11) & 0x1F;
+            var_f2 = (*var_v0 >> 6) & 0x1F;
+            var_f12 = (*var_v0 >> 1) & 0x1F;
+            var_f14 = (*arg4 >> 11) & 0x1F;
+            var_f6 = (*arg4 >> 6) & 0x1F;
+            var_f8 = (*arg4 >> 1) & 0x1F;
+            var_f20 = arg7 / 255.0f;
+            var_f22 = 1.0 - var_f20;
+            var_f0 = (var_f14 * var_f20) + (var_f22 * var_f0);
+            var_f2 = (var_f6 * var_f20) + (var_f22 * var_f2);
+            var_f12 = (var_f8 * var_f20) + (var_f22 * var_f12);
+            if (D_80052720[4] != 0) {
+                var_f0 *= var_f20;
+                var_f2 *= var_f20;
+                var_f12 *= var_f20;
+            }
+            *var_v0 = (((u32) var_f0 & 0xFFFF) << 11) | (((u32) var_f2 & 0xFFFF) << 6) | (((u32) var_f12 & 0xFFFF) << 1) | 1;
+            arg4++;
+            var_v0++;
+        }
+        var_v0 = (var_v0 - arg5) + 0x140;
+    }
+}
+
+void func_8000BD70(Unk8000BD70 *arg0) {
+    u32 v0 = 80;
+    u32 v1 = 120;
+    u32 *a1 = (u32 *)((u8 *)arg0 + 0x7DF0);
+    u32 a2 = 0;
+    u32 a0;
+
+    do {
+        a0 = 0;
+        do {
+            a1[0] = 0;
+            a1[1] = 0;
+            a1 += 2;
+            a0 += 4;
+        } while (a0 < v0);
+        a1 += (0x1E0 / 4);
+        a2++;
+    } while (a2 < v1);
+}
+
+void func_8000BDB4(void* dest, s32 size) {
+    osInvalDCache(dest, size);
+}
+
+void func_8000BDD4(s16* arg0, s16* arg1, s32 arg2, s32 arg3) {
+    s32 temp = arg3;
+    s32 temp2;
+    s16 *v0 = arg0;
+    s16 *v1 = arg1;
+
+    while (temp--) {
+        temp2 = arg2;
+        while (temp2--) {
+            *(v0++) = 0;
+            *(v1++) = 0;
+        }
+    }
+}
+
+#ifndef NON_EQUIVALENT
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000BE24.s")
+#else
+// https://decomp.me/scratch/NwG4Z
+extern u32 D_317F0[];
+extern u32 D_769A0[];
+void func_8000BE24(void) {
+    Vtx* temp_a0;
+    Vtx* temp_a2;
+    Vtx* temp_a1;
+    f32 temp_f0;
+    f32 var_f2;
+    Unk80059164* var_s0;
+    s32 var_s4;
+    s32 var_v1;
 
+    gDPSetColorImage(D_8008305C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, D_800351D4, osVirtualToPhysical(D_80083064));
+    gSPDisplayList(D_8008305C++, (u32)D_800591F8);
+    gDPSetScissor(D_8008305C++, 0, 0, 0, D_800351D4, D_800351D0);
+    if (D_800351D4 == SCREEN_WIDTH) {
+        gSPViewport(D_8008305C++, (u32) D_800591B8);
+    } else {
+        gSPViewport(D_8008305C++, (u32) D_800591C8);
+    }
+
+    gSPDisplayList(D_8008305C++, (u32) D_800591D8);
+
+    for (var_s4 = 0; D_80059164[var_s4].unk0 != 0; var_s4++) {
+        var_s0 = &D_80059164[var_s4];
+        if (var_s0->unk0 != 0) {
+            temp_a2 = D_800B84B8[D_80083060];
+            temp_a0 = &temp_a2[var_s4 * 4];
+            temp_a1 = &temp_a2[var_s4 * 4];
+            temp_a0[0].v.ob[0] = var_s0->unk4 / -2;
+            temp_a0[0].v.ob[1] = var_s0->unk6 / 2;
+            temp_a0[1].v.ob[0] = var_s0->unk4 / 2;
+            temp_a0[1].v.ob[1] = var_s0->unk6 / 2;
+            temp_a0[2].v.ob[0] = var_s0->unk4 / 2;
+            temp_a0[2].v.ob[1] = var_s0->unk6 / -2;
+            temp_a0[3].v.ob[0] = var_s0->unk4 / -2;
+            temp_a0[3].v.ob[1] = var_s0->unk6 / -2;
+            temp_a0[0].v.cn[0] = var_s0->unk8;
+            temp_a0[0].v.cn[1] = var_s0->unk9;
+            temp_a0[0].v.cn[2] = var_s0->unkA;
+            temp_a0[0].v.cn[3] = var_s0->unkB;
+
+            temp_a0[1].v.cn[0] = var_s0->unkC;
+            temp_a0[1].v.cn[1] = var_s0->unkD;
+            temp_a0[1].v.cn[2] = var_s0->unkE;
+            temp_a0[1].v.cn[3] = var_s0->unkF;
+
+            temp_a0[2].v.cn[0] = var_s0->unk14;
+            temp_a0[2].v.cn[1] = var_s0->unk15;
+            temp_a0[2].v.cn[2] = var_s0->unk16;
+            temp_a0[2].v.cn[3] = var_s0->unk17;
+
+            temp_a0[3].v.cn[0] = var_s0->unk10;
+            temp_a0[3].v.cn[1] = var_s0->unk11;
+            temp_a0[3].v.cn[2] = var_s0->unk12;
+            temp_a0[3].v.cn[3] = var_s0->unk13;
+
+            for (var_v1 = 0; var_v1 < 4; var_v1++) {
+                temp_a1[var_v1].v.ob[2] = -5;
+                temp_a1[var_v1].v.tc[1] = temp_a1[var_v1].v.tc[0] = 0;
+                temp_a1[var_v1].v.flag = 0;
+            }
+
+            temp_f0 = D_800351D4;
+            var_f2 = D_800351D0;
+            guFrustum(&D_800B8038[D_80083060], -temp_f0 * 0.5f, temp_f0 * 0.5f, -var_f2 * 0.5f, var_f2 * 0.5f, 1.0f, 10.0f, 1.0f);
+            guRotate(&D_800B82B8[var_s4][D_80083060], D_80059278, 0.0f, 0.0f, 1.0f);
+            guTranslate(&D_800B80B8[var_s4][D_80083060], var_s0->unk0 - (D_800351D4 / 2), -(var_s0->unk2 - (D_800351D0 / 2)), 0.0f);
+            gSPMatrix(D_8008305C++, OS_PHYSICAL_TO_K0(&D_800B8038[D_80083060]), 6);
+            gSPMatrix(D_8008305C++, OS_PHYSICAL_TO_K0(&D_800B80B8[var_s4][D_80083060]), 2);
+            gSPMatrix(D_8008305C++, OS_PHYSICAL_TO_K0(&D_800B82B8[var_s4][D_80083060]), 0);
+            gSPDisplayList(D_8008305C++, (u32) D_80052280);
+            gSPVertex(D_8008305C++, (u32) &D_800B84B8[D_80083060][var_s4 * 4], 4, 0)
+            gSPDisplayList(D_8008305C++, (u32) D_800522C0);
+        }
+    }
+    gSPLoadUcodeEx(D_8008305C++, (u32) D_317F0, (u32) D_769A0, 0x800);
+    gDPPipeSync(D_8008305C++);
+}
+#endif
+
+#ifndef NON_EQUIVALENT
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000C56C.s")
+#else
+// https://decomp.me/scratch/s0P8p
+
+void func_8000572C(void);                                  /* extern */
+void func_8000BE24(void);                                  /* extern */
+extern s32 D_80037F58;
+
+typedef struct {
+    s32 unk0[2];
+} Unk;
+
+void func_8000C56C(void) {
+    s32 temp_t5;
+    s32 var_a1;
+    s32 var_a2;
+    s32 var_s0;
+    s32* var_a0;
+    s32* var_a3;
+    s32* temp_v0;
+    s32* var_v1;
+
+    var_s0 = 0;
+    if (D_80037F58 == 1) {
+        func_8000572C();
+    }
+    func_800050B0();
+    temp_v0 = osViGetCurrentFramebuffer();
+    if (temp_v0 == (s32*)D_80081E64) {
+        var_a0 = D_80081E68;
+    } else {
+        var_a0 = D_80081E64;
+    }
+    if (D_800351D4 == SCREEN_WIDTH) {
+        D_80059164[0].unk0 = 0xA0;
+        D_80059164[0].unk2 = 0x78;
+        D_80059164[0].unk4 = 0x140;
+        D_80059164[0].unk6 = 0xF0;
+        var_a2 = 0x25800;
+    } else {
+        D_80059164[0].unk0 = 0x140;
+        D_80059164[0].unk2 = 0xF0;
+        D_80059164[0].unk4 = 0x280;
+        D_80059164[0].unk6 = 0x1E0;
+        var_a2 = 0x96000;
+    }
+    var_v1 = temp_v0;
+    for (var_a1 = 0; var_a1 < var_a2; var_a1++) {
+        var_a0[var_a1] = var_v1[var_a1];
+    }
+    while (1) {
+        func_80005108();
+        D_80059164[0].unkB = var_s0;
+        D_80059164[0].unkF = var_s0;
+        D_80059164[0].unk13 = var_s0;
+        D_80059164[0].unk17 = var_s0;
+        func_8000BE24();
+        func_80005384();
+        var_s0 += 8;
+        if (var_s0 < 0x100) {
+            continue;
+        }
+        var_s0 = 0xFF;
+    }
+}
+#endif
