@@ -60,7 +60,7 @@ jobs:
         run: |
           test -n "$ROM_PASSWORD"
           openssl enc -d -aes-256-cbc -salt -pbkdf2 -iter 100000 \
-            -in paintstudio-private/dmpj.d64.aes \
+            -in PaintStudioDecompPrivate/dmpj.d64.aes \
             -out dmpj.d64 \
             -pass env:ROM_PASSWORD
 
