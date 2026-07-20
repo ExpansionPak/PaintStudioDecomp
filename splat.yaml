@@ -322,7 +322,7 @@ segments:
     align: 8
     symbol_name_format: cam_$VRAM
     subsegments:
-    - [0x27BA20, asm]
+    - [0x27BA20, c]
     - [0x295C30, data]
     - [0x2BA0A0, pad]
   - name: 3dworld_gfx
