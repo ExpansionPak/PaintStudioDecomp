@@ -2,6 +2,13 @@
 
 #include "PR/sched.h"
 
+s32 func_80011C50(s32);
+s32 func_80020D7C(s32*);
+extern s32 D_saveload_80301074;
+extern s32 D_saveload_80301084;
+extern s32 D_saveload_80301088;
+extern s32 D_saveload_803041E0;
+extern s32 (*D_saveload_80309CF0)(s32, s32, s32);
 extern s32 D_saveload_80300FA4;
 extern s32 D_saveload_80300FA8;
 extern s32 D_saveload_80300FC4;
@@ -742,7 +749,19 @@ extern s32 D_803158E0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C07A0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C07D0.s")
+void func_saveload_802C07D0(s32 arg0) {
+    s32 sp34;
+    volatile s32 dummy[6];
+
+    sp34 = func_80011C50(arg0);
+    if (D_saveload_80301084 < (D_saveload_80301088 + 0x80)) {
+        func_80020D7C(&D_saveload_803041E0);
+        return;
+    }
+    D_saveload_80309CF0(sp34 + 0xA0000, D_saveload_80301074 + D_saveload_80301088, 0x80);
+    D_saveload_80301088 += 0x80;
+    (void)dummy;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C087C.s")
 
