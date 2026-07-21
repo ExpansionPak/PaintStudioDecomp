@@ -2,6 +2,18 @@
 
 #include "PR/sched.h"
 
+struct Unk800C4AC8 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+};
+
+struct Arg1Struct {
+    char pad[0x268];
+    struct Unk800C4AC8* unk268;
+};
+
 extern s32 D_8011F5E4;
 
 void func_800BD8E0(void) {
@@ -145,7 +157,23 @@ void func_800C2D1C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C499C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C4AC8.s")
+s32 func_800C4AC8(s32* arg0, void* arg1, unsigned short arg2) {
+    s32 temp_a1;
+    struct Unk800C4AC8* temp_v1;
+    struct Arg1Struct* hold_arg1 = (struct Arg1Struct*)arg1;
+    
+    temp_v1 = hold_arg1->unk268; 
+    
+    if (temp_v1 != 0) {
+        temp_a1 = arg0[arg2]; 
+        
+        if (arg0[arg2] != 0) {
+            return (arg0[arg2] & 0xFFFFFF) + (s32)temp_v1;
+        }
+        return 0;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C4B10.s")
 
