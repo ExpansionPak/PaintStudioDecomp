@@ -2,7 +2,11 @@
 
 #include "PR/sched.h"
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800BD8E0.s")
+extern s32 D_8011F5E4;
+
+void func_800BD8E0(void) {
+    D_8011F5E4 = 3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800BD8F0.s")
 
