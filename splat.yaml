@@ -275,7 +275,7 @@ segments:
     vram: 0x800BD8E0
     align: 8
     subsegments:
-    - [0x787C8, asm]
+    - [0x787C8, c]
     - [0xDA398, data]
     - [0x11A228, pad]
   - name: capture
