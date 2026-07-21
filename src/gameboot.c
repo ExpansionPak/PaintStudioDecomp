@@ -17,6 +17,9 @@
 #define HIGH_RES_SCREEN_WIDTH 640
 #define HIGH_RES_SCREEN_HEIGHT 480
 
+typedef char *va_list;
+#define va_start(vp, parmN) (vp = ((va_list)&parmN + sizeof(parmN)))
+
 typedef struct {
     /* 0x00 */ s16 centerX;
     /* 0x02 */ s16 centerY;
@@ -352,6 +355,7 @@ extern u8 func_800BD8E0[];
 extern u8 D_8015F340[];
 extern u8 func_801F6EB0[];
 
+extern s32 func_80002030;
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
 
@@ -730,7 +734,15 @@ void func_80001FA8(void) {
     func_80023690(0xB1FF0000, 0x49533634);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80001FF0.s")
+// Big thanks to inspectredc for matching this function!
+// https://decomp.me/scratch/CuWBl
+// https://github.com/inspectredc
+void func_80001FF0(const char* fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    
+    _Printf(&func_80002030, NULL, fmt, args);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80002030.s")
 
