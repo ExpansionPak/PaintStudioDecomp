@@ -21,6 +21,7 @@ extern ALSynth* D_8013D0D4;
 extern ALSynth* D_801F4BC0;
 extern ALSynth* D_801F4BC4;
 extern s32 D_8011F5E4;
+extern s32 D_80121F24[][6];
 extern f64 D_8015F038;
 
 void func_800BD8E0(void) {
@@ -73,7 +74,9 @@ f32 func_800C0AE4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0C68.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0CCC.s")
+s32 func_800C0CCC(u16 arg0) {
+    return D_80121F24[arg0][0];
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0CF0.s")
 
