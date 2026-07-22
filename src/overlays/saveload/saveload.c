@@ -23,6 +23,7 @@ extern s32 D_saveload_80300FC8;
 extern s32 D_saveload_80300FCC;
 extern s32 D_saveload_80300FD0;
 extern s32 func_saveload_802C01C8(s32, s32);
+extern s8 D_saveload_80309480;
 extern s32 D_saveload_80309D20;
 extern s32 D_803158E0;
 
@@ -232,7 +233,9 @@ extern s32 D_803158E0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_8028C5C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_8028C690.s")
+void func_saveload_8028C690(void) {
+    D_saveload_80309480 = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_8028C6AC.s")
 
