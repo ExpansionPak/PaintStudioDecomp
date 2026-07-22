@@ -11,6 +11,7 @@ typedef struct {
 
 s32 func_cam_80285830(s32*, s32, s32, s32);
 extern s32 D_802C8760;
+extern s32 D_802C8858;
 extern s32 D_cam_8029EAE4;
 extern s32 func_cam_802889A0;
 
@@ -237,7 +238,12 @@ void func_cam_80289480(s32 arg0, s32 arg1, s32 arg2, s32 arg3, struct { s32 unk0
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028CF9C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028D084.s")
+void func_cam_8028D084(s32 arg0) {
+    D_802C8858 += arg0;
+    if (D_802C8858 >= 0x5DC1) {
+        D_802C8858 = 0x5DC0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028D0C8.s")
 
