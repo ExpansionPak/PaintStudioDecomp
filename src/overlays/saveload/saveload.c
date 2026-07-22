@@ -13,12 +13,24 @@ struct UnkStruct {
     s32 unk4;
 };
 
+typedef struct  {
+    char pad[0x2C];
+    s32 unk2C;
+    char pad48[0x48 - 0x30];
+    s32 unk48;
+} UnkArg1;
+
 s32 func_80011C50(s32);
 s32 func_80020D7C(s32*);
 s32 func_saveload_802BE478(s32*);                       /* extern */
 extern s32 D_saveload_80300624;
 extern s32 D_saveload_80300E24;
 extern s32 D_saveload_803040D0;
+extern void* D_saveload_802C3AB4;
+extern s32 D_saveload_802C3ABC;
+extern s8 D_saveload_803096F0;
+extern s8 D_saveload_803096F1;
+extern s32 func_saveload_802852EC;
 extern s32 func_saveload_802BE5EC;
 s32 func_saveload_802C1210(s32*, s32*);
 void func_saveload_802C15D4(s32* arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -67,7 +79,28 @@ extern s8 D_saveload_80309480;
 extern s32 D_saveload_80309D20;
 extern s32 D_803158E0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_80284130.s")
+// Function matched by inspectredc
+// https://decomp.me/scratch/xMAZI
+// https://github.com/inspectredc
+void func_saveload_80284130(s32 arg0, UnkArg1* arg1) {
+    s32 sp34;
+    s32 sp1C[6];
+    s32 sp18;
+
+    D_saveload_802C3AB4 = arg1;
+    sp18 = arg1->unk48;
+    sp34 = arg1->unk2C;
+
+    func_saveload_802BEDD0(&sp18);
+    func_saveload_80284A30(arg1);
+    
+    D_saveload_803096F0 = 0;
+    D_saveload_803096F1 = 0;
+    func_saveload_80284CC0();
+    
+    D_saveload_802C3ABC = arg0;
+    func_saveload_802BE29C(&func_saveload_802852EC, 0, 0, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802841C8.s")
 
@@ -726,8 +759,8 @@ void func_saveload_8028C690(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802BE1EC.s")
 
-// Yo another big shoutout to inspectredc for matching this function!
-
+// Function matched by inspectredc
+// https://decomp.me/scratch/UjLdB
 // https://github.com/inspectredc
 void func_saveload_802BE1FC(void) {
     struct UnkStruct* sp1C;
