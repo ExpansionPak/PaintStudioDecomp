@@ -14,6 +14,9 @@ struct Arg1Struct {
     struct Unk800C4AC8* unk268;
 };
 
+s32 func_8011B2A4(ALPlayer*);                         /* extern */
+extern ALSynth* D_801F4BC0;
+extern ALSynth* D_801F4BC4;
 extern s32 D_8011F5E4;
 
 void func_800BD8E0(void) {
@@ -1865,7 +1868,13 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011B97C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/alSynRemovePlayer.s")
+void alSynRemovePlayer(ALSynth* s, ALPlayer* client) {
+    if ((s != NULL) && ((s32) s->pAllocList.prev & 0x80000000)) {
+        D_801F4BC0 = s;
+    }
+    func_8011B2A4(client);
+    D_801F4BC0 = D_801F4BC4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011BA0C.s")
 
