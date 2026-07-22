@@ -15,6 +15,11 @@ struct UnkStruct {
 
 s32 func_80011C50(s32);
 s32 func_80020D7C(s32*);
+s32 func_saveload_802BE478(s32*);                       /* extern */
+extern s32 D_saveload_80300624;
+extern s32 D_saveload_80300E24;
+extern s32 D_saveload_803040D0;
+extern s32 func_saveload_802BE5EC;
 s32 func_saveload_802C1210(s32*, s32*);
 void func_saveload_802C15D4(s32* arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_saveload_802C178C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
@@ -721,7 +726,18 @@ void func_saveload_8028C690(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802BE1EC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802BE1FC.s")
+// Yo another big shoutout to inspectredc for matching this function!
+
+// https://github.com/inspectredc
+void func_saveload_802BE1FC(void) {
+    struct UnkStruct* sp1C;
+
+    sp1C = &D_saveload_80300624;
+    D_saveload_80300E24 = 0;
+    sp1C->unk0 = &func_saveload_802BE5EC;
+    sp1C->unk4 = 0;
+    func_saveload_802BE478(&D_saveload_803040D0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802BE254.s")
 
