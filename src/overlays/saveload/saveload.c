@@ -2,9 +2,16 @@
 
 #include "PR/sched.h"
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Unk802C16B8;
+
 s32 func_80011C50(s32);
 s32 func_80020D7C(s32*);
 s32 func_saveload_802C1210(s32*, s32*);
+s32 func_saveload_802C15D4(s32*, s32, s32, s32);
 extern s32 D_saveload_80301064;
 extern u8 D_saveload_802C3D74;
 extern u8 D_saveload_802C3D78;
@@ -840,7 +847,18 @@ void func_saveload_802C14A4(s32* arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C163C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C16B8.s")
+void func_saveload_802C16B8(s32* arg0, Unk802C16B8* arg1) {
+    s32 sp1C;
+
+    sp1C = *arg0;
+    if (arg1->unk0 != 0) {
+        do {
+            func_saveload_802C15D4(&sp1C, arg1->unk0, arg1->unk4, arg1->unk8);
+            arg1++;
+        } while (arg1->unk0 != 0);
+    }
+    *arg0 = sp1C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C173C.s")
 
