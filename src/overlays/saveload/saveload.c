@@ -824,7 +824,13 @@ void func_saveload_802C11AC(s32* arg0, u16 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C1210.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C14A4.s")
+void func_saveload_802C14A4(s32* arg0, s32 arg1) {
+    s32 sp1C;
+
+    sp1C = *arg0;
+    func_saveload_802C1210(&sp1C, arg1);
+    *arg0 = sp1C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C14F0.s")
 
