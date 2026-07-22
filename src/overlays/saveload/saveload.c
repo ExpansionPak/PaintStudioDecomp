@@ -23,7 +23,7 @@ extern s32 D_saveload_80301084;
 extern s32 D_saveload_80301088;
 extern s32 D_saveload_803041E0;
 extern s32 (*D_saveload_80309CF0)(s32, s32, s32);
-s32 func_saveload_802C0580(s32);
+void func_saveload_802C0580(s32 arg0);
 typedef struct { s32 unk0; s32 unk4; } DecompInferred_sp4;
 extern s32 D_saveload_80300620;
 extern s32 D_saveload_80301070;
@@ -793,7 +793,18 @@ void func_saveload_802C0540(s32 arg0, s32 arg1) {
     func_saveload_802C01C8(arg0, arg1);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C0580.s")
+void func_saveload_802C0580(s32 arg0) {
+    if (arg0 > 0) {
+        do {
+            D_saveload_80300F60 = 0;
+            D_saveload_80300F64 += D_saveload_80300F7C + 0x10;
+            if (D_saveload_80300F64 > D_saveload_80300F74) {
+                break;
+            }
+            arg0--;
+        } while (arg0 > 0);
+    }
+}
 
 void func_saveload_802C05F0(s32 arg0) {
     if (arg0 > 0) {
