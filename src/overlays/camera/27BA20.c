@@ -2,6 +2,13 @@
 
 #include "PR/sched.h"
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+} Unk80286EAC;
+
 s32 func_cam_80285830(s32*, s32, s32, s32);
 extern s32 D_802C8760;
 extern s32 D_cam_8029EAE4;
@@ -91,7 +98,11 @@ extern s32 func_cam_802889A0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80286E6C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80286EAC.s")
+void func_cam_80286EAC(Unk80286EAC* arg0, s8 arg1) {
+    arg0->unk0 = (s32)arg1;
+    arg0->unk4 = (s32)arg1;
+    arg0->unkC = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80286ED0.s")
 
