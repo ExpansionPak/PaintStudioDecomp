@@ -8,6 +8,11 @@ typedef struct {
     s32 unk8;
 } Unk802C16B8;
 
+struct UnkStruct {
+    s32 unk0;
+    s32 unk4;
+};
+
 s32 func_80011C50(s32);
 s32 func_80020D7C(s32*);
 s32 func_saveload_802C1210(s32*, s32*);
@@ -22,6 +27,7 @@ extern s32 D_saveload_80301074;
 extern s32 D_saveload_80301084;
 extern s32 D_saveload_80301088;
 extern s32 D_saveload_803041E0;
+extern s32 D_saveload_80304340;
 extern s32 (*D_saveload_80309CF0)(s32, s32, s32);
 void func_saveload_802C0580(s32 arg0);
 typedef struct { s32 unk0; s32 unk4; } DecompInferred_sp4;
@@ -926,7 +932,18 @@ void func_saveload_802C16B8(s32* arg0, Unk802C16B8* arg1) {
     *arg0 = sp1C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802C173C.s")
+void func_saveload_802C173C(void** arg0) {
+    struct UnkStruct* sp4;
+    struct UnkStruct* sp0;
+    
+    sp4 = *arg0; 
+    
+    sp0 = sp4++; 
+    
+    sp0->unk0 = 0xDE000000;
+    sp0->unk4 = (s32)&D_saveload_80304340;
+    *arg0 = sp4;
+}
 
 void func_saveload_802C178C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     D_saveload_80300FB4 = arg0;
