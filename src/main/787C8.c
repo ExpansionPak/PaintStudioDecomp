@@ -16,6 +16,9 @@ struct Arg1Struct {
 
 u32 func_800C0BB4();
 s32 func_8011B2A4(ALPlayer*);
+s32 osCapReadIo(s32*, s32, s32*);                         /* extern */
+extern s32 D_801F37E0;
+extern s32 D_801F38E4;
 extern s32 D_8011F4EC;
 extern ALSynth* D_8013D0D4;
 extern ALSynth* D_801F4BC0;
@@ -1661,7 +1664,16 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0008.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0180.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/jG4jA
+// https://github.com/queueRAM
+s32 osCapRead0180(void) {
+    s32 sp1C;
+
+    osCapReadIo(&D_801F37E0, 0x180, &sp1C);
+    D_801F38E4 = sp1C;
+    return sp1C;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0000.s")
 
