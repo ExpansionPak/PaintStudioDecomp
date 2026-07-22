@@ -74,6 +74,9 @@ f32 func_800C0AE4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0C68.s")
 
+// Function matched by Bl00D4NGEL (Dominik Peters)
+// https://decomp.me/scratch/ISVtZ
+// https://github.com/Bl00D4NGEL
 s32 func_800C0CCC(u16 arg0) {
     return D_80121F24[arg0][0];
 }

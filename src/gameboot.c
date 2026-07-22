@@ -1213,6 +1213,9 @@ void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue) {
     }
 }
 
+// Function matched by Bl00D4NGEL (Dominik Peters)
+// https://decomp.me/scratch/6xXYP
+// https://github.com/Bl00D4NGEL
 int func_80004690(s32 arg0) {
     #define BETWEEN(x, min, max) ((x) >= (min) && (x) < (max))
     return BETWEEN(arg0, 0x30, 0x3A) || BETWEEN(arg0, 0x61, 0x67) || BETWEEN(arg0, 0x41, 0x47);
