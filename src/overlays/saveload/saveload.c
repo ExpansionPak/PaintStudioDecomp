@@ -4,6 +4,8 @@
 
 s32 func_80011C50(s32);
 s32 func_80020D7C(s32*);
+extern u8 D_saveload_802C3D74;
+extern u8 D_saveload_802C3D78;
 extern s32 D_saveload_80301074;
 extern s32 D_saveload_80301084;
 extern s32 D_saveload_80301088;
@@ -227,7 +229,16 @@ extern s32 D_803158E0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_8028C3B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_8028C414.s")
+void func_saveload_8028C414(s32 arg0) {
+    if (arg0 == 0) {
+        D_saveload_802C3D74 = (u8)0xEF;
+        D_saveload_802C3D78 = (u8)0x7A;
+    }
+    if (arg0 == 1) {
+        D_saveload_802C3D74 = (u8)0xC0;
+        D_saveload_802C3D78 = (u8)0x8A;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_8028C468.s")
 
