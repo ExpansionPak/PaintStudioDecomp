@@ -15,6 +15,7 @@ struct Arg1Struct {
 };
 
 s32 func_8011B2A4(ALPlayer*);
+extern s32 D_8011F4EC;
 extern ALSynth* D_8013D0D4;
 extern ALSynth* D_801F4BC0;
 extern ALSynth* D_801F4BC4;
@@ -120,7 +121,16 @@ void func_800BD8E0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C27B8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C280C.s")
+void func_800C280C(s32 arg0) {
+    s32 temp_s0;
+
+    temp_s0 = D_8011F4EC + arg0;
+    if (D_8011F4EC < temp_s0) {
+        do {
+            osYieldThread();
+        } while (D_8011F4EC < temp_s0);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C2864.s")
 
