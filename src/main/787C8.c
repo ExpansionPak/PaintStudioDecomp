@@ -21,6 +21,7 @@ extern ALSynth* D_8013D0D4;
 extern ALSynth* D_801F4BC0;
 extern ALSynth* D_801F4BC4;
 extern s32 D_8011F5E4;
+extern f64 D_8015F038;
 
 void func_800BD8E0(void) {
     D_8011F5E4 = 3;
@@ -1748,7 +1749,25 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_80119440.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_80119548.s")
+f32 func_80119548(f32 arg0) {
+    if (arg0 >= 360.0f) {
+        do {
+            arg0 -= 360.0f;
+        } while (arg0 >= 360.0f);
+    }
+    
+    if (arg0 < 0.0f) {
+        do {
+            arg0 += 360.0f;
+        } while (arg0 < 0.0f);
+    }
+    
+    if (D_8015F038 <= arg0) {
+        arg0 -= D_8015F038;
+    }
+    
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_801195C8.s")
 
