@@ -1,0 +1,60 @@
+name: Mario Artist Paint Studio
+repo: https://github.com
+platform: n64dd
+build_system: make
+versions:
+  - name: jp
+    fullname: jp
+    sha1: c3cd83e8aa479ba8b5e039ff99abfa630b5d1fa7
+    paths:
+      target: "dmpj.d64"
+      build_dir: "build"
+      map: "build/dmpj.map"
+      compiled_target: "build/dmpj.d64"
+      elf: "build/dmpj.elf"
+      expected_dir: "expected/"
+      asm: "asm"
+      nonmatchings: "asm/nonmatchings"
+
+tools:
+  mapfile_parser:
+    progress_report:
+      check_asm_paths: True
+      prefixes_to_trim:
+        - build/src/
+        - build/asm/
+        - build/
+      categories:
+        - id: boot
+          name: Boot
+          paths:
+            - entrypoint
+            - gameboot
+        - id: libleo
+          name: libleo
+          paths:
+            - leo/lib/
+        - id: libultra
+          name: libultra
+          paths:
+            - libultra/
+        - id: main
+          name: Main Engine
+          paths:
+            - main/
+        - id: capture
+          name: Capture Engine
+          paths:
+            - capture/
+        - id: printer
+          name: Printer Overlay
+          paths:
+            - overlays/printer/
+        - id: saveload
+          name: Save/Load Overlay
+          paths:
+            - overlays/saveload/
+        - id: camera
+          name: Camera Overlay
+          paths:
+            - overlays/camera/

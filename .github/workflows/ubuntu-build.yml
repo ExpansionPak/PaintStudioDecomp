@@ -54,7 +54,9 @@ jobs:
             openssl
 
       - name: Install Python dependencies
-        run: python3 -m pip install --break-system-packages -r tools/splat/requirements.txt
+        run: |
+          python3 -m pip install --break-system-packages -r requirements.txt
+          python3 -m pip install --break-system-packages -r tools/splat/requirements.txt
 
       - name: Decrypt baserom
         run: |
@@ -87,6 +89,16 @@ jobs:
           path: |
             build/progress.json
             build/badges
+          
+      - name: Generate objdiff report
+        run: python3 -m mapfile_parser objdiff_report report.json --version jp
+
+      - name: Upload decomp.dev progress report
+        uses: actions/upload-artifact@v4
+        with:
+          name: paintstudio_report
+          path: report.json
+
 
   publish-progress-badges:
     if: needs.build.result == 'success' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')

@@ -1,0 +1,6 @@
+c3cd83e8aa479ba8b5e039ff99abfa630b5d1fa7:
+  name: Mario Artist Paint Studio (JP)
+  build_dir: build
+  map: build/dmpj.map
+  asm_path: asm
+  src_path: src
