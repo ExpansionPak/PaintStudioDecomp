@@ -19,7 +19,8 @@ versions:
 tools:
   mapfile_parser:
     progress_report:
-      check_asm_paths: True
+      check_asm_paths: False
+      report_data: True
       prefixes_to_trim:
         - build/leo/lib
         - build/src/
