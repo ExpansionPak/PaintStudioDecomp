@@ -37,6 +37,11 @@ void func_saveload_802C15D4(s32* arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_saveload_802C178C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_saveload_802C1918(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 s32 func_saveload_802C1D88(s32, s32, s32, s32, s32);
+extern s32 D_saveload_802C3B70;
+extern s32 D_saveload_802C3B74;
+extern s8 D_saveload_802C3B80;
+extern s32 D_saveload_802C3B84;
+extern s32 D_saveload_802C3B88;
 extern s32 D_saveload_80301064;
 extern u8 D_saveload_802C3D74;
 extern u8 D_saveload_802C3D78;
@@ -162,7 +167,11 @@ void func_saveload_80284130(s32 arg0, UnkArg1* arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802875E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_80287670.s")
+void func_saveload_80287670(void) {
+    D_saveload_802C3B84 = D_saveload_802C3B70;
+    D_saveload_802C3B88 = D_saveload_802C3B74;
+    D_saveload_802C3B80 = 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/saveload/saveload/func_saveload_802876AC.s")
 
