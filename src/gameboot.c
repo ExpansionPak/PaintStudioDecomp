@@ -1266,7 +1266,9 @@ void func_800050B0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800057B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000584C.s")
+void func_8000584C(void) {
+    osRecvMesg(&D_8007D920, NULL, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80005878.s")
 
