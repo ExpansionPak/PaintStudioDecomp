@@ -913,7 +913,16 @@ void func_800030B0(u8* arg0, u8* arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800030E0.s")
+// Function matched by Bl00D4NGEL (Dominik Peters)
+// https://decomp.me/scratch/UQRe7
+// https://github.com/Bl00D4NGEL
+void func_800030E0(u8* arg0, u8* arg1, s32 arg2) {
+    s32 i;
+
+    for (i = 0; i != arg2; i++) {
+        *arg1++ = *arg0++;
+    }
+}
 
 s32 func_8000314C(u8 *a, u8 *b, u32 size) {
     s32 i;
