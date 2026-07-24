@@ -8,6 +8,7 @@ extern s32 D_80121E14;
 extern s32 D_80142F88;
 extern s32 D_80254364;
 extern s32 D_80279BD8;
+s32 func_8011B4C8(s32, s32);
 s32 func_80204DCC();
 extern s32 func_8023356C;
 s32 func_80248F50(s32, s32, s32, s32);
@@ -565,7 +566,9 @@ void func_8021D538(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_8021E3A8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_8021E55C.s")
+void func_8021E55C(s32 arg0) {
+    func_8011B4C8(3, 1);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_8021E584.s")
 
