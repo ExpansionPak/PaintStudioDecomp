@@ -132,7 +132,18 @@ s32 func_800C0CCC(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C272C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C27B8.s")
+s32 func_800C27B8(s32 arg0, u32* arg1) {
+    s32 sp1C;
+    u32 temp_v0;
+
+    sp1C = arg0 + 0x48A;
+    temp_v0 = func_800C24F4(&sp1C, 6);
+    *arg1 = temp_v0;
+    if (temp_v0 >= 0xF4240U) {
+        return 0;
+    }
+    return 1;
+}
 
 void func_800C280C(s32 arg0) {
     s32 temp_s0;
