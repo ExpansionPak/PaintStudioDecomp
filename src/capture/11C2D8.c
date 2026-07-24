@@ -3,6 +3,7 @@
 #include "PR/sched.h"
 
 extern s32 D_8011F4C8;
+extern s32 D_8012C0C8;
 extern s32 D_80142F88;
 s32 func_80204DCC();
 extern s32 func_8023356C;
@@ -700,7 +701,13 @@ void func_8022150C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_80227300.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_8022737C.s")
+void func_8022737C(void) {
+    u8* temp_v0;
+
+    temp_v0 = (u8*)&D_8012C0C8 + (D_8011F4C8 * 0xC0);
+    *(f32*)(temp_v0 + 0x10) = 33.0f;
+    *(f32*)(temp_v0 + 0x14) = 27.0f;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_802273B8.s")
 
