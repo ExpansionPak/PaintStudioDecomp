@@ -257,7 +257,12 @@ void func_cam_8028D084(s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028D0C8.s")
+void func_cam_8028D0C8(s32 arg0) {
+    D_802C8858 -= arg0;
+    if (D_802C8858 < 0x10) {
+        D_802C8858 = 0x10;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028D10C.s")
 
