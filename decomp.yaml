@@ -1,6 +1,6 @@
 name: Mario Artist Paint Studio
 repo: https://github.com
-platform: n64dd
+platform: n64 # Should be n64dd but... eh, whatever
 build_system: make
 versions:
   - name: jp
