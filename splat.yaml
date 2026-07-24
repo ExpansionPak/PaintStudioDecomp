@@ -285,7 +285,7 @@ segments:
     vram: 0x801F6EB0
     align: 8
     subsegments:
-    - [0x11C2D8, asm]
+    - [0x11C2D8, c]
     - [0x177F28, data]
     - [0x19CF98, pad]
   - name: printer
