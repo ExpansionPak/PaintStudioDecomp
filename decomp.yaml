@@ -21,7 +21,9 @@ tools:
     progress_report:
       check_asm_paths: True
       prefixes_to_trim:
+        - build/leo/lib
         - build/src/
+        - build/asm/data/
         - build/asm/
         - build/
       categories:
