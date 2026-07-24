@@ -1246,7 +1246,13 @@ s32 func_800046F8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80005078.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800050B0.s")
+void func_800050B0(void) {
+    D_80083060 = 0;
+    D_80037F50[1] = 1;
+    D_80037F50[2] = 0;
+    *D_800502A8 = 2;
+    osCreateMesgQueue(&D_80037F5C, *D_80037F74, 8);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80005108.s")
 
