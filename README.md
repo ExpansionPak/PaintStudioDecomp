@@ -54,7 +54,7 @@ make
 - download IDO 7.1 into `tools/ido_recomp/<host>/7.1`
 - run `tools/splat` to regenerate `asm/`, `bin/`, and `assets/` from `dmpj.d64`
 
-## Linux
+## Linux/WSL
 
 Ubuntu/Debian:
 
@@ -71,20 +71,8 @@ sudo apt-get install -y \
 	openssl \
 	python3 \
 	python3-pip \
+	python3.12-venv \
 	curl
-```
-
-Install Python dependencies:
-
-```sh
-python3 -m pip install -r tools/splat/requirements.txt
-```
-
-Then place `dmpj.d64` in the repository root and run:
-
-```sh
-make setup
-make
 ```
 
 ## macOS
@@ -95,7 +83,7 @@ Install Xcode Command Line Tools first if they are not already installed:
 xcode-select --install
 ```
 
-Install the required packages with Homebrew:
+Download [Homebrew](https://brew.sh/) and install the required packages using it:
 
 ```sh
 brew install \
@@ -104,20 +92,4 @@ brew install \
 	make \
 	mipsel-linux-gnu-binutils \
 	python
-```
-
-Install the Python dependencies:
-
-```sh
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install -r requirements.txt
-python3 -m pip install -r tools/splat/requirements.txt
-```
-
-Then place `dmpj.d64` in the repository root and run:
-
-```sh
-make setup
-make
 ```
