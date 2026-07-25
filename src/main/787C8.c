@@ -9,6 +9,11 @@ struct Unk800C4AC8 {
     s32 unkC;
 };
 
+struct Unk800C6DA4 {
+    char pad[0x30];
+    s32 unk30;
+};
+
 struct Arg1Struct {
     char pad[0x268];
     struct Unk800C4AC8* unk268;
@@ -26,6 +31,9 @@ extern ALSynth* D_801F4BC4;
 extern s32 D_8011F5E4;
 extern s32 D_80121F24[][6];
 extern f64 D_8015F038;
+extern s32 func_800C6678(void*, void*);
+extern s32 func_800C66D4(void*, void*);
+extern char D_801CFA50[];
 
 void func_800BD8E0(void) {
     D_8011F5E4 = 3;
@@ -261,7 +269,13 @@ s32 func_800C4AC8(s32* arg0, void* arg1, unsigned short arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C6D70.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C6DA4.s")
+s32 func_800C6DA4(struct Unk800C6DA4* arg0) {
+    s32 sp2C[7];
+
+    func_800C66D4(&D_801CFA50[arg0->unk30 * 0x510], &sp2C[4]);
+    func_800C6678(arg0, &sp2C[4]);
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C6DFC.s")
 
