@@ -1294,7 +1294,20 @@ void func_800050B0(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80005528.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000572C.s")
+void func_8000572C(void) {
+    OSMesg sp2C;
+
+    if (D_80037F50[1] == 0) {
+loop_2:
+        osRecvMesg(&D_80037F5C, &sp2C, 1);
+        if (*(s16 *) sp2C != 2) {
+            if (D_80037F50[1] == 0) {
+                goto loop_2;
+            }
+        }
+    }
+    D_80037F50[2] = 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800057B0.s")
 
