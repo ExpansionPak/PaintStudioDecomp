@@ -947,8 +947,18 @@ s32 func_8000314C(u8 *a, u8 *b, u32 size) {
     return 1;
 }
 
+// Function matched by an anonymous user on decomp.me
+s32 func_8000324C(u8* arg0) {
+    s32 i;
+    u8 temp_v0;
+    u8* var_a0;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000324C.s")
+    i = 0;
+    while (*arg0++) {
+        i++;
+    }
+    return i;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000327C.s")
 
