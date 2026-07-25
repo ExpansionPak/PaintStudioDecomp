@@ -1353,7 +1353,20 @@ void func_8000A5AC(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AD54.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000ADA0.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/ghcD8
+// https://github.com/queueRAM
+u8* func_8000ADA0(u8* arg0, u8 arg1) {
+    while ((*arg0 != 0) && (arg1 != *arg0)) {
+        arg0++;
+    }
+    
+    if (*arg0 != 0) {
+        return arg0;
+    } else {
+        return NULL;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000ADF0.s")
 
