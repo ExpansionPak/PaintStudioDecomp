@@ -1138,7 +1138,41 @@ s32 func_80003A98(void) {
     return 0;
 }
 
+// There's probably a file split here which could explain why these 2 functions match on decomp.me but not here for some reason.
+#ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003AC0.s")
+#else
+// https://decomp.me/scratch/uXM98
+void func_80003FE0(Gfx**);          /* extern */
+extern u32 D_317F0[];
+extern u32 D_769A0[];
+
+void func_80003AC0(void) {
+    s32 color;
+    s32 pad0;
+    s32 pad1;
+
+    gDPSetColorImage(D_8008305C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, D_800351D4, osVirtualToPhysical(D_80083064));
+    gSPDisplayList(D_8008305C++, D_80037E60);
+    gDPSetScissor(D_8008305C++, G_SC_NON_INTERLACE, 0, 0, D_800351D4, D_800351D0);
+
+    if (D_800351D4 == 0x140) {
+        gSPViewport(D_8008305C++, D_80037E20);
+    } else {
+        gSPViewport(D_8008305C++, D_80037E30);
+    }
+
+    gSPDisplayList(D_8008305C++, D_80037E40);
+    gDPSetCycleType(D_8008305C++, G_CYC_FILL);
+    color = GPACK_RGBA5551(0, 0, 0, 1);
+    gDPSetFillColor(D_8008305C++, (color << 16) | color);
+    gDPFillRectangle(D_8008305C++, 0, 0, D_800351D4 - 2, D_800351D0 - 2);
+    gSPDisplayList(D_8008305C++, D_80052280);
+    gSPLoadUcode(D_8008305C++, D_317F0, D_769A0);
+    gDPPipeSync(D_8008305C++);
+    func_80003FE0(&D_8008305C);
+}
+#endif
 
 #ifndef NON_MATCHING
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003D60.s")
