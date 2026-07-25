@@ -21,7 +21,10 @@ struct Arg1Struct {
 
 u32 func_800C0BB4();
 s32 func_8011B2A4(ALPlayer*);
-s32 osCapReadIo(s32*, s32, s32*);                         /* extern */
+s32 osCapReadIo(s32*, s32, s32*);
+extern s32 D_80076464;
+extern u32 D_80121EB8;
+extern void* D_80279BD8;
 extern s32 D_801F37E0;
 extern s32 D_801F38E4;
 extern s32 D_8011F4EC;
@@ -122,7 +125,12 @@ s32 func_800C0CCC(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C2144.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C2188.s")
+void func_800C2188(void) {
+    s32 sp24[4];
+
+    LeoByteToLBA(D_80076464, D_80121EB8, &sp24[3]);
+    Mfs_ReadLBA(0x58AU, D_80279BD8, (u32) sp24[3]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C21CC.s")
 
