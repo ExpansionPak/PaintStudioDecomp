@@ -1745,7 +1745,10 @@ s32 osCapWrite0008(s32 arg0) {
     return arg0;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0180.s")
+s32 osCapWrite0180(s32 arg0) {
+    osCapWriteIo(&D_801F37E0, 0x180, arg0);
+    return arg0;
+}
 
 void osCapWrite0100(void) {
     osCapWriteIo(&D_801F37E0, 0x100, 0);
