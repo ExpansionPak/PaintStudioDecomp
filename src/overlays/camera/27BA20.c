@@ -162,7 +162,21 @@ void func_cam_80286EAC(Unk80286EAC* arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80287170.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80287290.s")
+s32 func_cam_80287290(u8* arg0) {
+    s32 sp4 = 0;
+
+    if (arg0 == NULL) {
+        return 0;
+    }
+
+    if (*arg0++) {
+        do {
+            sp4++;
+        } while (*arg0++);
+    }
+
+    return sp4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_802872EC.s")
 
