@@ -66,6 +66,12 @@ typedef union {
 } Unk800823B0; // size = 0x42
 
 typedef struct {
+    u8 pad0[0x18];
+    u8 unk18;
+    u8 pad19[0x6C - 0x19];
+} Unk80083C70; // siz: 0x6C
+
+typedef struct {
     s16 unk0;
     s16 unk2;
     u8 pad4[0x28-0x4];
@@ -145,6 +151,8 @@ typedef struct {
     u8 pad0[0x7DF0];
     s32 unk7DF0[120][20];
 } Unk8000BD70;
+
+extern Unk80083C70 D_80083C70[30];
 
 // .bss
 u8 D_800789D0[0x7E0];
@@ -1288,7 +1296,18 @@ void func_8000584C(void) {
 // file split around here?
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007AEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007B20.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/Cs1Oz
+// https://github.com/queueRAM
+void func_80007B20(void) {
+    s32 i;
+
+    // unrolled loop, starting at 80083C70
+    // broken up into 2x outside loop and 7 iterations of loop 4
+    for (i = 0; i < 30; i++) {
+        D_80083C70[i].unk18 = 0;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007B60.s")
 
