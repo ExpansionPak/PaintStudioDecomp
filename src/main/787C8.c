@@ -26,6 +26,7 @@ extern s32 D_80076464;
 extern u32 D_80121EB8;
 extern void* D_80279BD8;
 extern s32 D_801F37E0;
+extern s32 D_801F38D4;
 extern s32 D_801F38DC;
 extern s32 D_801F38E4;
 extern s32 D_8011F4EC;
@@ -1694,7 +1695,13 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0000.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0004.s")
+s32 osCapRead0004(void) {
+    s32 sp1C;
+
+    osCapReadIo(&D_801F37E0, 4, &sp1C);
+    D_801F38D4 = sp1C;
+    return sp1C;
+}
 
 s32 osCapRead0008(void) {
     s32 sp1C;
