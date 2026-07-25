@@ -26,6 +26,7 @@ extern s32 D_80076464;
 extern u32 D_80121EB8;
 extern void* D_80279BD8;
 extern s32 D_801F37E0;
+extern s32 D_801F38DC;
 extern s32 D_801F38E4;
 extern s32 D_8011F4EC;
 extern ALSynth* D_8013D0D4;
@@ -1695,7 +1696,13 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0004.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0008.s")
+s32 osCapRead0008(void) {
+    s32 sp1C;
+
+    osCapReadIo(&D_801F37E0, 8, &sp1C);
+    D_801F38DC = sp1C;
+    return sp1C;
+}
 
 // Function matched by queueRAM
 // https://decomp.me/scratch/jG4jA
