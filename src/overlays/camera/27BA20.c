@@ -30,7 +30,7 @@ extern s32 D_cam_8029EC80;
 extern s32 D_cam_8029EC84;
 extern s32 D_cam_8029EC88;
 extern s32 D_cam_8029EC8C;
-extern s32 D_cam_8029EC90;
+extern u16 D_cam_8029EC90[];
 extern s32 D_cam_8029ECA4;
 extern s32 D_cam_8029ECAC;
 extern s32 D_cam_8029ECB0;
@@ -464,7 +464,12 @@ void func_cam_8028DD84(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80299960.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029A3D4.s")
+s32 func_cam_8029A3D4(s32 arg0, s32 arg1) {
+    s32 sp4;
+
+    sp4 = (D_cam_8029EC90[arg0] >> arg1) & 0x1F;
+    return (sp4 * 8) | (sp4 >> 2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029A418.s")
 
