@@ -1402,7 +1402,18 @@ u8* func_8000ADA0(u8* arg0, u8 arg1) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000ADF0.s")
+void func_8000ADF0(void) {
+    D_800508A4 = 0xFF;
+    D_800508A8 = 0xFF;
+    D_800508AC = 0xFF;
+    D_800508B0 = 0xFF;
+    D_800508B4 = 0;
+    D_800508B8 = 0;
+    D_800508BC = 0x28;
+    D_800508C0 = 1;
+    D_800508C4 = 1.0f;
+    D_800508C8 = 1.0f;
+}
 
 void func_8000AE58(s32 arg0, s32 arg1) {
     D_800508BC = arg0;
