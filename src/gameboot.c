@@ -1372,7 +1372,12 @@ void func_8000AE80(f64 arg0, f64 arg1) {
     D_800508C8 = (f32)arg1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AE9C.s")
+void func_8000AE9C(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    D_800508A4 = arg0;
+    D_800508A8 = arg1;
+    D_800508AC = arg2;
+    D_800508B0 = arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AED0.s")
 
