@@ -9,6 +9,7 @@ typedef struct {
     s32 unkC;
 } Unk80286EAC;
 
+s32 func_80020D7C(s32*, u8*);
 s32 func_cam_80284EC8(s32);
 s32 func_cam_8028C950(s32, s32);
 s32 func_cam_8028CB24(s32, s32);
@@ -23,6 +24,7 @@ extern void* D_802C8774;
 extern s32 D_802C8790;
 extern s32 D_802C8878;
 extern s32 D_802C888C;
+extern s32 D_cam_8029E3A0;
 extern s32 D_cam_8029EAAC;
 extern s32 D_cam_8029EAE4;
 extern s32 D_cam_8029EBD0;
@@ -64,11 +66,33 @@ extern s32 D_cam_8029F324;
 extern s32 D_cam_8029F328;
 extern s32 D_cam_8029F32C;
 extern s32 D_cam_8029F330;
+extern u8 D_cam_802C27B0[];
+extern u8 D_cam_802C27D0[];
 extern s32 func_cam_802889A0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80284130.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_802841CC.s")
+s32 func_cam_802841CC(OSPfs* arg0, u8 arg1) {
+    s32 sp5C;
+    s32 sp58;
+    s32 pad[13];
+
+    sp58 = 0;
+    if ((u32)&D_cam_802C27B0 & 0xF) {
+        func_80020D7C(&D_cam_8029E3A0, D_cam_802C27B0);
+    }
+
+    sp5C = 0;
+    do {
+    } while (D_cam_802C27B0[sp5C] = arg1, ++sp5C < 0x20);
+
+    sp58 = osGbpakReadWrite(arg0, 1, 0x4000, D_cam_802C27B0, 0x20);
+    if (sp58 == 0) {
+        D_cam_802C27D0[arg0->channel] = arg1;
+    }
+
+    return sp58;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028429C.s")
 
