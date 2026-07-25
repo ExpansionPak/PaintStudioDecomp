@@ -22,6 +22,7 @@ struct Arg1Struct {
 u32 func_800C0BB4();
 s32 func_8011B2A4(ALPlayer*);
 s32 osCapReadIo(s32*, s32, s32*);
+s32 osCapWriteIo(s32*, s32, s32);
 extern s32 D_80076464;
 extern u32 D_80121EB8;
 extern void* D_80279BD8;
@@ -1729,7 +1730,10 @@ s32 osCapRead0180(void) {
     return sp1C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0000.s")
+s32 osCapWrite0000(s32 arg0) {
+    osCapWriteIo(&D_801F37E0, 0, arg0);
+    return arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0004.s")
 
