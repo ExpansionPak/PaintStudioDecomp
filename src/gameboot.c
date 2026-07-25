@@ -1260,8 +1260,13 @@ s32 func_800046F8(s32 arg0) {
     }
     return var_v1;
 }
-
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80004730.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/Gs7JS
+// https://github.com/queueRAM
+// needed to return int instead of s32 for some reason
+int func_80004730(s32 arg0) {
+    return ((arg0 >= 0x30) && (arg0 < 0x3A));
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000474C.s")
 
