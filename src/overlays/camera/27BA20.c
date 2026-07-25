@@ -72,6 +72,9 @@ extern s32 func_cam_802889A0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80284130.s")
 
+// function matched by celophi
+// https://decomp.me/scratch/Xpoqr
+// https://github.com/celophi
 s32 func_cam_802841CC(OSPfs* arg0, u8 arg1) {
     s32 sp5C;
     s32 sp58;
