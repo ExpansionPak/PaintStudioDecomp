@@ -7,16 +7,33 @@ extern s32 D_8012C0C8;
 extern s32 D_80121E14;
 extern s32 D_80142F88;
 extern s16 D_8014A058;
+extern struct temp_v0 D_80142D98[];
 extern s32 D_801A38F0;
 extern s32 D_80254364;
 extern s32 D_80279BD8;
 s32 func_800D416C();
 s32 func_80113FC0();
 s32 func_8011B4C8(s32, s32);
+extern int func_801FE320;
 s32 func_80204DCC();
 extern s32 func_8023356C;
 s32 func_80248F50(s32, s32, s32, s32);
 s32 func_80239370(s32, s32, s32, s32, s32);
+
+// size 0x278
+struct temp_v0 {
+  char unk0[0x7F];
+  char unk7F;
+  char unk80[0x1E0];
+  struct unk260* unk260;
+    char unk4[0x14];
+};
+
+// size 0x70 or bigger
+struct unk260 {
+  char unk0[0x6C];
+  void* unk6C;
+};
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_801F6EB0.s")
 
@@ -60,7 +77,13 @@ s32 func_80239370(s32, s32, s32, s32, s32);
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_801FD358.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_801FD360.s")
+// Function matched by rbran
+// https://decomp.me/scratch/mGQhq
+// https://github.com/rbran
+void func_801FD360(s32 arg0) {
+    D_80142D98[D_8011F4C8].unk7F = 0;
+    D_80142D98[D_8011F4C8].unk260->unk6C = &func_801FE320;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/capture/11C2D8/func_801FD3A4.s")
 
