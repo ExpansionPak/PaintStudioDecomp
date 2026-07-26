@@ -3,7 +3,7 @@ build/
 expected/
 asm/
 assets/
-tools/__pycache__
+__pycache__/
 tools/ido_recomp
 *.d64
 *_auto.txt

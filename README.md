@@ -54,7 +54,7 @@ make
 - download IDO 7.1 into `tools/ido_recomp/<host>/7.1`
 - run `tools/splat` to regenerate `asm/`, `bin/`, and `assets/` from `dmpj.d64`
 
-## Linux
+## Linux/WSL
 
 Ubuntu/Debian:
 
@@ -71,20 +71,8 @@ sudo apt-get install -y \
 	openssl \
 	python3 \
 	python3-pip \
+	python3.12-venv \
 	curl
-```
-
-Install Python dependencies:
-
-```sh
-python3 -m pip install -r tools/splat/requirements.txt
-```
-
-Then place `dmpj.d64` in the repository root and run:
-
-```sh
-make setup
-make
 ```
 
 ## macOS
@@ -95,7 +83,7 @@ Install Xcode Command Line Tools first if they are not already installed:
 xcode-select --install
 ```
 
-Install the required packages with Homebrew:
+Download [Homebrew](https://brew.sh/) and install the required packages using it:
 
 ```sh
 brew install \
@@ -106,18 +94,40 @@ brew install \
 	python
 ```
 
-Install the Python dependencies:
+## Diffing a Function
+
+This repo uses [asm-differ](https://github.com/simonlindholm/asm-differ) (`tools/asm-differ`, a submodule) to compare your current C output against the target assembly for a function.
+
+Before diffing for the first time, snapshot a known-good build as the baseline to diff against:
 
 ```sh
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install -r requirements.txt
-python3 -m pip install -r tools/splat/requirements.txt
-```
-
-Then place `dmpj.d64` in the repository root and run:
-
-```sh
-make setup
 make
+cp -r build expected/build
 ```
+
+Then diff a function by name (or address):
+
+```sh
+python3 tools/asm-differ/diff.py -mo func_80007D64
+```
+
+- `-m` rebuilds automatically via `make` before diffing
+- `-o` diffs the object file so symbol names resolve
+- add `-w` to re-run automatically whenever the source file is saved
+
+Run `python3 tools/asm-differ/diff.py --help` for the full list of options.
+
+## Using decomp.me
+
+Functions can also be matched entirely in the browser using [decomp.me](https://decomp.me/), which doesn't require a local build environment. This is useful for getting help from others, or for working without a full local setup.
+
+decomp.me uses `asm-differ` as its diff viewer, the same tool `tools/asm-differ` provides locally. Because both sides use the same diffing logic, the score and diff output you see on decomp.me are exactly what you'd get from `tools/asm-differ/diff.py` locally.
+
+Go to [decomp.me/new](https://decomp.me/new) and create a new scratch:
+
+- **Platform**: Nintendo 64
+- **Preset**: Mario Paint Studio
+- **Compiler**: `ido7.1`
+- **Diff Label**: `asm label from where function begins`
+- **Target assembly**: paste the contents of the function's `.s` file
+- **Context**: paste the contents of `ctx.c`
