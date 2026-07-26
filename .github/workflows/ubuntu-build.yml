@@ -75,10 +75,59 @@ jobs:
       - name: Verify built ROM hash
         run: md5sum -c checksum.md5
 
-      - name: Generate progress data
+      - name: Generate objdiff report and shield data
         run: |
-          mkdir -p build/badges
-          python3 tools/progress.py -q --json build/progress.json
+          python3 -m mapfile_parser objdiff_report report.json --version jp
+
+          python3 -c '
+          import json, os
+
+          with open("report.json", "r") as f:
+              report = json.load(f)
+
+          m = report.get("measures", {})
+
+          total_code = int(m.get("total_code", 0))
+          matched_code = int(m.get("matched_code", 0))
+          code_ratio = float(m.get("matched_code_percent", 0.0)) / 100.0
+
+          total_funcs = int(m.get("total_functions", 0))
+          matched_funcs = int(m.get("matched_functions", 0))
+          funcs_ratio = float(m.get("matched_functions_percent", 0.0)) / 100.0
+
+          data_ratio = float(m.get("matched_data_percent", m.get("complete_data_percent", 0.0))) / 100.0
+
+          progress = {
+              "total": {
+                  "decompiled_ratio": code_ratio,
+                  "decompiled_bytes": matched_code,
+                  "total_bytes": total_code
+              },
+              "code": {
+                  "decompiled_ratio": code_ratio,
+                  "decompiled_funcs_ratio": funcs_ratio,
+                  "decompiled_funcs": matched_funcs,
+                  "decompiled_bytes": matched_code,
+                  "total_funcs": total_funcs,
+                  "total_bytes": total_code
+              },
+              "data": {
+                  "decompiled_ratio": data_ratio,
+                  "decompiled_bytes": 0,
+                  "total_bytes": 0
+              },
+              "git": {
+                  "commit_hash": "",
+                  "commit_hash_short": "",
+                  "commit_timestamp": 0
+              }
+          }
+
+          os.makedirs("build/badges", exist_ok=True)
+          with open("build/progress.json", "w") as f:
+              json.dump(progress, f, indent=2)
+          '
+
           python3 tools/generate_progress_badges.py build/progress.json build/badges
 
       - name: Upload progress badge data
@@ -90,15 +139,11 @@ jobs:
             build/progress.json
             build/badges
           
-      - name: Generate objdiff report
-        run: python3 -m mapfile_parser objdiff_report report.json --version jp
-
       - name: Upload decomp.dev progress report
         uses: actions/upload-artifact@v4
         with:
           name: paintstudio_report
           path: report.json
-
 
   publish-progress-badges:
     if: needs.build.result == 'success' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
