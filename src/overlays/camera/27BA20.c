@@ -9,6 +9,13 @@ typedef struct {
     s32 unkC;
 } Unk80286EAC;
 
+s32 func_80020D7C(s32*, u8*);
+s32 func_cam_80284EC8(s32);
+s32 func_cam_8028C950(s32, s32);
+s32 func_cam_8028CB24(s32, s32);
+s32 func_cam_8028CBE4();
+extern s32 D_802C8784;
+extern s32 D_cam_802C28A0;
 s32 func_cam_80285830(s32*, s32, s32, s32);
 extern s32 D_802C8760;
 extern s32 D_802C8858;
@@ -17,17 +24,28 @@ extern void* D_802C8774;
 extern s32 D_802C8790;
 extern s32 D_802C8878;
 extern s32 D_802C888C;
+extern s32 D_cam_8029E3A0;
 extern s32 D_cam_8029EAAC;
 extern s32 D_cam_8029EAE4;
 extern s32 D_cam_8029EBD0;
 extern s32 D_cam_8029EC80;
+extern s32 D_cam_8029EC84;
 extern s32 D_cam_8029EC88;
+extern s32 D_cam_8029EC8C;
+extern u16 D_cam_8029EC90[];
+extern s32 D_cam_8029ECA4;
 extern s32 D_cam_8029ECAC;
+extern s32 D_cam_8029ECB0;
 extern s32 D_cam_8029ECC0;
+extern s32 D_cam_8029ECC4;
 extern s32 D_cam_8029EDC0;
+extern s32 D_cam_8029EDC4;
 extern s32 D_cam_8029EDC8;
+extern s32 D_cam_8029EDCC;
 extern s32 D_cam_8029EDD0;
+extern s32 D_cam_8029EDD4;
 extern s32 D_cam_8029EDD8;
+extern s32 D_cam_8029EDDC;
 extern s32 D_cam_8029F0BC;
 extern s32 D_cam_8029F0C0;
 extern s32 D_cam_8029F120;
@@ -35,11 +53,49 @@ extern s32 D_cam_8029F124;
 extern s32 D_cam_8029F128;
 extern s32 D_cam_8029F220;
 extern s32 D_cam_8029F2D0;
+extern s32 D_cam_8029F300;
+extern s32 D_cam_8029F304;
+extern s32 D_cam_8029F308;
+extern s32 D_cam_8029F30C;
+extern s32 D_cam_8029F310;
+extern s32 D_cam_8029F314;
+extern s32 D_cam_8029F318;
+extern s32 D_cam_8029F31C;
+extern s32 D_cam_8029F320;
+extern s32 D_cam_8029F324;
+extern s32 D_cam_8029F328;
+extern s32 D_cam_8029F32C;
+extern s32 D_cam_8029F330;
+extern u8 D_cam_802C27B0[];
+extern u8 D_cam_802C27D0[];
 extern s32 func_cam_802889A0;
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80284130.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_802841CC.s")
+// function matched by celophi
+// https://decomp.me/scratch/Xpoqr
+// https://github.com/celophi
+s32 func_cam_802841CC(OSPfs* arg0, u8 arg1) {
+    s32 sp5C;
+    s32 sp58;
+    s32 pad[13];
+
+    sp58 = 0;
+    if ((u32)&D_cam_802C27B0 & 0xF) {
+        func_80020D7C(&D_cam_8029E3A0, D_cam_802C27B0);
+    }
+
+    sp5C = 0;
+    do {
+    } while (D_cam_802C27B0[sp5C] = arg1, ++sp5C < 0x20);
+
+    sp58 = osGbpakReadWrite(arg0, 1, 0x4000, D_cam_802C27B0, 0x20);
+    if (sp58 == 0) {
+        D_cam_802C27D0[arg0->channel] = arg1;
+    }
+
+    return sp58;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028429C.s")
 
@@ -133,7 +189,21 @@ void func_cam_80286EAC(Unk80286EAC* arg0, s8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80287170.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80287290.s")
+s32 func_cam_80287290(u8* arg0) {
+    s32 sp4 = 0;
+
+    if (arg0 == NULL) {
+        return 0;
+    }
+
+    if (*arg0++) {
+        do {
+            sp4++;
+        } while (*arg0++);
+    }
+
+    return sp4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_802872EC.s")
 
@@ -250,7 +320,13 @@ void func_cam_80289480(s32 arg0, s32 arg1, s32 arg2, s32 arg3, struct { s32 unk0
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028CCA8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028CDBC.s")
+void func_cam_8028CDBC(s32 arg0, s32 arg1) {
+    func_cam_8028CBE4();
+    func_cam_8028CB24(arg1, 1);
+    func_cam_8028C950(arg0, arg1);
+    func_cam_80284EC8(arg1);
+    D_802C8784 = D_cam_802C28A0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028CE1C.s")
 
@@ -278,7 +354,17 @@ void func_cam_8028D0C8(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028D304.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028D6C4.s")
+s32 func_cam_8028D6C4(void) {
+    D_cam_8029EDD0 = D_cam_8029EDD4;
+    D_cam_8029EC80 = D_cam_8029EC84;
+    D_cam_8029EC88 = D_cam_8029EC8C;
+    D_cam_8029ECAC = D_cam_8029ECB0;
+    D_cam_8029EDD8 = D_cam_8029EDDC;
+    D_cam_8029ECC0 = D_cam_8029ECC4;
+    D_cam_8029EDC8 = D_cam_8029EDCC;
+    D_cam_8029EDC0 = D_cam_8029EDC4;
+    bcopy(&D_cam_8029ECA4, &D_cam_8029EC90, 8);
+}
 
 void func_cam_8028D77C(void) {
     D_cam_8029EDD0 = 0;
@@ -419,7 +505,12 @@ void func_cam_8028DD84(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80299960.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029A3D4.s")
+s32 func_cam_8029A3D4(s32 arg0, s32 arg1) {
+    s32 sp4;
+
+    sp4 = (D_cam_8029EC90[arg0] >> arg1) & 0x1F;
+    return (sp4 * 8) | (sp4 >> 2);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029A418.s")
 
@@ -443,7 +534,21 @@ void func_cam_8028DD84(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029C3A4.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029C3F4.s")
+void func_cam_8029C3F4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    D_cam_8029F314 = arg0;
+    D_cam_8029F318 = arg1;
+    D_cam_8029F30C = arg2;
+    D_cam_8029F310 = arg3;
+    D_cam_8029F304 = 0;
+    D_cam_8029F308 = 0;
+    D_cam_8029F31C = 1;
+    D_cam_8029F320 = 1;
+    D_cam_8029F324 = 0xFF;
+    D_cam_8029F328 = 0xFF;
+    D_cam_8029F32C = 0xFF;
+    D_cam_8029F330 = 0xFF;
+    D_cam_8029F300 = -1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8029C488.s")
 

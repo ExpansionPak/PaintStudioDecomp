@@ -21,8 +21,15 @@ struct Arg1Struct {
 
 u32 func_800C0BB4();
 s32 func_8011B2A4(ALPlayer*);
-s32 osCapReadIo(s32*, s32, s32*);                         /* extern */
+s32 osCapReadIo(s32*, s32, s32*);
+s32 osCapWriteIo(s32*, s32, s32);
+extern s32 D_80076464;
+extern u32 D_80121EB8;
+extern void* D_80279BD8;
 extern s32 D_801F37E0;
+extern s32 D_801F38CC;
+extern s32 D_801F38D4;
+extern s32 D_801F38DC;
 extern s32 D_801F38E4;
 extern s32 D_8011F4EC;
 extern ALSynth* D_8013D0D4;
@@ -122,7 +129,12 @@ s32 func_800C0CCC(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C2144.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C2188.s")
+void func_800C2188(void) {
+    s32 sp24[4];
+
+    LeoByteToLBA(D_80076464, D_80121EB8, &sp24[3]);
+    Mfs_ReadLBA(0x58AU, D_80279BD8, (u32) sp24[3]);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C21CC.s")
 
@@ -1683,11 +1695,29 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapCartDataInit.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0000.s")
+s32 osCapRead0000(void) {
+    s32 sp1C;
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0004.s")
+    osCapReadIo(&D_801F37E0, 0, &sp1C);
+    D_801F38CC = sp1C;
+    return sp1C;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapRead0008.s")
+s32 osCapRead0004(void) {
+    s32 sp1C;
+
+    osCapReadIo(&D_801F37E0, 4, &sp1C);
+    D_801F38D4 = sp1C;
+    return sp1C;
+}
+
+s32 osCapRead0008(void) {
+    s32 sp1C;
+
+    osCapReadIo(&D_801F37E0, 8, &sp1C);
+    D_801F38DC = sp1C;
+    return sp1C;
+}
 
 // Function matched by queueRAM
 // https://decomp.me/scratch/jG4jA
@@ -1700,15 +1730,29 @@ s32 osCapRead0180(void) {
     return sp1C;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0000.s")
+s32 osCapWrite0000(s32 arg0) {
+    osCapWriteIo(&D_801F37E0, 0, arg0);
+    return arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0004.s")
+s32 osCapWrite0004(s32 arg0) {
+    osCapWriteIo(&D_801F37E0, 4, arg0);
+    return arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0008.s")
+s32 osCapWrite0008(s32 arg0) {
+    osCapWriteIo(&D_801F37E0, 8, arg0);
+    return arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0180.s")
+s32 osCapWrite0180(s32 arg0) {
+    osCapWriteIo(&D_801F37E0, 0x180, arg0);
+    return arg0;
+}
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapWrite0100.s")
+void osCapWrite0100(void) {
+    osCapWriteIo(&D_801F37E0, 0x100, 0);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapInquiry.s")
 
