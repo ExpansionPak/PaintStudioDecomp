@@ -4,3 +4,6 @@
 [submodule "tools/asmproc"]
 	path = tools/asmproc
 	url = https://github.com/simonlindholm/asm-processor
+[submodule "tools/asm-differ"]
+	path = tools/asm-differ
+	url = https://github.com/simonlindholm/asm-differ.git
