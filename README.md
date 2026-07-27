@@ -4,7 +4,7 @@
 [![Code](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/code.json&cacheSeconds=300)](https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/progress.json)
 [![Data](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/data.json&cacheSeconds=300)](https://raw.githubusercontent.com/ExpansionPak/PaintStudioDecomp/gh-pages/badges/progress.json)
 
-<img src="https://decomp.dev/ExpansionPak/PaintStudioDecomp.svg?w=512&h=256" width="512" height="256">
+[<img src="https://decomp.dev/ExpansionPak/PaintStudioDecomp.svg?w=512&h=256" width="512" height="256">](https://decomp.dev/ExpansionPak/PaintStudioDecomp)
 
 This is a work-in-progress decompilation of [Mario Artist: Paint Studio (1999)](https://en.wikipedia.org/wiki/Mario_Artist) for the [64DD](https://en.wikipedia.org/wiki/64DD)
 

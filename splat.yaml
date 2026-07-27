@@ -97,7 +97,7 @@ segments:
     - [0x15BC0, asm, libultra/io/sptask]
     - [0x15EB0, asm, libultra/os/destroythread]
     - [0x15FC0, asm, libultra/os/exceptasm]
-    - [0x168C0, asm, libultra/gu/scale]
+    - [0x168C0, c, libultra/gu/scale]
     - [0x16960, asm, libultra/libc/bzero]
     - [0x16A00, asm, libultra/io/piread]
     - [0x16A40, asm, libultra/io/gbpakcheckconnector]
