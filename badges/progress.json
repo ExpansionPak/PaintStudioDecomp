@@ -1,14 +1,14 @@
 {
   "total": {
-    "decompiled_ratio": 0.0099789697,
-    "decompiled_bytes": 15184,
+    "decompiled_ratio": 0.01002366,
+    "decompiled_bytes": 15252,
     "total_bytes": 1521600
   },
   "code": {
-    "decompiled_ratio": 0.0099789697,
-    "decompiled_funcs_ratio": 0.04663047,
-    "decompiled_funcs": 146,
-    "decompiled_bytes": 15184,
+    "decompiled_ratio": 0.01002366,
+    "decompiled_funcs_ratio": 0.046949854,
+    "decompiled_funcs": 147,
+    "decompiled_bytes": 15252,
     "total_funcs": 3131,
     "total_bytes": 1521600
   },
