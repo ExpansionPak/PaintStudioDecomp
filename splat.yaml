@@ -77,7 +77,7 @@ segments:
     - [0x14B10, asm, leo/lib/cjcreateleomanager]
     - [0x14D50, asm, leo/lib/cacreateleomanager]
     - [0x14F80, asm, leo/lib/testunitready]
-    - [0x15020, asm, leo/lib/leotestunit]
+    - [0x15020, c, leo/lib/leotestunit]
     - [0x15060, asm, leo/lib/readrtc]
     - [0x150C0, asm, leo/lib/leoseek]
     - [0x15180, asm, leo/lib/seek]
