@@ -83,7 +83,7 @@ segments:
     - [0x15180, asm, leo/lib/seek]
 
     #--libultra 2.0J .text
-    - [0x151E0, asm, libultra/io/piacs]
+    - [0x151E0, c, libultra/io/piacs]
     - [0x152A0, asm, libultra/os/sendmesg]
     - [0x153F0, asm, libultra/os/stopthread]
     - [0x154B0, asm, libultra/io/vigetline]
