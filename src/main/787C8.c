@@ -127,7 +127,21 @@ s32 func_800C0CCC(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C1F78.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C2144.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/1282a
+// https://github.com/queueRAM
+void func_800C2144(void) {
+    s32 sp24;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp30;
+
+    sp28 = D_80076464, // comma to the rescue xd
+    sp2C = D_80121EB8;
+    LeoByteToLBA(sp28, sp2C, &sp24);
+    sp30 = D_80279BD8;
+    Mfs_WriteLBA(0x58A, sp30, sp24);
+}
 
 void func_800C2188(void) {
     s32 sp24[4];
