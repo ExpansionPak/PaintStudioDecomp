@@ -1539,7 +1539,9 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8010E23C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8010E244.s")
+void func_8010E244(s32 *arg0, s32 arg1, s32 arg2) {
+    arg0[arg2 + 149] = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8010E254.s")
 
