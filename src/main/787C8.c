@@ -1910,7 +1910,10 @@ f32 func_80119548(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A6E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A72C.s")
+s32 func_8011A72C(s8 *arg0, s32 arg1) {
+    arg0[179] = 1;
+    return arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A73C.s")
 
