@@ -1435,7 +1435,18 @@ void func_8000A5AC(s32 a0, s32 a1, s32 a2, s32 a3, s32 a4) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/RenderText.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AD54.s")
+// Function matched by rbran
+// https://decomp.me/scratch/PhSeG
+// https://github.com/rbran
+s32 func_8000AD54(u8 *arg0) {
+    if (D_80050334 == 0) {
+        return (arg0[0] << 8) + arg0[1];
+    }
+    if (arg0[0] >= 0x80) {
+        return 0;
+    }
+    return D_8005206C[arg0[0]];
+}
 
 // Function matched by queueRAM
 // https://decomp.me/scratch/ghcD8
