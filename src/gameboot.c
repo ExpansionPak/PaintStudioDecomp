@@ -1375,7 +1375,10 @@ void func_80007B20(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D04.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007D64.s")
+void func_80007D64(s32 *arg0, s32 arg1, s32 arg2) {
+    arg0[2] = arg1;
+    arg0[3] = arg2;
+}
 
 void func_80007D70(UnkStruct80007D70 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
     s32 temp1 = arg1;
