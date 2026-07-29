@@ -1,0 +1,89 @@
+{
+  "custom_make": "make",
+  "build_base": true,
+  "build_target": false,
+  "watch_patterns": [
+    "*.c",
+    "*.h",
+    "*.s",
+    "Makefile",
+    "splat.yaml"
+  ],
+  "ignore_patterns": [
+    "build/**/*"
+  ],
+  "units": [
+    {
+      "name": "src/gameboot.c",
+      "target_path": "expected/build/src/gameboot.c.o",
+      "base_path": "build/src/gameboot.c.o",
+      "metadata": {
+        "source_path": "src/gameboot.c"
+      }
+    },
+    {
+      "name": "src/main/787C8.c",
+      "target_path": "expected/build/src/main/787C8.c.o",
+      "base_path": "build/src/main/787C8.c.o",
+      "metadata": {
+        "source_path": "src/main/787C8.c"
+      }
+    },
+    {
+      "name": "src/capture/11C2D8.c",
+      "target_path": "expected/build/src/capture/11C2D8.c.o",
+      "base_path": "build/src/capture/11C2D8.c.o",
+      "metadata": {
+        "source_path": "src/capture/11C2D8.c"
+      }
+    },
+    {
+      "name": "src/leo/lib/leotestunit.c",
+      "target_path": "expected/build/src/leo/lib/leotestunit.c.o",
+      "base_path": "build/src/leo/lib/leotestunit.c.o",
+      "metadata": {
+        "source_path": "src/leo/lib/leotestunit.c"
+      }
+    },
+    {
+      "name": "src/libultra/io/piacs.c",
+      "target_path": "expected/build/src/libultra/io/piacs.c.o",
+      "base_path": "build/src/libultra/io/piacs.c.o",
+      "metadata": {
+        "source_path": "src/libultra/io/piacs.c"
+      }
+    },
+    {
+      "name": "src/libultra/io/vitbl.c",
+      "target_path": "expected/build/src/libultra/io/vitbl.c.o",
+      "base_path": "build/src/libultra/io/vitbl.c.o",
+      "metadata": {
+        "source_path": "src/libultra/io/vitbl.c"
+      }
+    },
+    {
+      "name": "src/libultra/gu/scale.c",
+      "target_path": "expected/build/src/libultra/gu/scale.c.o",
+      "base_path": "build/src/libultra/gu/scale.c.o",
+      "metadata": {
+        "source_path": "src/libultra/gu/scale.c"
+      }
+    },
+    {
+      "name": "src/overlays/camera/27BA20.c",
+      "target_path": "expected/build/src/overlays/camera/27BA20.c.o",
+      "base_path": "build/src/overlays/camera/27BA20.c.o",
+      "metadata": {
+        "source_path": "src/overlays/camera/27BA20.c"
+      }
+    },
+    {
+      "name": "src/overlays/saveload/saveload.c",
+      "target_path": "expected/build/src/overlays/saveload/saveload.c.o",
+      "base_path": "build/src/overlays/saveload/saveload.c.o",
+      "metadata": {
+        "source_path": "src/overlays/saveload/saveload.c"
+      }
+    }
+  ]
+}
