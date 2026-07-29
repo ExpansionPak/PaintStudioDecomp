@@ -354,6 +354,8 @@ extern u32 D_8011F4FC_LOAD;
 extern u8 D_801243E8[];
 extern s32 D_80126620;
 
+extern s32 D_80279BD8;
+
 // unknown data
 extern u8 D_80315AE0[];
 extern u16* D_80000318;
@@ -373,8 +375,12 @@ extern u8 D_8015F340[];
 extern u8 func_801F6EB0[];
 
 extern s32 func_80002030;
+extern u8 D_800330B0;
+extern u8 D_80033B80;
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
+extern u8 D_80076D30;
+extern u8 D_80076D90;
 
 extern u32 D_317F0[];
 extern u32 D_769A0[];
@@ -1500,7 +1506,26 @@ void func_8000584C(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800078B0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007A28.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/UPXh9
+// https://github.com/queueRAM
+void func_80007A28(s32 arg0) {
+    // something odd about these s32/u32 casts influences the instruction scheduling
+    D_800502E0[0] = 4;
+    D_800502E0[4] = (u32)&D_800330B0;
+    D_800502E0[5] = (s32)&D_80033B80 - (s32)&D_800330B0;
+    D_800502E0[6] = (u32)&D_80076D30;
+    D_800502E0[0xC] = D_80279BD8;
+    D_800502E0[0xD] = (s32)&D_80076D90 - (s32)&D_80076D30;
+    D_800502E0[0xF] = 1;
+
+    osWritebackDCache(D_800502E0, 0x40);
+
+    osInvalDCache((void *)D_80279BD8, 0x38400);
+    osSpTaskLoad((OSTask *)D_800502E0);
+    osSpTaskStartGo((OSTask *)D_800502E0);
+    osRecvMesg(&D_8007D920, NULL, OS_MESG_BLOCK);
+}
 
 // file split around here?
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80007AEC.s")
