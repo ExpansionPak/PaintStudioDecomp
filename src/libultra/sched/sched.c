@@ -2,6 +2,9 @@
 
 #include "PR/sched.h"
 
+// Function matched by inspectredc
+// https://decomp.me/scratch/GRUrW
+// https://github.com/inspectredc
 OSScTask *__scTaskReady(OSScTask *t)
 {
     int rv = 0;

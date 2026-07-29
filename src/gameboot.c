@@ -74,14 +74,18 @@ typedef struct {
 typedef struct {
     s16 unk0;
     s16 unk2;
-    u8 pad4[0x28-0x4];
+    s16 unk4;
+    s16 unk6;
+    f32 unk8;
+    f32 unkC;
+    u8 pad10[0x28-0x10];
     s16 unk28;
     u16 pad2A;
     u16 pad2C;
     s16 unk2E;
     s8 unk30;
     s8 unk31;
-} Unk80050860; // size = 0x32
+} Unk80050860;
 
 typedef struct {
     s16 unk0;
@@ -241,6 +245,7 @@ extern char D_80037C1C[];
 extern char D_80037C90[];
 extern char D_80037CBC[];
 extern u32 D_80037D20[3]; // = { 0 };
+extern s32 D_80037D24;
 extern u8 D_80037D2C; // = 0;
 extern RectDescriptor D_80037D30[5];
 extern s32 D_80037E20[4]; // static GBI commands
@@ -344,6 +349,7 @@ extern s32 D_8011F524;
 extern u32 D_8011F4FC;
 extern u32 D_8011F4FC_LOAD;
 extern u8 D_801243E8[];
+extern s32 D_80126620;
 
 // unknown data
 extern u8 D_80315AE0[];
@@ -1498,7 +1504,22 @@ void func_8000AE9C(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_800508B0 = arg3;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000AED0.s")
+// Function matched by rbran
+// https://decomp.me/scratch/PhO26
+// https://github.com/rbran
+void func_8000AED0(s8* arg0, s32 arg1) {
+    D_80050860.unk4 = (s16) ((D_800508BC * 8) + 8);
+    D_80050860.unk6 = (s16) ((D_800508C0 * 0x10) + 8);
+    if ((D_80126620 & 2) && (D_80037D24 != 0)) {
+        func_800DBAF0(&D_80050860, arg0, D_800508BC, D_800508C0, arg1);
+    } else {
+        func_8000A5AC(&D_80050860, arg0, D_800508BC, D_800508C0, arg1);
+    }
+    D_80050860.unk0 = (s16) D_800508B4;
+    D_80050860.unk2 = (s16) D_800508B8;
+    D_80050860.unk8 = (f32) D_800508C4;
+    D_80050860.unkC = (f32) D_800508C8;
+}
 
 u8 GetCharWidth(u16 arg0) {
     
