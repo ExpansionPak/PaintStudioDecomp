@@ -1,3 +1,6 @@
+#define F3DEX_GBI_2
+#include <ultra64.h>
+
 #include "PR/os.h"
 #include "PR/R4300.h"
 #include "PR/sptask.h"
@@ -1180,11 +1183,6 @@ void func_80003AC0(void) {
 }
 #endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003D60.s")
-#else
-// this should match but doesn't seem to?
-// https://decomp.me/scratch/2bzEn
 void func_80003D60(void) {
     s32 pad[3];
 
@@ -1208,7 +1206,6 @@ void func_80003D60(void) {
     gDPSetFillColor(D_8008305C++, 0x00010001);
     gDPFillRectangle(D_8008305C++, 0, 0, (D_800351D4 - 2), (D_800351D0 - 2));
 }
-#endif
 
 void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top) {
     s32 halfScreenWidth;
