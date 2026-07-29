@@ -34,6 +34,7 @@ s32 osCapReadIo(s32*, s32, s32*);
 s32 osCapWriteIo(s32*, s32, s32);
 extern s32 D_80076464;
 extern u32 D_80121EB8;
+extern s32 D_8017873C;
 extern void* D_80279BD8;
 extern s32 D_801F27B0;
 extern s32 D_801F37E0;
@@ -594,7 +595,16 @@ void func_800CCAF4(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800D4064.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800D4098.s")
+s32 func_800D4098(s32 arg0) {
+    s32 *var_v1 = D_8017873C;
+
+    for (;;) {
+        if (arg0 == var_v1[3]) {
+            return var_v1;
+        }
+        var_v1 = var_v1[0];
+    }
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800D40C4.s")
 
