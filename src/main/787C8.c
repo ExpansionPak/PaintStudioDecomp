@@ -9,6 +9,15 @@ struct Unk800C4AC8 {
     s32 unkC;
 };
 
+typedef struct {
+    u8 pad[0x3D0];
+    s8 unk3D0;
+    u8 pad2[3];
+    s8 unk3D4;
+    s8 unk3D5;
+    s8 unk3D6;
+} Unk800CC104;
+
 struct Unk800C6DA4 {
     char pad[0x30];
     s32 unk30;
@@ -421,7 +430,14 @@ s32 func_800C6DA4(struct Unk800C6DA4* arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800CBF14.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800CC104.s")
+void func_800CC104(Unk800CC104 *arg0, u8 arg1, u8 arg2, u8 arg3) {
+    arg0->unk3D0 = arg1;
+    arg0->unk3D4 = arg1;
+    (&arg0->unk3D0)[1] = arg2;
+    arg0->unk3D5 = arg2;
+    (&arg0->unk3D0)[2] = arg3;
+    arg0->unk3D6 = arg3;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800CC12C.s")
 
