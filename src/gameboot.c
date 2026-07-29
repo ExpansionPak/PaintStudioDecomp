@@ -376,6 +376,9 @@ extern s32 func_80002030;
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
 
+extern u32 D_317F0[];
+extern u32 D_769A0[];
+
 extern u16 D_8015F620;
 
 // .data
@@ -400,6 +403,7 @@ void func_80003D60(void);
 void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)());
 void func_80003720(char *str, s32 screenWidth);
 void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top);
+void func_80003FE0(Gfx**);
 void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue);
 void func_8000ADF0(void);
 void func_8000AE58(s32, s32);
@@ -1147,15 +1151,9 @@ s32 func_80003A98(void) {
     return 0;
 }
 
-// There's probably a file split here which could explain why these 2 functions match on decomp.me but not here for some reason.
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003AC0.s")
-#else
+// Function matched by queueRAM
 // https://decomp.me/scratch/uXM98
-void func_80003FE0(Gfx**);          /* extern */
-extern u32 D_317F0[];
-extern u32 D_769A0[];
-
+// https://github.com/queueRAM
 void func_80003AC0(void) {
     s32 color;
     s32 pad0;
@@ -1181,7 +1179,6 @@ void func_80003AC0(void) {
     gDPPipeSync(D_8008305C++);
     func_80003FE0(&D_8008305C);
 }
-#endif
 
 void func_80003D60(void) {
     s32 pad[3];
