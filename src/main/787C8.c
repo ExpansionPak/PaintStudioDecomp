@@ -26,6 +26,7 @@ s32 osCapWriteIo(s32*, s32, s32);
 extern s32 D_80076464;
 extern u32 D_80121EB8;
 extern void* D_80279BD8;
+extern s32 D_801F27B0;
 extern s32 D_801F37E0;
 extern s32 D_801F38CC;
 extern s32 D_801F38D4;
@@ -1699,7 +1700,9 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_80113FEC.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_80114034.s")
+s32 func_80114034(void) {
+    return D_801F27B0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapConvertToRGBA.s")
 
