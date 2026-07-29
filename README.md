@@ -96,7 +96,16 @@ brew install \
 
 ## Diffing a Function
 
-This repo uses [asm-differ](https://github.com/simonlindholm/asm-differ) (`tools/asm-differ`, a submodule) to compare your current C output against the target assembly for a function.
+Both diffing tools below compare your current build's object files against a known-good baseline (`expected/build`), so the general workflow is:
+
+1. `make setup` - only needed once, or after pulling changes that touch `splat.yaml`/the base ROM. Regenerates `asm/`, `bin/`, and `assets/` from `dmpj.d64`.
+2. `make` - rebuilds the ROM from current source. If it succeeds, `md5sum -c checksum.md5` prints `build/dmpj.d64: OK`, confirming a bit-exact match against the original ROM regardless of which functions are matched yet (unmatched functions still compile to identical bytes via their `GLOBAL_ASM` stubs).
+3. `cp -r build expected/build` - snapshot that known-good build as the baseline. Only needs to be redone after step 1/2 change what "known-good" looks like (e.g. after `make setup`, or after pulling other people's matches).
+4. Diff a specific function with `asm-differ` or `objdiff` (below) to see if your in-progress C matches.
+
+### Using asm-differ
+
+[asm-differ](https://github.com/simonlindholm/asm-differ) (`tools/asm-differ`, a submodule), is a tool used by default on decomp.me, to compare your current C output against the target assembly for a function.
 
 Before diffing for the first time, snapshot a known-good build as the baseline to diff against:
 
@@ -116,6 +125,42 @@ python3 tools/asm-differ/diff.py -mo func_80007D64
 - add `-w` to re-run automatically whenever the source file is saved
 
 Run `python3 tools/asm-differ/diff.py --help` for the full list of options.
+
+### Using objdiff
+
+[objdiff](https://github.com/encounter/objdiff) is an alternative diffing tool also used on decomp.me with a GUI, live rebuild-on-save, and a function/object browser - also the same diffing engine decomp.me uses under the hood, so a scratch that matches in the browser will match here too. The project's `objdiff.json` (repo root) is already configured with one unit per `c`-type source file.
+
+Install it (either works):
+
+```sh
+# prebuilt binary - see https://github.com/encounter/objdiff/releases
+# or, with Rust installed:
+cargo install --locked --git https://github.com/encounter/objdiff.git objdiff-gui objdiff-cli
+```
+
+Like `asm-differ`, it needs a known-good baseline to diff against:
+
+```sh
+make
+cp -r build expected/build
+```
+
+Then launch the GUI, pointing it at the repo root (it won't auto-detect the current directory):
+
+```sh
+objdiff -p /path/to/PaintStudioDecomp
+```
+
+- The sidebar lists every unit from `objdiff.json` (one per `c`-type source file, e.g. `src/gameboot.c`).
+- Click a unit to open its diff view: target assembly on the left, your current build on the right, function by function. Matching lines are unhighlighted; mismatches are highlighted, similar to `asm-differ`'s output.
+- Each unit also shows a match percentage in the sidebar so you can see progress at a glance.
+- With the window focused, save the source file you're working on and objdiff rebuilds and re-diffs automatically (via `watch_patterns` in `objdiff.json`) - no need to switch back to a terminal.
+
+To check overall progress without the GUI, use the CLI instead:
+
+```sh
+objdiff-cli report generate
+```
 
 ## Using decomp.me
 
