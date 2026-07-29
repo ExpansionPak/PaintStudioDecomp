@@ -1539,7 +1539,9 @@ void func_80104058(void) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8010E23C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8010E244.s")
+void func_8010E244(s32 *arg0, s32 arg1, s32 arg2) {
+    arg0[arg2 + 149] = arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8010E254.s")
 
@@ -1910,7 +1912,10 @@ f32 func_80119548(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A6E8.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A72C.s")
+s32 func_8011A72C(s8 *arg0, s32 arg1) {
+    arg0[179] = 1;
+    return arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A73C.s")
 
@@ -1938,7 +1943,10 @@ f32 func_80119548(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011AA1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011AA2C.s")
+s32 func_8011AA2C(s8 *arg0, s32 arg1) {
+    arg0[206] = 0;
+    return arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011AA38.s")
 
