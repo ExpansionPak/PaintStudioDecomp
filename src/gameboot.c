@@ -1,3 +1,6 @@
+#define F3DEX_GBI_2
+#include <ultra64.h>
+
 #include "PR/os.h"
 #include "PR/R4300.h"
 #include "PR/sptask.h"
@@ -373,6 +376,9 @@ extern s32 func_80002030;
 extern s32 D_80037E20[];
 extern s32 D_80037E30[];
 
+extern u32 D_317F0[];
+extern u32 D_769A0[];
+
 extern u16 D_8015F620;
 
 // .data
@@ -397,6 +403,7 @@ void func_80003D60(void);
 void func_80003570(char* str, s32 arg1, s32 screenWidth, s32 (*callback)());
 void func_80003720(char *str, s32 screenWidth);
 void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top);
+void func_80003FE0(Gfx**);
 void func_80004594(char *text, s32 x, s32 y, u8 red, u8 green, u8 blue);
 void func_8000ADF0(void);
 void func_8000AE58(s32, s32);
@@ -430,6 +437,27 @@ s32 func_800046DC(void);
 
 void RenderText(s32, s32, s32, s32, s32);
 void func_8000A5F0(s32, s32, s32, s32, s32);
+
+extern void __ull_to_d(s32);
+extern void __ull_to_f(s32);
+extern void __f_to_ull(s32);
+extern f32 __sinf(f32);
+extern s32 _bcmp(const void*, const void*, size_t);
+
+extern void func_80005078(s32, s32);
+extern void func_80011C50(s32);
+extern void func_80020D20(s32, s32, s32);
+extern void func_80020D7C(s32, s32);
+extern void func_80021EB0(s32);
+extern void func_800220A0(void);
+extern void func_800220B0(void);
+extern void func_800232C0(s32, s32, s32);
+extern void func_80023660(void);
+extern void func_80025470(void);
+extern void func_80025480(void*, f32, f32, f32);
+
+extern void guS2D2EmuBgRect1Cyc(s32, s32);
+extern void guS2D2EmuSetScissor(s32, s32, s32, s32, s32);
 
 void func_80001360(void *arg) {
     osInitialize();
@@ -760,7 +788,133 @@ void func_80001FF0(const char* fmt, ...) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80002030.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800021E8.s")
+void func_800021E8(void) {
+    float sp38[4][4]; // Clean 64-byte float matrix at sp + 0x38
+
+    sqrtf(90.0f);
+    coss(0x5A);
+    sins(0x5A);
+    __sinf(90.0f);
+    cosf(90.0f);
+
+    osViBlack(TRUE);
+    osViSetMode(&osViModeTable[2]); // Index 2 -> 0xA0 offset
+    osViSetSpecialFeatures(0);
+    osViSwapBuffer(NULL);
+    
+    osViSetXScale(1.0f);
+    osViSetYScale(1.0f);
+    
+    osViGetCurrentFramebuffer();
+    osViGetNextFramebuffer();
+    osViGetCurrentMode();
+    osCreateViManager(1);
+    osViGetCurrentLine();
+
+    func_800220A0();
+
+    guMtxF2L(sp38, NULL);
+    guPerspective(NULL, NULL, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    guMtxXFML(NULL, 0.0f, 0.0f, 0.0f, NULL, NULL, NULL);
+    guRotateF(sp38, 0.0f, 0.0f, 0.0f, 0.0f);
+    guMtxCatF(sp38, sp38, sp38);
+    guAlignF(sp38, 0.0f, 0.0f, 0.0f, 0.0f);
+    guMtxXFMF(sp38, 0.0f, 0.0f, 0.0f, NULL, NULL, NULL);
+    guLookAt(NULL, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    guMtxL2F(sp38, NULL);
+
+    guS2D2EmuSetScissor(0, 0, 0, 0, 0);
+    guS2D2EmuBgRect1Cyc(0, 0);
+
+    guFrustum(NULL, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    guRotate(NULL, 0.0f, 0.0f, 0.0f, 0.0f);
+    guTranslate(NULL, 0.0f, 0.0f, 0.0f);
+
+    func_80025480(NULL, 0.0f, 0.0f, 0.0f);
+
+    guTranslateF(NULL, 0.0f, 0.0f, 0.0f);
+    guScaleF(NULL, 0.0f, 0.0f, 0.0f);
+    guNormalize(NULL, NULL, NULL);
+
+    func_80021EB0(0);
+
+    osAiSetNextBuffer(NULL, 0);
+    osAiGetLength();
+    osContGetReadData(NULL);
+    osContStartReadData(NULL);
+    osContReset(NULL, NULL);
+    osDriveRomInit();
+
+    osCreateScheduler(NULL, NULL, 0, 0, 0);
+    osScAddClient(NULL, NULL, NULL);
+    osScGetCmdQ(NULL);
+    osScRemoveClient(NULL, NULL);
+
+    osSpTaskLoad(NULL);
+    osSpTaskStartGo(NULL);
+
+    _bcmp(NULL, NULL, 0);
+    func_80011C50(0);
+
+    LeoGetAAdr(0, NULL, NULL, NULL);
+
+    osGbpakGetStatus(NULL, NULL);
+    osGbpakReadWrite(NULL, 0, 0, NULL, 0);
+    osGbpakInit(NULL, NULL, 0);
+
+    func_800232C0(0, 0, 0);
+
+    osGbpakCheckConnector(NULL, NULL);
+    osGbpakPower(NULL, 0);
+
+    func_80005078(0, 0);
+    func_80020D7C(0, 0);
+    func_800220B0();
+
+    LeoByteToLBA(0, 0, NULL);
+    LeoResetClear();
+    LeoCreateLeoManager(0, 0, NULL, 0);
+    LeoCJCreateLeoManager(0, 0, NULL, 0);
+    LeoCACreateLeoManager(0, 0, NULL, 0);
+    LeoReadCapacity(NULL, 0);
+    LeoTestUnitReady(NULL);
+    LeoRezero(NULL, NULL);
+    LeoReadWrite(NULL, 0, 0, NULL, 0, NULL);
+    LeoSeek(NULL, 0, NULL);
+    LeoSpdlMotor(NULL, 0, NULL);
+    LeoReadDiskID(NULL, NULL, NULL);
+    LeoReadRTC(NULL, NULL);
+    LeoSetRTC(NULL, NULL, NULL);
+    LeoModeSelectAsync(NULL, 0, 0, NULL);
+
+    osEPiLinkHandle(NULL);
+    osEPiStartDma(NULL, NULL, 0);
+    osCartRomInit();
+    osGetThreadId(NULL);
+
+    func_80023660();
+    func_80025470();
+
+    __ull_to_f(0);
+    __f_to_ull(0);
+    __ull_to_d(0);
+
+    func_80020D20(0, 0, 0);
+
+    alSynAddPlayer(NULL, NULL);
+    alSynAllocVoice(NULL, NULL, NULL);
+    alSynStopVoice(NULL, NULL);
+    alSynSetVol(NULL, NULL, 0, 0);
+    alSynSetFXMix(NULL, NULL, 0);
+    alSynStartVoice(NULL, NULL, NULL);
+    alSynSetPan(NULL, NULL, 0);
+    alSynSetPitch(NULL, NULL, 0.0f);
+    alInit(NULL, NULL);
+    alLink(NULL, NULL);
+    alClose(NULL);
+    alAudioFrame(NULL, NULL, NULL, 0);
+    alUnlink(NULL);
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80002788.s")
 
@@ -1144,15 +1298,9 @@ s32 func_80003A98(void) {
     return 0;
 }
 
-// There's probably a file split here which could explain why these 2 functions match on decomp.me but not here for some reason.
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003AC0.s")
-#else
+// Function matched by queueRAM
 // https://decomp.me/scratch/uXM98
-void func_80003FE0(Gfx**);          /* extern */
-extern u32 D_317F0[];
-extern u32 D_769A0[];
-
+// https://github.com/queueRAM
 void func_80003AC0(void) {
     s32 color;
     s32 pad0;
@@ -1178,13 +1326,7 @@ void func_80003AC0(void) {
     gDPPipeSync(D_8008305C++);
     func_80003FE0(&D_8008305C);
 }
-#endif
 
-#ifndef NON_MATCHING
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80003D60.s")
-#else
-// this should match but doesn't seem to?
-// https://decomp.me/scratch/2bzEn
 void func_80003D60(void) {
     s32 pad[3];
 
@@ -1208,7 +1350,6 @@ void func_80003D60(void) {
     gDPSetFillColor(D_8008305C++, 0x00010001);
     gDPFillRectangle(D_8008305C++, 0, 0, (D_800351D4 - 2), (D_800351D0 - 2));
 }
-#endif
 
 void func_80003EE8(s32 width, s32 height, s32 *left, s32 *top) {
     s32 halfScreenWidth;
