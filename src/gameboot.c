@@ -374,7 +374,7 @@ extern u8 func_800BD8E0[];
 extern u8 D_8015F340[];
 extern u8 func_801F6EB0[];
 
-extern s32 func_80002030;
+extern s32 func_80002030(s32 arg0, u8* arg1, s32 arg2);
 extern u8 D_800330B0;
 extern u8 D_80033B80;
 extern s32 D_80037E20[];
@@ -792,7 +792,58 @@ void func_80001FF0(const char* fmt, ...) {
     _Printf(&func_80002030, NULL, fmt, args);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80002030.s")
+// Function matched by Bl00D4NGEL (Dominik Peters)
+// https://decomp.me/scratch/stb3U
+// https://github.com/Bl00D4NGEL
+s32 func_80002030(s32 arg0, u8* arg1, s32 arg2) {
+    u32 sp5C;
+    s32 var_s1;
+    s32 bound;
+    s32 temp_v0;
+    s32 temp_v1;
+    u32 temp_s0;
+    osPiReadIo(0xB1FF0000U, &sp5C);
+
+    if (sp5C != 0x49533634) {
+        return 1;
+    }
+    
+    osPiReadIo(0xB1FF0004U, &sp5C);
+    bound = sp5C;
+    osPiReadIo(0xB1FF0014U, &sp5C);
+    var_s1 = sp5C;
+    temp_v0 = var_s1 + arg2;
+
+    if (temp_v0 >= (s32)0xFFE0) {
+        temp_v1 = temp_v0 + (s32)0xFFFF0020;
+        if (temp_v1);
+        if (bound < temp_v1 || var_s1 < bound) {
+            return 1;
+        }
+    } else if (var_s1 < bound && bound < temp_v0) {
+        return 1;
+    }
+
+    if (arg2 != 0) {
+        do {
+            temp_s0 = (var_s1 & 0x0FFFFFFC) + 0xB1FF0020;
+            if (*arg1 != 0) {
+                osPiReadIo(temp_s0, &sp5C);
+                func_80023690(temp_s0, (*arg1 << ((3 - (var_s1 & 3)) * 8)) | (sp5C & ~(0xFF << ((3 - (var_s1 & 3)) * 8))));
+                var_s1++;
+                if (var_s1 >= (s32)0xFFE0) {
+                    var_s1 += 0xFFFF0020;
+                }
+            }
+            arg2--;
+            arg1++;
+        } while (arg2 != 0);
+    }
+
+    func_80023690(0xB1FF0014U, var_s1);
+
+    return 1;
+}
 
 void func_800021E8(void) {
     float sp38[4][4]; // Clean 64-byte float matrix at sp + 0x38
