@@ -1719,7 +1719,18 @@ u16 func_8000B054(s32 arg0) {
     return D_800508CC[arg0];
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B070.s")
+// Function matched by MatBourgon
+// https://decomp.me/scratch/CZVYA
+// https://github.com/MatBourgon
+s32 func_8000B070(unsigned short arg0) {
+    int i;
+    for (i = 0; i != 0x88; i++) {
+        if (arg0 == D_800508CC[i]) {
+            return i & 0xFF;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000B0FC.s")
 
