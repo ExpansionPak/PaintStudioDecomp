@@ -259,6 +259,7 @@ extern char D_80037F28[];
 extern u8 D_80037F3C; // = 0x81;
 extern u8 D_80037F3D[12];
 extern s32 D_80037F50[3]; // = { 0 };
+extern s32 D_80037F58;
 extern OSMesgQueue D_80037F5C; // = { 0 };
 extern OSMesg D_80037F74[8][16]; // = { 0 };
 // TODO: too early to determine the range of these
@@ -340,7 +341,7 @@ extern s32 D_8005273C[9];
 extern s32 D_80052760[17];
 extern s32 D_800527A4[]; // maybe a struct? passed into func_8000B768 as 5th arg (sp10)
 extern s32 D_80058744[]; // maybe a struct? passed into func_8000BA44 as 5th arg (sp10)
-extern Unk80059164 D_80059164[2];
+extern Unk80059164 D_80059164;
 extern s32 D_800591B8[4];
 extern s32 D_800591C8[4];
 extern s32 D_800591D8[8]; // array of gbi commands?
@@ -2002,65 +2003,65 @@ void func_8000BE24(void) {
 }
 #endif
 
-#ifndef NON_EQUIVALENT
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_8000C56C.s")
-#else
-// https://decomp.me/scratch/s0P8p
-
-void func_8000572C(void);                                  /* extern */
-void func_8000BE24(void);                                  /* extern */
-extern s32 D_80037F58;
-
-typedef struct {
-    s32 unk0[2];
-} Unk;
-
+// Function matched by inspectredc
+// https://decomp.me/scratch/p1k5b
+// https://github.com/inspectredc
 void func_8000C56C(void) {
-    s32 temp_t5;
-    s32 var_a1;
-    s32 var_a2;
+    s32 *src;
+    s32 *dst;
+    s32 *temp1;
+    s32 *temp2;
+    s32 totalWords;
+    s32 i;
     s32 var_s0;
-    s32* var_a0;
-    s32* var_a3;
-    s32* temp_v0;
-    s32* var_v1;
 
     var_s0 = 0;
     if (D_80037F58 == 1) {
         func_8000572C();
     }
     func_800050B0();
-    temp_v0 = osViGetCurrentFramebuffer();
-    if (temp_v0 == (s32*)D_80081E64) {
-        var_a0 = D_80081E68;
+
+    src = (s32 *)osViGetCurrentFramebuffer();
+    if (src == (s32 *)D_80081E64) {
+        dst = (s32 *)D_80081E68;
     } else {
-        var_a0 = D_80081E64;
+        dst = (s32 *)D_80081E64;
     }
+
     if (D_800351D4 == SCREEN_WIDTH) {
-        D_80059164[0].unk0 = 0xA0;
-        D_80059164[0].unk2 = 0x78;
-        D_80059164[0].unk4 = 0x140;
-        D_80059164[0].unk6 = 0xF0;
-        var_a2 = 0x25800;
+        D_80059164.unk0 = 0xA0;
+        D_80059164.unk2 = 0x78;
+        D_80059164.unk4 = 0x140;
+        D_80059164.unk6 = 0xF0;
+        totalWords = 0x25800;
     } else {
-        D_80059164[0].unk0 = 0x140;
-        D_80059164[0].unk2 = 0xF0;
-        D_80059164[0].unk4 = 0x280;
-        D_80059164[0].unk6 = 0x1E0;
-        var_a2 = 0x96000;
+        D_80059164.unk0 = 0x140;
+        D_80059164.unk2 = 0xF0;
+        D_80059164.unk4 = 0x280;
+        D_80059164.unk6 = 0x1E0;
+        totalWords = 0x96000;
     }
-    var_v1 = temp_v0;
-    for (var_a1 = 0; var_a1 < var_a2; var_a1++) {
-        var_a0[var_a1] = var_v1[var_a1];
+
+    for (i = 0, temp2 = src, temp1 = dst; i < totalWords; i += 0x20) {
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
+        *temp1++ = *temp2++;
     }
+
     while (1) {
         func_80005108();
-        D_80059164[0].unkB = var_s0;
-        D_80059164[0].unkF = var_s0;
-        D_80059164[0].unk13 = var_s0;
-        D_80059164[0].unk17 = var_s0;
+        D_80059164.unkB = var_s0;
+        D_80059164.unkF = var_s0;
+        D_80059164.unk13 = var_s0;
+        D_80059164.unk17 = var_s0;
         func_8000BE24();
         func_80005384();
+
         var_s0 += 8;
         if (var_s0 < 0x100) {
             continue;
@@ -2068,4 +2069,3 @@ void func_8000C56C(void) {
         var_s0 = 0xFF;
     }
 }
-#endif
