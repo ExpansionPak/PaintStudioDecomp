@@ -440,7 +440,7 @@ void func_800C28A0(void);
 
 s32 func_80023690(s32, s32);
 
-s32 func_800046DC(void);
+int func_800046DC(s32 arg0);
 
 void RenderText(s32, s32, s32, s32, s32);
 void func_8000A5F0(s32, s32, s32, s32, s32);
@@ -1487,18 +1487,24 @@ int func_80004690(s32 arg0) {
     return BETWEEN(arg0, 0x30, 0x3A) || BETWEEN(arg0, 0x61, 0x67) || BETWEEN(arg0, 0x41, 0x47);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800046DC.s")
+// Function matched by Bl00D4NGEL (Dominik Peters)
+// https://decomp.me/scratch/Sx4BA
+// https://github.com/Bl00D4NGEL
+int func_800046DC(s32 arg0) {
+    return arg0 >= 0x61 && arg0 < 0x7B;
+}
 
 s32 func_800046F8(s32 arg0) {
     s32 var_v1;
 
-    if (func_800046DC() != 0) {
+    if (func_800046DC(arg0) != 0) {
         var_v1 = arg0 - 0x20;
     } else {
         var_v1 = arg0;
     }
     return var_v1;
 }
+
 // Function matched by queueRAM
 // https://decomp.me/scratch/Gs7JS
 // https://github.com/queueRAM
