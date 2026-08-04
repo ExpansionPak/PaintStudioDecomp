@@ -28,6 +28,11 @@ struct Arg1Struct {
     struct Unk800C4AC8* unk268;
 };
 
+typedef struct {
+    u16 unk0;
+    u8 pad2[2];
+} Unk8015F638;
+
 u32 func_800C0BB4();
 s32 func_8011B2A4(ALPlayer*);
 s32 osCapReadIo(s32*, s32, s32*);
@@ -48,8 +53,10 @@ extern ALSynth* D_801F4BC0;
 extern ALSynth* D_801F4BC4;
 extern s32 D_8011F5E4;
 extern s32 D_80121F24[][6];
+extern u8 D_80122854;
 extern f32 D_8015CBB8;
 extern f64 D_8015F038;
+extern Unk8015F638 D_8015F638[];
 extern s32 func_800C6678(void*, void*);
 extern s32 func_800C66D4(void*, void*);
 extern char D_801CFA50[];
@@ -115,7 +122,19 @@ s32 func_800C0CCC(u16 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0E64.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0F4C.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/BrQCu
+// https://github.com/queueRAM
+u16 func_800C0F4C(void) {
+    u16 var_v0; // when adds to u16, compiler masks 32-bit register with 0xFFFF
+
+    for (var_v0 = 0; var_v0 < 4; var_v0++) {
+        if ((D_80122854 & (1 << var_v0)) && (D_8015F638[var_v0].unk0 & 0x1)) {
+            return var_v0 + 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C0FB8.s")
 
