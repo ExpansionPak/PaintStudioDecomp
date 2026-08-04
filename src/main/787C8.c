@@ -1836,7 +1836,18 @@ void osCapWrite0100(void) {
     osCapWriteIo(&D_801F37E0, 0x100, 0);
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/osCapInquiry.s")
+s32 osCapInquiry(void) {
+    s32 sp1C;
+    s32 temp_v0;
+
+    osCapWrite0100();
+    sp1C = osCapRead0000() & 0x40;
+    temp_v0 = osCapRead0004() & 0x40320000;
+    if ((sp1C == 0x40) && ((temp_v0) == 0x40320000)) {
+        return 3;
+    }
+    return 4;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_80114DB0.s")
 
