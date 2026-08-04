@@ -25,6 +25,8 @@ extern s32 D_802C8790;
 extern s32 D_802C8878;
 extern s32 D_802C888C;
 extern s32 D_cam_8029E3A0;
+extern s32 D_cam_8029E984[];
+extern s32 D_cam_8029EA84;
 extern s32 D_cam_8029EAAC;
 extern s32 D_cam_8029EAE4;
 extern s32 D_cam_8029EBD0;
@@ -139,7 +141,13 @@ s32 func_cam_802841CC(OSPfs* arg0, u8 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_802858F0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_80285900.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/OdFol
+// https://github.com/queueRAM
+void func_cam_80285900(s32 arg0) {
+    D_cam_8029EA84 += 1;
+    D_cam_8029E984[D_cam_8029EA84] = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlays/camera/27BA20/func_cam_8028593C.s")
 

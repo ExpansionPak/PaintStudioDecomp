@@ -360,7 +360,8 @@ void func_800C6DFC(s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C7738.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/n_alSynFreeFX.s")
+void n_alSynFreeFX(s32 arg0) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C7760.s")
 
@@ -1711,7 +1712,8 @@ void func_8010E244(s32 *arg0, s32 arg1, s32 arg2) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_801120C0.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/alSynFreeFX.s")
+void alSynFreeFX(ALSynth* s, void** fx) {
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_80112330.s")
 
