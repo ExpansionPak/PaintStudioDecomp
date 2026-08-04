@@ -2053,7 +2053,16 @@ s32 func_8011AA2C(s8 *arg0, s32 arg1) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011AD1C.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011AD70.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/POAO6
+// https://github.com/queueRAM
+
+// here, arg0 could be a struct or an array. caller may help differentiate
+void* func_8011AD70(u8* arg0, u8* arg1) {
+    arg0[0xd0] = (u8) *arg1;
+    return arg1 + 1;
+}
+
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011AD80.s")
 
