@@ -33,6 +33,11 @@ typedef struct {
     u8 pad2[2];
 } Unk8015F638;
 
+typedef struct {
+    void* unk0;
+    u8 pad4[0xD0];
+} Unk8016FC20; // size = 0xD4
+
 u32 func_800C0BB4();
 s32 func_8011B2A4(ALPlayer*);
 s32 osCapReadIo(s32*, s32, s32*);
@@ -57,8 +62,10 @@ extern u8 D_80122854;
 extern f32 D_8015CBB8;
 extern f64 D_8015F038;
 extern Unk8015F638 D_8015F638[];
+extern Unk8016FC20 D_8016FC20[];
 extern s32 func_800C6678(void*, void*);
 extern s32 func_800C66D4(void*, void*);
+extern void func_800C6E30(void);
 extern char D_801CFA50[];
 
 void func_800BD8E0(void) {
@@ -334,7 +341,12 @@ s32 func_800C6DA4(struct Unk800C6DA4* arg0) {
     return 1;
 }
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C6DFC.s")
+// Function matched by queueRAM
+// https://decomp.me/scratch/9A0le
+// https://github.com/queueRAM
+void func_800C6DFC(s32 arg0) {
+    D_8016FC20[arg0].unk0 = func_800C6E30;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_800C6E30.s")
 
