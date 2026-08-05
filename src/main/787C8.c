@@ -2,6 +2,17 @@
 
 #include "PR/sched.h"
 
+typedef struct StructA {
+    /* 0x00 */ u8 filler[0xAE];
+    /* 0xAE */ s16 unkAE;
+    /* 0xB0 */ s16 unkB0;
+} StructA; // TODO: Give this struct a name
+
+typedef struct StructB {
+    /* 0x00 */ u8 unk0;
+    /* 0x01 */ u8 unk1;
+} StructB; // TODO: Give this struct a name
+
 struct Unk800C4AC8 {
     s32 unk0;
     s32 unk4;
@@ -1979,7 +1990,14 @@ f32 func_80119548(f32 arg0) {
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A574.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A588.s")
+void* func_8011A588(StructA* arg0, StructB* arg1) {
+    s32 v1 = arg1->unk0;
+
+    arg0->unkAE = ((((v1 << 8) & 0xFF00) & 0xFF00) | arg1->unk1) & 0xFFFF;
+    arg1++;
+    arg0->unkB0 = 0;
+    return arg1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/main/787C8/func_8011A5A8.s")
 
