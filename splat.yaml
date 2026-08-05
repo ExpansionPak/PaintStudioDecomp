@@ -126,7 +126,7 @@ segments:
     - [0x18C30, asm, libultra/io/viblack]
     - [0x18CA0, asm, libultra/io/pirawread]
     - [0x18CF0, asm, libultra/io/sirawread]
-    - [0x18D40, asm, libultra/os/getthreadid]
+    - [0x18D40, c, libultra/os/getthreadid]
     - [0x18D60, asm, libultra/os/setintmask]
     - [0x18E00, asm, libultra/gu/mtxutil]
     - [0x19070, asm, libultra/io/visetmode]
