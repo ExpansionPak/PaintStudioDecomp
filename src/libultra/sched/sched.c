@@ -1,19 +1,20 @@
-#include "common.h"
-
 #include "PR/sched.h"
 
-// Function matched by inspectredc
-// https://decomp.me/scratch/GRUrW
-// https://github.com/inspectredc
-OSScTask *__scTaskReady(OSScTask *t)
+OSScTask *__scTaskReady(OSScTask *t) 
 {
     int rv = 0;
     void *a;
-    void *b;
+    void *b;    
 
-    if (t) {
-        if ((a = osViGetCurrentFramebuffer()) !=
-            (b = osViGetNextFramebuffer())) {
+    if (t) {    
+        /*
+         * If there is a pending swap bail out til later (next
+         * retrace).
+         */
+        if ((a=osViGetCurrentFramebuffer()) != (b=osViGetNextFramebuffer())) {
+#ifdef SC_LOGGING
+            osLogEvent(l, 513, 2, a, b);
+#endif            
             return 0;
         }
 

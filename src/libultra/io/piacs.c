@@ -1,13 +1,8 @@
-#include "common.h"
+#include "PR/piint.h"
 
-#include "PR/sched.h"
-
-s32 __osPiCreateAccessQueue();                        /* extern */
-extern OSMesgQueue __osPiAccessQueue;
-extern s32 __osPiAccessQueueEnabled;
 extern void* piAccessBuf;
 
-s32 __osPiCreateAccessQueue(void) {
+void __osPiCreateAccessQueue(void) {
     __osPiAccessQueueEnabled = 1;
     osCreateMesgQueue(&__osPiAccessQueue, &piAccessBuf, 1);
     osSendMesg(&__osPiAccessQueue, NULL, 0);

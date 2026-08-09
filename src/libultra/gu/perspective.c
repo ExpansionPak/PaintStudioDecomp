@@ -2,7 +2,7 @@
 
 #include "PR/sched.h"
 
-f32 __sinf(f32);                                    /* extern */
+extern f32 __sinf(f32);
 extern f64 perspective_rodata_0000;
 
 void guPerspectiveF(float mf[4][4], u16 *perspNorm, float fovy, float aspect, float near, float far, float scale)
