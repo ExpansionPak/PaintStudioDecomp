@@ -99,7 +99,7 @@ segments:
     - [0x15FC0, asm, libultra/os/exceptasm]
     - [0x168C0, c, libultra/gu/scale]
     - [0x16960, asm, libultra/libc/bzero]
-    - [0x16A00, asm, libultra/io/piread]
+    - [0x16A00, c, libultra/io/piread]
     - [0x16A40, asm, libultra/io/gbpakcheckconnector]
     - [0x16ED0, asm, libultra/io/gbpakpower]
     - [0x16FE0, data] # padding, but not 0xFFFFFFFF

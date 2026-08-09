@@ -12,3 +12,4 @@ tools/ido_recomp
 *.ld
 .venv/
 nonmatchings/
+.vscode/
