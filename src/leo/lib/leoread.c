@@ -1,31 +1,7 @@
-#include "PR/leo.h"
+#include "libultra/ultra64.h"
+#include "leo/leo_internal.h"
 
-typedef int bool; // TODO separate this part into include/libc/stdbool.h
-#define false   0
-#define true    1
-
-#define LEO_MSG_CONTROL_C2_CORRECTION   0x80000
-#define LEO_MSG_CONTROL_FORCE_ACCEPT    0x90000
-
-typedef struct {
-  /* 0x0 */ u16 lba;
-  /* 0x2 */ u16 cylinder;
-  /* 0x4 */ u16 blk_bytes;
-  /* 0x6 */ u8 sec_bytes;
-  /* 0x7 */ u8 head;
-  /* 0x8 */ u8 zone;
-  /* 0x9 */ u8 rdwr_blocks;
-  /* 0xA */ u8 start_block;
-} tgt_param_form; // size = 0xC
-
-u16 leoC2_Correction(void);                               /* extern */
-extern OSMesgQueue LEOc2ctrl_que;
-extern OSMesgQueue LEOcontrol_que;
-extern LEOCmd* LEOcur_command;
-extern OSThread LEOinterruptThread;
-void leoRead_common(u32);                                /* extern */
 extern vu16 LEOrw_flags;
-extern tgt_param_form LEOtgt_param;
 
 void leoRead(void) {
     LEOrw_flags = 0;

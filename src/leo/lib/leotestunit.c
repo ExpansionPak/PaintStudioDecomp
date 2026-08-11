@@ -1,7 +1,5 @@
-#include "PR/leo.h"
-
-s8 leoChk_cur_drvmode();                            /* extern */
-extern LEOCmd* LEOcur_command;
+#include "libultra/ultra64.h"
+#include "leo/leo_internal.h"
 
 void leoTest_unit_rdy(void) {
     ((LEOCmdTestUnitReady*) LEOcur_command)->test = leoChk_cur_drvmode();
