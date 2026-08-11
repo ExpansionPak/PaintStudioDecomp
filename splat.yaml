@@ -53,7 +53,7 @@ segments:
     - [0xE0B0, asm, leo/lib/leord_diskid]
     - [0xE240, asm, leo/lib/leomecha]
     - [0xEB90, asm, leo/lib/spdlmotor]
-    - [0xEC50, asm, leo/lib/leoc2ecc]
+    - [0xEC50, c, leo/lib/leoc2ecc]
     - [0xFD40, asm, leo/lib/createleomanager]
     - [0xFEB0, asm, leo/lib/leointerrupt]
     - [0x10580, asm, leo/lib/setrtc]
@@ -203,7 +203,7 @@ segments:
     - [0x5BE80, rodata, leo/lib/leord_diskid]
     - [0x5BE90, rodata, leo/lib/leomecha]
     - [0x5BF00, rodata, leo/lib/leo_tbl]
-    - [0x5C0E0, rodata, leo/lib/leoc2ecc]
+    - [0x5C0E0, .rodata, leo/lib/leoc2ecc]
     - [0x5C500, rodata, leo/lib/leomseq_tbl]
     - [0x5C580, rodata, leo/lib/leotimer]
     #--libultra 2.0J .rodata
