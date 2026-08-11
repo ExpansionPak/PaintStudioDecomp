@@ -44,7 +44,7 @@ segments:
     - [0xC590, asm, leo/lib/leofunc]
     - [0xCA00, asm, leo/lib/leoint]
     - [0xD400, asm, leo/lib/leocmdex]
-    - [0xDA90, asm, leo/lib/leoread]
+    - [0xDA90, c, leo/lib/leoread]
     - [0xDC50, asm, leo/lib/lbatobyte]
     - [0xDDA0, asm, leo/lib/driverominit]
     - [0xDF00, asm, leo/lib/leoinquiry]

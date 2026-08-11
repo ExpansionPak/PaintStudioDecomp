@@ -1,20 +1,10 @@
-#include "common.h"
-
-#include "PR/sched.h"
-
-struct UnkStruct {
-    s8 pad0[4];
-    s8 unk4;
-    s8 unk5;
-    s8 pad6[6];
-    s8 unkC;
-};
+#include "PR/leo.h"
 
 s8 leoChk_cur_drvmode();                            /* extern */
-extern struct UnkStruct* LEOcur_command;
+extern LEOCmd* LEOcur_command;
 
 void leoTest_unit_rdy(void) {
-    LEOcur_command->unkC = leoChk_cur_drvmode();
-    LEOcur_command->unk5 = 0;
-    LEOcur_command->unk4 = 0;
+    ((LEOCmdTestUnitReady*) LEOcur_command)->test = leoChk_cur_drvmode();
+    LEOcur_command->header.sense = LEO_SENSE_NO_ADDITIONAL_SENSE_INFOMATION;
+    LEOcur_command->header.status = LEO_STATUS_GOOD;
 }

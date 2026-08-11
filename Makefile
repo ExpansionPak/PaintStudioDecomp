@@ -43,6 +43,8 @@ IDO_STATIC_RECOMP_VERSION := v1.2
 IDO_RECOMP_ROOT := tools/ido_recomp/$(HOST_OS)
 IDO_71_RECOMP_DIR := $(IDO_RECOMP_ROOT)/7.1
 IDO_71_RECOMP_CC := $(IDO_71_RECOMP_DIR)/cc
+IDO_53_RECOMP_DIR := $(IDO_RECOMP_ROOT)/5.3
+IDO_53_RECOMP_CC := $(IDO_53_RECOMP_DIR)/cc
 
 ifeq ($(HOST_OS),linux)
 ifneq ($(filter arm64 aarch64 armv7l armv6l,$(UNAME_M)),)
@@ -117,7 +119,7 @@ endif
 
 # game uses IDO 7.1
 CC = $(IDO_71_RECOMP_CC)
-CC_OLD = $(IDO_71_RECOMP_CC)
+CC_OLD = $(IDO_53_RECOMP_CC)
 ASMPROC_DIR := tools/asmproc
 ASMPROC = python3 $(ASMPROC_DIR)/build.py
 ASMPROC_FILES := $(ASMPROC_DIR)/build.py $(ASMPROC_DIR)/asm_processor.py $(ASMPROC_DIR)/prelude.inc
@@ -200,10 +202,18 @@ $(IDO_71_RECOMP_CC):
 		tar -xzf "$$archive" -C "$(IDO_71_RECOMP_DIR)"; \
 		rm -f "$$archive"
 
+$(IDO_53_RECOMP_CC):
+	@rm -rf $(IDO_53_RECOMP_DIR)
+	@mkdir -p $(IDO_53_RECOMP_DIR)
+	@archive="$$(mktemp -t ido-5.3-recomp.XXXXXX)"; \
+		curl --fail --location --output "$$archive" "$(call ido_download_url,5.3)"; \
+		tar -xzf "$$archive" -C "$(IDO_53_RECOMP_DIR)"; \
+		rm -f "$$archive"
+
 $(ASMPROC_FILES):
 	@test -f $@ || (echo "Missing asmproc submodule at $(ASMPROC_DIR). Run 'make submodules' or 'git submodule update --init --recursive'." && false)
 
-setup: distclean submodules $(IDO_71_RECOMP_CC) split
+setup: distclean submodules $(IDO_71_RECOMP_CC) $(IDO_53_RECOMP_CC) split
 
 #==============================================================================#
 # Texture Generation                                                           #
@@ -240,6 +250,10 @@ $(BUILD_DIR)/src/overlays/%.c.o: src/overlays/%.c Makefile $(ASMPROC_FILES)
 $(BUILD_DIR)/%.c.o: %.c Makefile $(ASMPROC_FILES)
 	$(CC_CHECK) $(CHECK_FLAGS) $(CHECK_WARNINGS) -MMD -MP -MT $@ -MF $(@:.o=.d) $<
 	$(ASMPROC) $(CC) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) $(OPTFLAGS) -o $@ $<
+
+$(BUILD_DIR)/src/leo/lib/%.c.o: src/leo/lib/%.c Makefile $(ASMPROC_FILES)
+	$(CC_CHECK) $(CHECK_FLAGS) $(CHECK_WARNINGS) -MMD -MP -MT $@ -MF $(@:.o=.d) $<
+	$(ASMPROC) $(CC_OLD) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) $(OPTFLAGS) $(MIPS_VERSION) -o $@ $<
 
 $(BUILD_DIR)/src/libultra/libc/ll.c.o: src/libultra/libc/ll.c
 	$(CC) -c $(CFLAGS) $(OPTFLAGS) -o $@ $<
