@@ -62,7 +62,7 @@ segments:
     - [0x10990, asm, leo/lib/driveexist]
     - [0x10A60, asm, leo/lib/leomode_sel]
     - [0x10B10, asm, leo/lib/leord_capa]
-    - [0x10BB0, asm, leo/lib/leoutil]
+    - [0x10BB0, c, leo/lib/leoutil]
     - [0x10E00, asm, leo/lib/rezero]
     - [0x10E60, c, leo/lib/leorezero]
     - [0x10F00, c, leo/lib/bytetolba]
