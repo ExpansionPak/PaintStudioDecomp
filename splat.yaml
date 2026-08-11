@@ -55,7 +55,7 @@ segments:
     - [0xEB90, asm, leo/lib/spdlmotor]
     - [0xEC50, c, leo/lib/leoc2ecc]
     - [0xFD40, asm, leo/lib/createleomanager]
-    - [0xFEB0, asm, leo/lib/leointerrupt]
+    - [0xFEB0, c, leo/lib/leointerrupt]
     - [0x10580, asm, leo/lib/setrtc]
     - [0x106F0, asm, leo/lib/leomseq_tbl]
     - [0x108A0, asm, leo/lib/leomotor]

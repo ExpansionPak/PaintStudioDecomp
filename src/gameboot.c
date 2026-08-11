@@ -8,6 +8,7 @@
 #include "PR/ultratypes.h"
 #include "PR/gbi.h"
 #include "PR/leo.h"
+#include "macros.h"
 
 #include "common.h"
 #include "gameboot.h"
@@ -15,8 +16,6 @@
 #define THREAD_ID_IDLE 1
 #define THREAD_ID_MAIN 6
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
 #define HIGH_RES_SCREEN_WIDTH 640
 #define HIGH_RES_SCREEN_HEIGHT 480
 
