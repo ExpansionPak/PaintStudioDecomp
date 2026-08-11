@@ -70,7 +70,7 @@ segments:
     - [0x11180, asm, leo/lib/modeselect]
     - [0x11210, asm, leo/lib/readcapacity]
     - [0x112A0, asm, leo/lib/leotranslat]
-    - [0x11540, asm, leo/lib/leotimer]
+    - [0x11540, c, leo/lib/leotimer]
     - [0x11A50, hasm, leo/lib/getkadr]
     - [0x12550, hasm, leo/lib/getaadr]
     - [0x149E0, asm, leo/lib/leowrite]
@@ -205,7 +205,7 @@ segments:
     - [0x5BF00, rodata, leo/lib/leo_tbl]
     - [0x5C0E0, .rodata, leo/lib/leoc2ecc]
     - [0x5C500, rodata, leo/lib/leomseq_tbl]
-    - [0x5C580, rodata, leo/lib/leotimer]
+    - [0x5C580, .rodata, leo/lib/leotimer]
     #--libultra 2.0J .rodata
     - [0x5C5A0, rodata, libultra/gu/rotate]
     - [0x5C5B0, rodata, libultra/gu/sinf]
