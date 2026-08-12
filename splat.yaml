@@ -54,7 +54,7 @@ segments:
     - [0xE240, c, leo/lib/leomecha]
     - [0xEB90, asm, leo/lib/spdlmotor]
     - [0xEC50, c, leo/lib/leoc2ecc]
-    - [0xFD40, asm, leo/lib/createleomanager]
+    - [0xFD40, c, leo/lib/createleomanager]
     - [0xFEB0, c, leo/lib/leointerrupt]
     - [0x10580, asm, leo/lib/setrtc]
     - [0x106F0, asm, leo/lib/leomseq_tbl]
@@ -173,7 +173,7 @@ segments:
     - [0x590D0, data, leo/lib/leocmdex]
     - [0x590F0, data, leo/lib/driverominit]
     - [0x59100, data, leo/lib/leord_diskid]
-    - [0x59120, data, leo/lib/createleomanager]
+    - [0x59120, .data, leo/lib/createleomanager]
     #--libultra 2.0J .data
     - [0x59130, data, libultra/io/piacs]
     - [0x59140, data, libultra/os/thread]
