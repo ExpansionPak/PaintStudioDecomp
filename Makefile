@@ -247,6 +247,8 @@ $(BUILD_DIR)/src/overlays/%.c.o: src/overlays/%.c Makefile $(ASMPROC_FILES)
 	$(CC_CHECK) $(CHECK_FLAGS) $(CHECK_WARNINGS) -MMD -MP -MT $@ -MF $(@:.o=.d) $<
 	$(ASMPROC) $(CC) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) -g -mips2 -o $@ $<
 
+$(BUILD_DIR)/src/libultra/%.c.o: CC := $(CC_OLD)
+
 $(BUILD_DIR)/%.c.o: %.c Makefile $(ASMPROC_FILES)
 	$(CC_CHECK) $(CHECK_FLAGS) $(CHECK_WARNINGS) -MMD -MP -MT $@ -MF $(@:.o=.d) $<
 	$(ASMPROC) $(CC) -- $(AS) $(ASFLAGS) -- -c $(CFLAGS) $(OPTFLAGS) -o $@ $<
