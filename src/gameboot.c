@@ -158,6 +158,13 @@ typedef struct {
     s32 unk7DF0[120][20];
 } Unk8000BD70;
 
+struct D_8005041C {
+    u8 unk0[0x294];
+    s32 (*unk294)(s32);
+    s32 unk298;
+    s32 unk29C;
+};
+
 extern Unk80083C70 D_80083C70[30];
 
 // .bss
@@ -221,6 +228,7 @@ extern Unk80084B30 D_80084B30[42];
 // extern u8 D_80084F50[0x2800];
 extern s32 D_80087750;
 extern u8 D_80087754[0x4]; // pad?
+void func_800095C0();
 extern Unk80087758 D_80087758[2][30][66];
 // u8 D_8009EA98[0x17348];
 // extern u8 D_800B5DE0[0x21B0];
@@ -300,7 +308,7 @@ extern s16 D_800503CE; // = 0x0028;
 extern s16 D_800503D0; // = 0x0002;
 extern s16 D_800503D2[]; // = { 0x0012, 0xC8C8, 0xC8FF, 0xC8C8, 0xC8FF, 0x6E6E, 0x6EFF, 0x6E6E, 0x6EFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
 extern s16 D_800503F4[]; // = { 0x0110, 0x0028, 0x0002, 0x0012, 0x6E6E, 0x6EFF, 0x6E6E, 0x6EFF, 0x3C3C, 0x3CFF, 0x3C3C, 0x3CFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 };
-extern s32 D_8005041C; // = 0;
+extern struct D_8005041C D_8005041C;  // = 0;
 extern s32 D_80050420; // = 0;
 // -- file split here?
 extern s32 D_80050438; // = 0;
@@ -1628,7 +1636,19 @@ void func_80007D70(UnkStruct80007D70 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80008808.s")
 
-#pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_800088E8.s")
+s32 func_800088E8(s32 arg0) {
+    s32 (*temp)(s32);
+
+    func_800095C0();
+    D_8005033C = 0;
+
+    temp = D_8005041C.unk294;
+    if (temp != NULL) {
+        return D_8005041C.unk294(D_8005041C.unk29C);
+    }
+
+    return 1;
+}
 
 #pragma GLOBAL_ASM("asm/nonmatchings/gameboot/func_80008938.s")
 
