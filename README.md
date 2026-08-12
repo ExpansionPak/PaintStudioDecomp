@@ -176,3 +176,7 @@ Go to [decomp.me/new](https://decomp.me/new) and create a new scratch:
 - **Diff Label**: `asm label from where function begins`
 - **Target assembly**: paste the contents of the function's `.s` file
 - **Context**: paste the contents of `ctx.c`
+
+## Credits
+
+Huge shoutout to the [F-Zero X Expansion Kit decompilation](https://github.com/inspectredc/fzerox-expansion-kit) for providing most of the matched leo/lib functions!
