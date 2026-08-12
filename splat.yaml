@@ -67,7 +67,7 @@ segments:
     - [0x10E60, c, leo/lib/leorezero]
     - [0x10F00, c, leo/lib/bytetolba]
     - [0x11060, asm, leo/lib/leoreset]
-    - [0x11180, asm, leo/lib/modeselect]
+    - [0x11180, c, leo/lib/modeselect]
     - [0x11210, asm, leo/lib/readcapacity]
     - [0x112A0, asm, leo/lib/leotranslat]
     - [0x11540, c, leo/lib/leotimer]
