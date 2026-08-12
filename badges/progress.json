@@ -6,10 +6,10 @@
   },
   "code": {
     "decompiled_ratio": 0.025318086000000004,
-    "decompiled_funcs_ratio": 0.08141026,
+    "decompiled_funcs_ratio": 0.08117608999999999,
     "decompiled_funcs": 254,
     "decompiled_bytes": 38524,
-    "total_funcs": 3120,
+    "total_funcs": 3129,
     "total_bytes": 1521600
   },
   "data": {
