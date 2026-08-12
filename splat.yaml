@@ -48,7 +48,7 @@ segments:
     - [0xDC50, asm, leo/lib/lbatobyte]
     - [0xDDA0, asm, leo/lib/driverominit]
     - [0xDF00, asm, leo/lib/leoinquiry]
-    - [0xDFB0, asm, leo/lib/leodiskinit]
+    - [0xDFB0, c, leo/lib/leodiskinit]
     - [0xE050, asm, leo/lib/readdiskid]
     - [0xE0B0, asm, leo/lib/leord_diskid]
     - [0xE240, c, leo/lib/leomecha]
