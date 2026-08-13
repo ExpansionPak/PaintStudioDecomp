@@ -34,7 +34,7 @@ ASM_DIRS := asm asm/data asm/main asm/capture \
 	asm/libultra/audio asm/libultra/gu asm/libultra/io asm/libultra/libc asm/libultra/os asm/libultra/sched \
 	asm/data/libultra/audio asm/data/libultra/gu asm/data/libultra/io asm/data/libultra/libc asm/data/libultra/os asm/data/libultra/sched \
 	asm/leo/lib asm/data/leo/lib
-DATA_DIRS := bin assets
+DATA_DIRS := $(shell test ! -d bin -a ! -d assets || find bin assets -type d)
 SRC_DIRS := $(shell test ! -d src || find src -type d)
 
 ########## Make tools ##########
@@ -67,7 +67,7 @@ ido_download_url = https://github.com/decompals/ido-static-recomp/releases/downl
 
 C_FILES := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 S_FILES := $(foreach dir,$(SRC_DIRS) $(ASM_DIRS),$(wildcard $(dir)/*.s))
-DATA_FILES := $(foreach dir,$(DATA_DIRS),$(wildcard $(dir)/*.bin))
+DATA_FILES := $(shell test ! -d bin -a ! -d assets || find bin assets -type f -name "*.bin")
 PNG_FILES     := $(foreach dir,$(DATA_DIRS),$(wildcard $(dir)/*.png))
 
 PNG_INC_FILES := $(foreach f,$(PNG_FILES:.png=.inc),$(BUILD_DIR)/$f)

@@ -59,7 +59,6 @@ void leointerrupt(void* arg) {
 
 extern u8 LEOC2_Syndrome[2][0xE8 * 4];
 
-#ifdef NON_MATCHING
 LEOError read_write_track(void) {
     LEOError message;
     u32 block;
@@ -230,9 +229,6 @@ LEOError read_write_track(void) {
     }
     return message;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/leo/lib/leoint/read_write_track.s")
-#endif
 
 u32 leoChk_mecha_int(void) {
     u32 stat = leoWait_mecha_cmd_done(ASIC_RD_SEEK);
@@ -264,8 +260,6 @@ void leosetup_BM(void) {
     osEPiWriteIo(LEOPiInfo, LEO_BM_STATUS, LEOasic_bm_ctl_shadow);
 }
 
-// matches but need to match the trailing "nops" at the end
-#ifdef NON_MATCHING
 LEOError leochk_err_reg(void) {
     u32 sense;
     u32 index_status;
@@ -293,6 +287,3 @@ LEOError leochk_err_reg(void) {
         }
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/leo/lib/leoint/leochk_err_reg.s")
-#endif

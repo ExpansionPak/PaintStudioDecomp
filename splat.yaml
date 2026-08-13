@@ -8,7 +8,7 @@ options:
   basename: dmpj
   base_path: .
   ld_script_path: dmpj.ld
-  ld_fill_value: 0xFFFFFFFF
+  ld_fill_value: 0x00000000
   platform: n64 # not n64. n64dd
   hasm_in_src_path: True
   ld_legacy_generation: true
@@ -43,6 +43,7 @@ segments:
     - [0xC500, c, leo/lib/readwrite]
     - [0xC590, asm, leo/lib/leofunc]
     - [0xCA00, c, leo/lib/leoint]
+    - [0xD3F0, pad]
     - [0xD400, c, leo/lib/leocmdex]
     - [0xDA90, c, leo/lib/leoread]
     - [0xDC50, c, leo/lib/lbatobyte]
@@ -229,7 +230,7 @@ segments:
     - { start: 0x767A0, type: databin, use_src_path: True, name: rsp/s2dex2 }
     - { start: 0x76B90, type: databin, use_src_path: True, name: rsp/f3dpex2 }
 
-    - [0x76FB0, pad] # end
+    - [0x76FB0, bin, boot_end_pad] # end
 
 
     # .bss
@@ -277,7 +278,7 @@ segments:
     subsegments:
     - [0x787C8, c]
     - [0xDA398, data]
-    - [0x11A228, pad]
+    - [0x11A228, bin, main_end_pad]
   - name: capture
     type: code
     dir: capture
@@ -287,7 +288,7 @@ segments:
     subsegments:
     - [0x11C2D8, c]
     - [0x177F28, data]
-    - [0x19CF98, pad]
+    - [0x19CF98, bin, capture_end_pad]
   - name: printer
     exclusive_ram_id: overlay
     type: code
@@ -299,7 +300,7 @@ segments:
     subsegments:
     - [0x19E2B0, asm]
     - [0x1C6068, data] #alignment problem here
-    - [0x1F3200, pad]
+    - [0x1F3200, bin, printer_end_pad]
   - name: saveload
     exclusive_ram_id: overlay
     type: code
@@ -312,7 +313,7 @@ segments:
     - [0x1F4D40, c, saveload]
     - [0x2346C0, data]
     - [0x23B610, databin] # gfx
-    - [0x279C60, pad]
+    - [0x279C60, bin, saveload_end_pad]
   - name: camera
     exclusive_ram_id: overlay
     type: code
@@ -324,7 +325,7 @@ segments:
     subsegments:
     - [0x27BA20, c]
     - [0x295C30, data]
-    - [0x2BA0A0, pad]
+    - [0x2BA0A0, bin, camera_end_pad]
   - name: 3dworld_gfx
     type: data
     start: 0x2BA388
