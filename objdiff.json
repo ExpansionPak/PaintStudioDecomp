@@ -38,6 +38,14 @@
       }
     },
     {
+      "name": "src/leo/lib/leoint.c",
+      "target_path": "expected/build/src/leo/lib/leoint.c.o",
+      "base_path": "build/src/leo/lib/leoint.c.o",
+      "metadata": {
+        "source_path": "src/leo/lib/leoint.c"
+      }
+    },
+    {
       "name": "src/leo/lib/leotestunit.c",
       "target_path": "expected/build/src/leo/lib/leotestunit.c.o",
       "base_path": "build/src/leo/lib/leotestunit.c.o",
