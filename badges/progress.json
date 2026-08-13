@@ -1,19 +1,19 @@
 {
   "total": {
-    "decompiled_ratio": 0.027568350000000002,
-    "decompiled_bytes": 41948,
-    "total_bytes": 1521600
+    "decompiled_ratio": 0.028756873999999998,
+    "decompiled_bytes": 43756,
+    "total_bytes": 1521584
   },
   "code": {
-    "decompiled_ratio": 0.027568350000000002,
-    "decompiled_funcs_ratio": 0.08373282,
-    "decompiled_funcs": 262,
-    "decompiled_bytes": 41948,
+    "decompiled_ratio": 0.028756873999999998,
+    "decompiled_funcs_ratio": 0.08437201,
+    "decompiled_funcs": 264,
+    "decompiled_bytes": 43756,
     "total_funcs": 3129,
-    "total_bytes": 1521600
+    "total_bytes": 1521584
   },
   "data": {
-    "decompiled_ratio": 0.97061066,
+    "decompiled_ratio": 0.9706288999999999,
     "decompiled_bytes": 0,
     "total_bytes": 0
   },
